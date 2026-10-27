@@ -169,6 +169,8 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
 .total.hot{background:var(--snip);color:var(--snip-ink);border-color:transparent}
 .total small{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.8;display:block}
 .total strong{font-family:var(--f-display);font-weight:800;font-size:clamp(28px,3.6vw,46px);font-variant-numeric:tabular-nums;line-height:1.1;display:block}
+.snipctas{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.btn.snipplay{background:var(--snip);color:var(--snip-ink)}
 .subs{list-style:none;margin:0;padding:0;display:grid;gap:10px;min-width:0;position:relative}
 .sub{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:14px 14px 14px 18px}
 .sico{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-family:var(--f-display);font-weight:800;flex:none;background:var(--surface-2);color:var(--snip)}
@@ -449,6 +451,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
         </div>
         <p class="sr" id="demoLive" aria-live="polite"></p>
         <p class="label" style="margin-top:14px">Example subscriptions, not real data</p>
+        <div class="snipctas"><a class="btn primary snipplay" href="https://play.google.com/store/apps/details?id=app.snip.tracker" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3.5v17l9-8.5z" fill="currentColor" opacity=".9"/><path d="M13 12l3.2-3.1L6 3.2z" fill="currentColor" opacity=".6"/><path d="M13 12l3.2 3.1L6 20.8z" fill="currentColor" opacity=".6"/><path d="M16.2 8.9 20 11a1.1 1.1 0 0 1 0 2l-3.8 2.1L13 12z" fill="currentColor"/></svg>View on Google Play</a><a class="btn" href="https://drakiverse.studio/snipapp/" target="_blank" rel="noopener">Screenshots &amp; details ↗</a></div>
       </div>
       <div style="min-width:0">
         <ul class="subs" id="subs"></ul>
@@ -525,7 +528,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
       <nav class="fcol fin" aria-label="Apps">
         <h3>Apps</h3>
         <ul>
-          <li><a class="flink" href="#demo" style="--lc:var(--snip)"><span class="sw" aria-hidden="true"></span>Snip<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+          <li><a class="flink" href="https://drakiverse.studio/snipapp/" style="--lc:var(--snip)"><span class="sw" aria-hidden="true"></span>Snip<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
           <li><a class="flink" href="#lapse" style="--lc:var(--purple)"><span class="sw" aria-hidden="true"></span>Lapse<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
           <li><a class="flink" href="#contact" style="--lc:var(--orange)"><span class="sw" aria-hidden="true"></span>App 03 <span class="fbadge">In the lab</span></a></li>
         </ul>
@@ -647,7 +650,7 @@ safe("detail",()=>{
   const LOGO_S='<svg viewBox="0 0 100 100" aria-hidden="true"><defs><clipPath id="cl2"><polygon points="0,0 56,0 38,100 0,100"/></clipPath><clipPath id="cr2"><polygon points="64,0 100,0 100,100 46,100"/></clipPath></defs><rect width="100" height="100" rx="24" fill="#0b0b0b"/><g clip-path="url(#cl2)"><rect x="14" y="26" width="72" height="48" rx="9" fill="#c8ff2e"/><rect x="14" y="36" width="72" height="8" fill="#0b0b0b"/></g><g clip-path="url(#cr2)" transform="translate(3,-2)"><rect x="14" y="26" width="72" height="48" rx="9" fill="#c8ff2e"/><rect x="14" y="36" width="72" height="8" fill="#0b0b0b"/></g></svg>';
   const LOGO_L='<svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="24" fill="#fff1dc" stroke="#0b0b0c" stroke-opacity=".12"/><path d="M28 22V78H78" fill="none" stroke="#9d8cff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="M39 22V67H78" fill="none" stroke="#ff8fc7" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="M50 22V56H78" fill="none" stroke="#ffa03a" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   const D={
-    snip:{tone:"snip",num:"App 01 · Coming to Google Play",name:"Snip",logo:LOGO_S,kick:"A subscription tracker.",body:"Snip puts every recurring charge in one list, warns you before something renews, and shows what you really spend each month and each year.",feats:["Every subscription in one list","A heads-up before anything renews","Monthly and yearly totals","Free. Snip Pro is a one-time purchase."],cta:["#demo","Try the live demo"]},
+    snip:{tone:"snip",num:"App 01 · Coming to Google Play",name:"Snip",logo:LOGO_S,kick:"A subscription tracker.",body:"Snip puts every recurring charge in one list, warns you before something renews, and shows what you really spend each month and each year.",feats:["Every subscription in one list","A heads-up before anything renews","Monthly and yearly totals","Free. Snip Pro is a one-time purchase."],cta:["#demo","Try the live demo"],ext:[["https://play.google.com/store/apps/details?id=app.snip.tracker","View on Google Play"],["https://drakiverse.studio/snipapp/","Screenshots & details"]]},
     lapse:{tone:"lapse",num:"App 02 · In development",name:"Lapse",logo:LOGO_L,kick:"An all-in-one expiry tracker.",body:"If it expires or comes due, it goes in Lapse. Passports, warranties, insurance, food, medication and upcoming bills, all counting down, with reminders before the date, not after.",feats:["Documents, warranties and insurance","Food and medication","Upcoming bills","Free for 5 items. Pro unlock for $3.99."],cta:["#lapse","Watch time pass"]},
     next:{tone:"",num:"App 03 · In the lab",name:"Next",logo:"",kick:"The next small fix.",body:"We keep a running list of little things that waste people's time. If something bugs you every week and an app could make it go away, tell us.",feats:["One problem per app","Android first, iOS next","Free to start, fair to upgrade","Your idea could be App 03"],cta:["#contact","Suggest an idea"]}
   };
@@ -658,7 +661,7 @@ safe("detail",()=>{
     det.innerHTML=`<div class="dinner"><div class="dbar di"><span class="idx">${w.num}</span><button class="close" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
       <div class="dtitle di">${w.logo}<h2 id="dTitle">${w.name}</h2></div><p class="kick di">${w.kick}</p><p class="dbody di">${w.body}</p>
       <ul class="feats">${w.feats.map((f,i)=>`<li class="di"><span>0${i+1}</span>${f}</li>`).join("")}</ul>
-      <div class="dctas di"><a class="dbtn solid" href="${w.cta[0]}" data-jump="${w.cta[0]}">${w.cta[1]}</a><button class="dbtn" type="button" data-back>Back to the apps</button></div></div>`;
+      <div class="dctas di"><a class="dbtn solid" href="${w.cta[0]}" data-jump="${w.cta[0]}">${w.cta[1]}</a>${(w.ext||[]).map(([h,t])=>`<a class="dbtn" href="${h}" target="_blank" rel="noopener">${t} ↗</a>`).join("")}<button class="dbtn" type="button" data-back>Back to the apps</button></div></div>`;
     det.hidden=false;det.scrollTop=0;document.documentElement.style.overflow="hidden";
     if(motion){const tl=G.timeline();tl.fromTo(det,{clipPath:inset(card.getBoundingClientRect())},{clipPath:"inset(0px 0px 0px 0px round 0px)",duration:.95,ease:"expo.inOut"})
       .from($$(".di",det),{y:60,opacity:0,duration:.8,stagger:.06,ease:"expo.out"},"-=.45")}
@@ -682,7 +685,7 @@ safe("sheet",()=>{
   const PAGES={
     privacy:{title:"Privacy Policy",html:`<p class="intro si">Drakiverse Studio makes small apps that respect your privacy. This policy explains what happens to your information when you use our apps and this website.</p>
       ${sec("--fg","Who we are",`<p class="si">Drakiverse Studio is an independent app developer based in Canada. You can reach us any time at ${EMAIL}, or at ${SNIP} and ${LAPSE} for app-specific questions.</p>`)}
-      ${sec("--snip","Snip",`<ul class="si"><li><strong>Your data stays on your phone.</strong> The subscriptions you add are stored on your device. We don't run servers, so we never receive them.</li><li><strong>No account needed.</strong> Snip doesn't ask you to sign up or log in.</li><li><strong>We don't sell or share personal information.</strong> We don't collect it in the first place.</li><li><strong>Purchases go through Google Play.</strong> If you buy Snip Pro, Google handles the payment. We never see your card details.</li></ul>`)}
+      ${sec("--snip","Snip",`<ul class="si"><li><strong>Your data stays on your phone.</strong> The subscriptions you add are stored on your device. We don't run servers, so we never receive them.</li><li><strong>No account needed.</strong> Snip doesn't ask you to sign up or log in.</li><li><strong>We don't sell or share personal information.</strong> We don't collect it in the first place.</li><li><strong>Purchases go through Google Play.</strong> If you buy Snip Pro, Google handles the payment. We never see your card details.</li></ul><p class="si">Snip also has its own app privacy policy at <a href="https://drakiverse.studio/snipapp/privacy.html" target="_blank" rel="noopener">drakiverse.studio/snipapp/privacy.html</a>.</p>`)}
       ${sec("--purple","Lapse",`<p class="si">Lapse is in development and is being built the same way: your items stay on your device, with no account required. We'll update this policy with any Lapse-specific details before it launches.</p>`)}
       ${sec("--pink","This website",`<p class="si">This site has no sign-up and no contact forms. It loads fonts from Google Fonts and code from a public content network (cdnjs), which means those services receive standard technical information such as your IP address when the page loads.</p>`)}
       ${sec("--orange","Children",`<p class="si">Our apps are general-audience tools and aren't designed for children under 13. We don't knowingly collect information from anyone.</p>`)}
