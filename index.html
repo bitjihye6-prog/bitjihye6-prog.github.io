@@ -127,7 +127,8 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
 .chip{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:999px;border:1.5px solid currentColor;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
 .chip i{width:7px;height:7px;border-radius:50%;background:currentColor}
 .art{flex:1;display:grid;place-items:center;min-height:0}
-.art svg{width:min(190px,44vw);height:auto}
+.art{position:relative}
+.art svg{position:absolute;inset:0;margin:auto;aspect-ratio:1;width:auto;height:min(190px,44vw,calc(100% - 28px))}
 .wname{font-family:var(--f-display);font-weight:700;font-size:clamp(52px,6.4vw,92px);line-height:.88;letter-spacing:-.045em;margin:0}
 .wline{margin:10px 0 0;font-size:16px;max-width:38ch;opacity:.85}
 .wopen{margin-top:18px;align-self:flex-start;display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 20px;border-radius:999px;font-weight:700;background:var(--ink);color:var(--fg)}
@@ -252,6 +253,10 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
 .sig svg{position:absolute;left:8%;right:4%;bottom:-.02em;width:88%;height:.32em;overflow:visible}
 .sig path{fill:none;stroke:url(#siggrad);stroke-width:5;stroke-linecap:round;stroke-dasharray:420;stroke-dashoffset:420;transition:stroke-dashoffset 1s cubic-bezier(.65,0,.35,1) 1.6s}
 .sig.on path{stroke-dashoffset:0}
+.loader .sig{margin-top:clamp(-46px,-3vw,-10px)}
+.loader .sig .ink{font-size:clamp(40px,8.5vw,130px);transition-duration:1s}
+.loader .sig path{transition-duration:.6s;transition-delay:.8s}
+.loader .sig.on .ink{animation:sigflow 3s linear .9s infinite}
 @keyframes sigflow{to{background-position:-220% 0}}
 @media (prefers-reduced-motion:reduce){.sig .ink{clip-path:none;transition:none;animation:none}.sig path{stroke-dashoffset:0;transition:none}}
 .stripes{display:flex;height:8px;margin-top:22px;border-radius:8px;overflow:hidden}
@@ -780,15 +785,16 @@ function heroIntro(){
 /* loader */
 safe("loader",()=>{
   const L=document.createElement("div");L.className="loader gut";L.setAttribute("aria-hidden","true");
-  L.innerHTML=`<div class="top label"><span>Independent app studio</span><span>Canada</span></div><div><div class="count" id="lc">0</div><div class="wordbox"><span class="fitword" id="lw">DRAKIVERSE</span></div><div class="bar"><i id="lb"></i></div></div>`;
+  L.innerHTML=`<div class="top label"><span>Independent app studio</span><span>Canada</span></div><div><div class="count" id="lc">0</div><div class="wordbox"><span class="fitword" id="lw">DRAKIVERSE</span></div><div class="sig" id="lsig"><span class="ink">.studio<svg viewBox="0 0 300 40" preserveAspectRatio="none"><path d="M4 30 C 70 8, 150 38, 220 18 S 290 10, 296 14"/></svg></span></div><div class="bar"><i id="lb"></i></div></div>`;
   document.body.appendChild(L);
   const lw=$("#lw",L);const chars=splitChars(lw);fitWord(lw);
-  const c={v:0};
+  const c={v:0};const ls=$("#lsig",L);setTimeout(()=>ls.classList.add("on"),450);
   const tl=G.timeline({onComplete:()=>L.remove()});
   tl.from(chars,{yPercent:115,duration:.9,stagger:.045,ease:"expo.out"})
     .to(c,{v:100,duration:1.5,ease:"power2.inOut",onUpdate:()=>$("#lc",L).textContent=Math.round(c.v)},0)
     .to($("#lb",L),{scaleX:1,duration:1.5,ease:"power2.inOut"},0)
     .to(chars,{yPercent:-115,duration:.6,stagger:.025,ease:"expo.in"},1.65)
+    .to(ls,{yPercent:-60,opacity:0,duration:.5,ease:"expo.in"},1.75)
     .to(L,{clipPath:"inset(0% 0% 100% 0%)",duration:.9,ease:"expo.inOut"},2.05)
     .add(heroIntro,2.25);
   L.style.clipPath="inset(0% 0% 0% 0%)";
