@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lapse: Expiry &amp; Bill Tracker</title>
+<meta name="description" content="Lapse reminds you before your passport, licence, insurance, food or bills expire or come due. No account, no bank login, pay once. Coming soon on Google Play.">
+<meta name="theme-color" content="#FFF1DC">
+<link rel="icon" href="icon.png">
+<meta property="og:title" content="Lapse: Expiry &amp; Bill Tracker">
+<meta property="og:description" content="Never miss a date that matters. Coming soon on Google Play.">
+<meta property="og:image" content="https://drakiverse.studio/lapse/img/banner.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap">
+<style>
+/* Layout: brand hero with app screenshot, three headline features, best-parts gallery, honest comparison, Free vs Pro, footer. Lapse brand: retro stripes on cream (dark mode = plum). */
+:root {
+  --bg: #FFF1DC; --surface: #FFFAF2; --surface-2: #F4E3C8; --line: #EAD6B8;
+  --fg: #2A2140; --muted: #5C5170; --purple: #6E62B8; --purple-text: #4B3FA0; --pink: #FF8FC7; --orange: #FFA03A;
+  --tint: #E6E1FF;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #141019; --surface: #1F1A27; --surface-2: #221C2B; --line: #2E2738; --fg: #F5EFE6; --muted: #C9C0D6; --purple-text: #B9ADFF; --tint: #262040; color-scheme: dark; }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--fg); font: 500 17px/1.55 Manrope, 'Segoe UI', Roboto, system-ui, sans-serif; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+a { color: var(--purple-text); }
+a:focus-visible, .btn:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; border-radius: 8px; }
+img { max-width: 100%; height: auto; display: block; }
+.wrap { max-width: 1060px; margin: 0 auto; }
+nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 22px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--fg); }
+.brand svg { width: 30px; height: 33px; }
+.brand span { font-size: 30px; font-weight: 800; letter-spacing: -0.045em; }
+nav .links { display: flex; gap: 18px; font-size: 15px; }
+nav .links a { color: var(--muted); }
+.hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 48px; align-items: center; padding-block: 36px 72px; }
+.kicker { margin: 0 0 14px; font-size: 14px; font-weight: 700; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+h1 { margin: 0; font-weight: 800; font-size: clamp(44px, 7vw, 76px); line-height: 1.0; letter-spacing: -0.04em; text-wrap: balance; }
+h1 em { font-style: normal; color: var(--purple); }
+@media (prefers-color-scheme: dark) { h1 em { color: #9D8CFF; } }
+.lede { margin: 22px 0 0; font-size: 20px; color: var(--muted); max-width: 36ch; }
+.cta { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.btn { display: inline-flex; align-items: center; gap: 10px; min-height: 56px; padding: 0 24px; border-radius: 18px; background: var(--purple); color: #fff; font-weight: 800; font-size: 17px; text-decoration: none; box-shadow: 0 4px 0 var(--pink), 0 8px 0 var(--orange); }
+.btn svg { width: 20px; height: 20px; }
+.pills { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 8px; }
+.pills span { font-size: 14px; font-weight: 700; padding: 6px 12px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); }
+.phone { justify-self: center; width: min(330px, 100%); border-radius: 38px; overflow: hidden; border: 7px solid #2A2140; box-shadow: 14px 14px 0 var(--pink), 28px 28px 0 var(--orange); transform: rotate(2deg); }
+section { padding-block: 60px; border-top: 1px solid var(--line); }
+h2 { margin: 0 0 8px; font-weight: 800; font-size: clamp(32px, 4.6vw, 46px); line-height: 1.05; letter-spacing: -0.03em; text-wrap: balance; }
+.sub { margin: 0 0 32px; color: var(--muted); max-width: 60ch; }
+.features { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.feature { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; overflow: hidden; display: flex; flex-direction: column; }
+.feature img { aspect-ratio: 9 / 11; object-fit: cover; object-position: top; border-bottom: 1px solid var(--line); }
+.feature div { padding: 18px 20px 22px; }
+.feature i { display: block; width: 34px; height: 6px; border-radius: 3px; margin-bottom: 12px; }
+.feature h3 { margin: 0 0 6px; font-size: 21px; font-weight: 800; letter-spacing: -0.01em; }
+.feature p { margin: 0; color: var(--muted); font-size: 16px; }
+.gallery { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 14px; margin-inline: calc(-1 * max(20px, env(safe-area-inset-left, 0px))); padding-inline: max(20px, env(safe-area-inset-left, 0px)); }
+.gallery figure { margin: 0; flex: 0 0 min(230px, 62vw); scroll-snap-align: start; }
+.gallery img { border-radius: 26px; border: 5px solid #2A2140; }
+.gallery figcaption { margin-top: 10px; font-weight: 800; font-size: 15px; }
+.gallery figcaption span { display: block; font-weight: 500; color: var(--muted); font-size: 14px; }
+.list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 28px; margin: 30px 0 0; padding: 0; list-style: none; }
+.list li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; }
+.list li::before { content: ""; width: 22px; height: 22px; margin-top: 3px; border-radius: 7px; background: var(--purple) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3.5 3.5 6.5-8' fill='none' stroke='%23FFFFFF' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 16px no-repeat; }
+.table-box { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; }
+table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 16px; }
+th, td { padding: 15px 18px; text-align: left; border-bottom: 1px solid var(--line); }
+tr:last-child td { border-bottom: none; }
+th { font-size: 15px; font-weight: 800; color: var(--muted); }
+th.lapse { color: var(--purple-text); }
+td { color: var(--muted); }
+td:first-child { color: var(--fg); font-weight: 600; }
+td.yes { color: var(--purple-text); font-weight: 800; }
+.note { margin-top: 14px; font-size: 14px; color: var(--muted); }
+.pro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+.plan { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 26px; }
+.plan.hot { background: var(--purple); color: #fff; border-color: transparent; box-shadow: 0 6px 0 var(--pink), 0 12px 0 var(--orange); }
+.plan h3 { margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.02em; }
+.plan .price { margin: 6px 0 16px; font-size: 15px; opacity: .8; }
+.plan ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
+.stripes { display: flex; gap: 8px; margin-bottom: 18px; }
+.stripes i { width: 30px; height: 7px; border-radius: 4px; }
+footer { border-top: 1px solid var(--line); padding-block: 32px 48px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; color: var(--muted); font-size: 15px; }
+footer a { color: var(--fg); }
+@media (max-width: 820px) {
+  .hero { grid-template-columns: 1fr; padding-block: 12px 56px; }
+  .phone { width: min(290px, 78%); }
+  .features, .pro { grid-template-columns: 1fr; }
+  .list { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { .phone { transform: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="brand" href="./" aria-label="Lapse home">
+      <svg viewBox="40 28 92 102" aria-hidden="true"><path d="M52 38v80h68" stroke="#6E62B8" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M66 38v66h54" stroke="#FF8FC7" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M80 38v52h40" stroke="#FFA03A" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      <span>lapse</span>
+    </a>
+    <div class="links"><a href="privacy">Privacy</a><a href="https://drakiverse.studio/">Drakiverse Studio</a></div>
+  </nav>
+
+  <header class="hero">
+    <div>
+      <p class="kicker">Expiry &amp; bill tracker</p>
+      <h1>Never miss a date <em>that matters.</em></h1>
+      <p class="lede">Lapse reminds you before your passport, licence, insurance, food or bills expire or come due. Reminders that actually arrive.</p>
+      <div class="cta">
+        <!-- At launch, swap the next line for: <a class="btn" href="https://play.google.com/store/apps/details?id=studio.drakiverse.lapse">Get it on Google Play</a> -->
+        <span class="btn" style="cursor:default">Coming soon on Google Play</span>
+      </div>
+      <div class="pills"><span>No account</span><span>No bank login</span><span>Pay once</span><span>No ads</span></div>
+    </div>
+    <picture style="display:contents"><source srcset="img/dark.webp" media="(prefers-color-scheme: dark)"><img class="phone" src="img/home.webp" alt="Lapse home screen: $1,384.50 in bills due this week, 1 expired, 3 due soon and 14 all good" width="600" height="1298"></picture>
+  </header>
+
+  <section>
+    <h2>Add it once. Lapse remembers.</h2>
+    <p class="sub">Everything that expires and every bill you pay, counting down in one place.</p>
+    <div class="features">
+      <article class="feature"><img style="object-position:bottom" src="img/voice.webp" alt="Saying 'Hydro bill $114 due on the 28th' to add a bill by voice" loading="lazy" width="600" height="1298"><div><i style="background:var(--purple)"></i><h3>Just say it</h3><p>"Hydro bill $114 due on the 28th." Lapse fills in the name, amount and date for you.</p></div></article>
+      <article class="feature"><img src="img/detail.webp" alt="Passport with 140 days left and a 6-month travel warning" loading="lazy" width="600" height="1298"><div><i style="background:var(--pink)"></i><h3>Warned in time</h3><p>Pick when to be reminded. Passports get a heads-up about the 6-month rule many countries use.</p></div></article>
+      <article class="feature"><img src="img/bills.webp" alt="Bills list with a Mark as paid button on the hydro bill" loading="lazy" width="600" height="1298"><div><i style="background:var(--orange)"></i><h3>Bills, sorted</h3><p>Tap "Mark as paid" and Lapse moves it to the next date. Loans tell you when the last payment is.</p></div></article>
+    </div>
+    <ul class="list">
+      <li>Checks your phone's battery settings so reminders aren't silenced</li>
+      <li>Keeps reminding every day until you mark it done</li>
+      <li>Weekly, every 2 weeks, monthly, quarterly, yearly or custom</li>
+      <li>Never changes a date on its own, and every change can be undone</li>
+      <li>Quiet hours, so nothing buzzes at night</li>
+      <li>Cream in light mode, plum in dark mode</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>The best parts</h2>
+    <p class="sub">Swipe through a few of our favourite screens.</p>
+    <div class="gallery" role="list">
+      <figure role="listitem"><img src="img/paid.webp" alt="Celebration screen after paying the hydro bill on time" loading="lazy" width="600" height="1298"><figcaption>Celebrate every bill<span>with a little confetti and your on-time streak</span></figcaption></figure>
+      <figure role="listitem"><img src="img/forecast.webp" alt="Bill forecast for the next 5 months" loading="lazy" width="600" height="1298"><figcaption>See months ahead<span>bill forecast and loans ending soon</span></figcaption></figure>
+      <figure role="listitem"><img src="img/family.webp" alt="Family screen with items for each person" loading="lazy" width="600" height="1298"><figcaption>The whole family<span>everyone's passports and cards, each in their colour</span></figcaption></figure>
+      <figure role="listitem"><img src="img/widget.webp" alt="Lapse widgets on an Android home screen" loading="lazy" width="600" height="1298"><figcaption>Home-screen widget<span>your next dates without opening the app</span></figcaption></figure>
+      <figure role="listitem"><img src="img/setup.webp" alt="Reminder check making sure notifications and alarms are allowed" loading="lazy" width="600" height="1298"><figcaption>Reminders that arrive<span>a one-minute check during setup</span></figcaption></figure>
+      <figure role="listitem"><img src="img/history.webp" alt="History of a bill with undo buttons" loading="lazy" width="600" height="1298"><figcaption>Undo anything<span>every change saved in the history</span></figcaption></figure>
+      <figure role="listitem"><img src="img/dark.webp" alt="Lapse home screen in dark mode" loading="lazy" width="600" height="1298"><figcaption>Dark mode<span>same retro colours, easy on the eyes</span></figcaption></figure>
+    </div>
+  </section>
+
+  <section>
+    <h2>Why Lapse</h2>
+    <p class="sub">Your calendar can remind you once. Lapse makes sure you actually deal with it.</p>
+    <div class="table-box">
+      <table>
+        <thead><tr><th scope="col"></th><th scope="col" class="lapse">Lapse</th><th scope="col">Phone calendar</th><th scope="col">Typical tracker apps</th></tr></thead>
+        <tbody>
+          <tr><td>Expiries and bills in one place</td><td class="yes">Yes</td><td>As plain events</td><td>Usually one or the other</td></tr>
+          <tr><td>Keeps reminding until it's done</td><td class="yes">Yes</td><td>No</td><td>Varies</td></tr>
+          <tr><td>Checks battery settings so alerts arrive</td><td class="yes">Yes</td><td>No</td><td>Rarely</td></tr>
+          <tr><td>Passport 6-month travel warning</td><td class="yes">Yes</td><td>No</td><td>Rarely</td></tr>
+          <tr><td>Account or bank login needed</td><td class="yes">No</td><td>Google account</td><td>Often</td></tr>
+          <tr><td>Price</td><td class="yes">Free, or pay once for Pro</td><td>Free</td><td>Often a monthly plan</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Lapse doesn't read your email or bank statements, so you add things yourself. Quick add and voice make that take seconds, and nothing ever leaves your phone.</p>
+  </section>
+
+  <section>
+    <h2>Free to start. Pay once for more.</h2>
+    <p class="sub">No subscription for a reminder app.</p>
+    <div class="pro">
+      <div class="plan"><div class="stripes"><i style="background:var(--purple)"></i><i style="background:var(--line)"></i><i style="background:var(--line)"></i></div><h3>Free</h3><p class="price">$0</p><ul><li>Up to 5 items, bills and expiries</li><li>Reminders, keep-reminding and quiet hours</li><li>Voice add and quick add</li><li>Date history and undo</li><li>Share a reminder by text or WhatsApp</li></ul></div>
+      <div class="plan hot"><div class="stripes"><i style="background:#fff"></i><i style="background:var(--pink)"></i><i style="background:var(--orange)"></i></div><h3>Lapse Pro</h3><p class="price">$3.99, one-time purchase through Google Play</p><ul><li>Unlimited items</li><li>Family profiles</li><li>Home-screen widget</li><li>Bill forecast and "ending soon" alerts</li><li>Export to a spreadsheet</li><li>Document photos and Google Calendar</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Drakiverse Studio · Lapse</span>
+    <span><a href="privacy">Privacy policy</a> · <a href="mailto:lapse@drakiverse.studio">lapse@drakiverse.studio</a></span>
+  </footer>
+</div>
+</body>
+</html>
