@@ -42,7 +42,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
 .fitword{display:inline-block;white-space:nowrap;font-family:var(--f-display);font-weight:700;line-height:.86;letter-spacing:-.04em}
 
 /* loader */
-.loader{position:fixed;inset:0;z-index:90;background:var(--bg);display:flex;flex-direction:column;justify-content:space-between;padding-block:calc(26px + env(safe-area-inset-top,0px)) calc(26px + env(safe-area-inset-bottom,0px))}
+.loader{position:fixed;inset:0;z-index:90;overflow:hidden;contain:paint;background:var(--bg);display:flex;flex-direction:column;justify-content:space-between;padding-block:calc(26px + env(safe-area-inset-top,0px)) calc(26px + env(safe-area-inset-bottom,0px))}
 .loader .top{display:flex;justify-content:space-between;gap:12px}
 .loader .wordbox{width:100%}
 .loader .bar{height:4px;background:var(--line);border-radius:4px;overflow:hidden;margin-top:18px}
@@ -253,7 +253,8 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
 .sig svg{position:absolute;left:8%;right:4%;bottom:-.02em;width:88%;height:.32em;overflow:visible}
 .sig path{fill:none;stroke:url(#siggrad);stroke-width:5;stroke-linecap:round;stroke-dasharray:420;stroke-dashoffset:420;transition:stroke-dashoffset 1s cubic-bezier(.65,0,.35,1) 1.6s}
 .sig.on path{stroke-dashoffset:0}
-.loader .sig{margin-top:clamp(-46px,-3vw,-10px)}
+.loader .sig{margin-top:clamp(-46px,-3vw,-10px);padding-right:4%;max-width:100%;overflow:hidden}
+.loader .sig .ink{transform:rotate(-4deg)}
 .loader .sig .ink{font-size:clamp(40px,8.5vw,130px);transition-duration:1s}
 .loader .sig path{transition-duration:.6s;transition-delay:.8s}
 .loader .sig.on .ink{animation:sigflow 3s linear .9s infinite}
@@ -787,7 +788,7 @@ safe("loader",()=>{
   const L=document.createElement("div");L.className="loader gut";L.setAttribute("aria-hidden","true");
   L.innerHTML=`<div class="top label"><span>Independent app studio</span><span>Canada</span></div><div><div class="count" id="lc">0</div><div class="wordbox"><span class="fitword" id="lw">DRAKIVERSE</span></div><div class="sig" id="lsig"><span class="ink">.studio<svg viewBox="0 0 300 40" preserveAspectRatio="none"><path d="M4 30 C 70 8, 150 38, 220 18 S 290 10, 296 14"/></svg></span></div><div class="bar"><i id="lb"></i></div></div>`;
   document.body.appendChild(L);
-  const lw=$("#lw",L);const chars=splitChars(lw);fitWord(lw);
+  const lw=$("#lw",L);const chars=splitChars(lw);fitWord(lw);const refit=()=>{if(L.isConnected)fitWord(lw)};addEventListener("resize",refit);if(document.fonts){document.fonts.load(`700 100px ${getComputedStyle(lw).fontFamily}`).then(refit,refit);document.fonts.ready.then(refit)}[150,400,800].forEach(t=>setTimeout(refit,t));
   const c={v:0};const ls=$("#lsig",L);setTimeout(()=>ls.classList.add("on"),450);
   const tl=G.timeline({onComplete:()=>L.remove()});
   tl.from(chars,{yPercent:115,duration:.9,stagger:.045,ease:"expo.out"})
