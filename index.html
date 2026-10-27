@@ -3,755 +3,877 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0A0D14">
+<meta name="description" content="Drakiverse Studio is an independent app studio from Canada making small apps that each fix one everyday annoyance. Meet Snip and Lapse. Android first, iOS on the way.">
+<meta name="theme-color" content="#0b0b0c">
+<meta property="og:title" content="Drakiverse Studio">
+<meta property="og:description" content="Small apps. Big relief. Meet Snip and Lapse.">
+<meta property="og:url" content="https://drakiverse.studio/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%230b0b0c'/%3E%3Crect x='22' y='22' width='14' height='56' rx='7' fill='%23c8ff2e'/%3E%3Crect x='42' y='22' width='14' height='56' rx='7' fill='%239d8cff'/%3E%3Crect x='62' y='22' width='14' height='56' rx='7' fill='%23ff8fc7'/%3E%3C/svg%3E">
+<style>body{margin:0}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
 <title>Drakiverse Studio</title>
-<meta name="description" content="Drakiverse Studio is an independent app studio from Canada. We make simple, private apps for everyday life.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
 <style>
-/* Layout: interactive WebGL particle universe (sticky, scroll-driven) with a HUD frame, then dark editorial sections (apps grid, mission, contact).
-   Single cinematic dark look by choice: night ink, signal orange, warm paper. */
-:root {
-  --ink: #0A0D14;
-  --ink-2: #121722;
-  --line: #262D3B;
-  --paper: #F3EEE6;
-  --muted: #9AA3B5;
-  --signal: #FF5A1F;
-  --lime: #C6F25E;
-  --display: 'Outfit', 'Segoe UI', Roboto, Arial, sans-serif;
-  --serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
-  --mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
-  color-scheme: dark;
+/* Layout: loader → kinetic hero with two app phones → velocity marquee → pinned horizontal app worlds that open full-screen → live Snip demo (Flip) → pinned Lapse "time-lapse" where scroll is time → scroll-lit manifesto → elastic contact → fit-width DRAKIVERSE footer. Deliberately dark (Snip + Lapse colours on black and cream). */
+:root{
+  --bg:#0b0b0c; --surface:#151517; --surface-2:#202023; --fg:#fff1dc; --muted:#b5ac9e; --line:rgba(255,241,220,.13);
+  --snip:#c8ff2e; --snip-ink:#0b0b0b;
+  --purple:#9d8cff; --pink:#ff8fc7; --orange:#ffa03a; --cream:#fff1dc; --ink:#0b0b0c;
+  --spectrum:linear-gradient(90deg,var(--snip),var(--purple),var(--pink),var(--orange));
+  --f-display:"Syne","Arial Black",system-ui,sans-serif;
+  --f-body:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
 }
-* { box-sizing: border-box; }
-html, body { margin: 0; }
-body { background: var(--ink); color: var(--paper); font: 17px/1.6 var(--serif); -webkit-font-smoothing: antialiased; }
-a { color: var(--paper); }
-a:focus-visible, button:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
-.mono { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
-.gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.6;overflow-x:clip;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+a{color:inherit}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer;touch-action:manipulation}
+a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-offset:3px;border-radius:8px}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1260px;margin:0 auto;width:100%}
+.mask{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.1em;margin-bottom:-.1em}
+.mask > span{display:inline-block}
+.label{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.fitword{display:inline-block;white-space:nowrap;font-family:var(--f-display);font-weight:800;line-height:.86;letter-spacing:-.04em}
 
-/* ---------- Universe intro ---------- */
-/* Logo fonts, embedded (subsets): Big Shoulders Bold and Instrument Serif Italic, SIL Open Font License 1.1. */
-@font-face { font-family: 'DrakiMark'; font-weight: 700; font-display: block; src: url(data:font/woff;base64,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) format('woff'); }
-@font-face { font-family: 'DrakiSerif'; font-style: italic; font-weight: 400; font-display: block; src: url(data:font/woff;base64,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) format('woff'); }
-.universe { position: relative; height: 460svh; background: var(--ink); }
-.stage { position: sticky; top: 0; height: 100svh; min-height: 520px; overflow: hidden; }
-.stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; }
-#mark { pointer-events: none; }
-.hud { position: absolute; inset: 0; pointer-events: none; color: rgba(243, 238, 230, 0.78); }
-.hud .row { position: absolute; left: max(18px, env(safe-area-inset-left, 0px)); right: max(18px, env(safe-area-inset-right, 0px)); display: flex; justify-content: space-between; gap: 16px; }
-.hud .top { top: 18px; }
-.hud .bottom { bottom: 20px; align-items: flex-end; }
-.hud .corner { position: absolute; width: 18px; height: 18px; border: 0 solid rgba(243, 238, 230, 0.55); }
-.hud .tl { top: 10px; left: 10px; border-top-width: 1px; border-left-width: 1px; }
-.hud .tr { top: 10px; right: 10px; border-top-width: 1px; border-right-width: 1px; }
-.hud .bl { bottom: 10px; left: 10px; border-bottom-width: 1px; border-left-width: 1px; }
-.hud .br { bottom: 10px; right: 10px; border-bottom-width: 1px; border-right-width: 1px; }
-.hud .num { font-variant-numeric: tabular-nums; }
-.hud .right { text-align: right; }
-.ov { position: absolute; left: 0; right: 0; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); text-align: center; opacity: 0; pointer-events: none; will-change: opacity, transform; }
-.ov.on { pointer-events: auto; }
-.ov-hint { bottom: 64px; display: flex; flex-direction: column; align-items: center; gap: 10px; color: rgba(243, 238, 230, 0.8); }
-.ov-hint .arrow { width: 22px; height: 34px; border: 1px solid rgba(243, 238, 230, 0.5); border-radius: 12px; position: relative; }
-.ov-hint .arrow::after { content: ""; position: absolute; left: 50%; top: 7px; width: 3px; height: 7px; margin-left: -1.5px; border-radius: 2px; background: var(--signal); animation: wheel 1.6s ease-in-out infinite; }
-@keyframes wheel { 0% { transform: translateY(0); opacity: 1; } 70% { transform: translateY(10px); opacity: 0; } 100% { opacity: 0; } }
-.ov-line { bottom: 14%; }
-.ov-line h2 { margin: 0 auto; max-width: 18ch; font: 700 clamp(28px, 5.6vw, 68px)/1.05 var(--display); letter-spacing: -0.025em; text-wrap: balance; text-shadow: 0 2px 30px rgba(10, 13, 20, 0.8); }
-.ov-line h2 em { display: block; margin-top: 6px; font: italic 400 1.1em/1 var(--serif); color: var(--signal); }
-.ov-line p { margin: 14px auto 0; max-width: 34ch; color: rgba(243, 238, 230, 0.78); font-size: clamp(18px, 2.2vw, 22px); text-shadow: 0 2px 20px rgba(10, 13, 20, 0.9); }
-.ov-card { bottom: 7%; display: flex; justify-content: center; }
-.snip-card { width: min(420px, 100%); text-align: left; display: flex; flex-direction: column; gap: 14px; padding: 20px; border-radius: 24px; background: rgba(14, 18, 26, 0.72); border: 1px solid rgba(198, 242, 94, 0.35); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5); }
-.snip-card .top { display: flex; align-items: center; gap: 14px; }
-.snip-card img { width: 56px; height: 56px; border-radius: 14px; }
-.snip-card h3 { margin: 0; font: 700 28px/1.1 var(--display); letter-spacing: -0.02em; }
-.snip-card .kicker { color: var(--lime); }
-.snip-card p { margin: 0; color: rgba(243, 238, 230, 0.8); font-size: 18px; line-height: 1.45; }
-.snip-card .links { display: flex; flex-wrap: wrap; gap: 8px; }
-.pill { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid rgba(243, 238, 230, 0.35); background: rgba(10, 13, 20, 0.55); color: var(--paper); font: 700 12px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; cursor: pointer; text-decoration: none; }
-.pill.lime { background: var(--lime); color: #0B0F0D; border-color: var(--lime); }
-.nogl .stage { background: radial-gradient(60% 50% at 50% 45%, rgba(255, 90, 31, 0.35), transparent 70%), var(--ink); }
-.nogl .fallback-title { display: block; }
-.fallback-title { display: none; position: absolute; left: 0; right: 0; top: 38%; text-align: center; font: 700 clamp(56px, 15vw, 200px)/0.9 'DrakiMark', 'Arial Narrow', Impact, sans-serif; }
-.fallback-title em { display: block; margin-top: 4px; padding-right: 8%; text-align: right; font: italic 400 0.42em/1 'DrakiSerif', Georgia, serif; color: inherit; }
-@media (max-width: 560px) { .hud .hide-sm { display: none; } .ov-hint { bottom: 72px; } }
-/* Reduced motion: no fly-through. The intro becomes one screen and the story lines stack below it. */
-.calm .universe { height: auto; }
-.calm .stage { position: relative; height: 92svh; }
-.calm .ov-hint { display: none; }
-.calm .story { position: relative; display: flex; flex-direction: column; gap: 56px; padding-block: 64px; }
-.calm .story .ov { position: relative; inset: auto; bottom: auto; opacity: 1; pointer-events: auto; }
-.tagline { margin: 0 0 10px; max-width: 44ch; text-wrap: balance; font: 400 clamp(19px, 2.4vw, 24px)/1.4 var(--serif); color: var(--paper); text-shadow: 0 2px 24px rgba(10, 13, 20, 0.95); }
-.sound { position: absolute; top: 46px; right: max(18px, env(safe-area-inset-right, 0px)); z-index: 3; }
-.sound[aria-pressed="true"] { border-color: var(--signal); }
-.sound[aria-pressed="true"] #soundWaves { opacity: 1; }
+/* loader */
+.loader{position:fixed;inset:0;z-index:90;background:var(--bg);display:flex;flex-direction:column;justify-content:space-between;padding-block:calc(26px + env(safe-area-inset-top,0px)) calc(26px + env(safe-area-inset-bottom,0px))}
+.loader .top{display:flex;justify-content:space-between;gap:12px}
+.loader .wordbox{width:100%}
+.loader .bar{height:4px;background:var(--line);border-radius:4px;overflow:hidden;margin-top:18px}
+.loader .bar i{display:block;height:100%;background:var(--spectrum);transform-origin:0 50%;transform:scaleX(0)}
+.loader .count{font-family:var(--f-display);font-weight:800;font-size:clamp(44px,9vw,110px);line-height:1;font-variant-numeric:tabular-nums;text-align:right}
 
-.warpglow { position: absolute; inset: 0; pointer-events: none; opacity: 0; mix-blend-mode: screen; background: radial-gradient(circle at 50% 50%, rgba(255, 245, 240, 0.95) 0, rgba(255, 90, 70, 0.75) 0.6%, rgba(255, 40, 30, 0.22) 3.5%, rgba(255, 30, 30, 0.06) 14%, transparent 34%); }
+/* nav */
+.progress{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;height:3px;background:var(--spectrum);transform-origin:0 50%;transform:scaleX(0);z-index:55}
+.nav{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:50;padding-block:14px;transition:transform .45s cubic-bezier(.22,1,.36,1)}
+.nav.hide{transform:translateY(-130%)}
+.nav .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-display);font-weight:800;font-size:17px;letter-spacing:.06em;white-space:nowrap}
+.brand .dot{width:12px;height:12px;border-radius:4px;background:var(--spectrum);flex:none}
+.navlinks{position:relative;display:flex;gap:2px;padding:5px;border-radius:999px;background:rgba(21,21,23,.78);border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.navlinks a{position:relative;z-index:1;font-size:14px;font-weight:600;text-decoration:none;padding:9px 14px;border-radius:999px;min-height:40px;display:flex;align-items:center;transition:color .25s}
+.navlinks a.hot{color:var(--ink)}
+.navpill{position:absolute;top:5px;bottom:5px;left:0;width:10px;border-radius:999px;background:var(--fg);opacity:0;pointer-events:none}
 
-/* ---------- Sections ---------- */
-main { max-width: 1120px; margin: 0 auto; }
-section { padding-block: 72px; border-top: 1px solid var(--line); }
-.eyebrow { display: flex; align-items: center; gap: 10px; color: var(--signal); margin-bottom: 18px; }
-.eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--signal); }
-h2 { margin: 0; font: 700 clamp(30px, 5.4vw, 60px)/1.05 var(--display); letter-spacing: -0.03em; text-wrap: balance; }
-h2 em { font: italic 400 1.15em/1 var(--serif); letter-spacing: 0; color: var(--signal); }
-.lede { margin: 18px 0 0; font-size: clamp(20px, 2.4vw, 26px); line-height: 1.4; color: var(--muted); max-width: 32ch; }
+/* hero */
+.hero{position:relative;min-height:94svh;display:flex;align-items:center;padding-block:120px 70px;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center}
+.hero-copy{min-width:0}
+.hero h1{font-family:var(--f-display);font-weight:800;font-size:clamp(54px,9.2vw,146px);line-height:.88;letter-spacing:-.04em;margin:18px 0 0}
+.hero h1 .line{display:block;white-space:nowrap}
+.cycler{display:inline-block;color:var(--snip)}
+.cycler .mask:nth-child(4n+2) > span{color:var(--purple)}
+.cycler .mask:nth-child(4n+3) > span{color:var(--pink)}
+.cycler .mask:nth-child(4n) > span{color:var(--orange)}
+.hero-sub{font-size:clamp(17px,1.6vw,20px);color:var(--muted);max-width:42ch;margin:28px 0 0}
+.hero-sub b{color:var(--fg);font-weight:600}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 24px;border-radius:999px;font-weight:700;font-size:16px;text-decoration:none;border:1px solid var(--line);background:var(--surface)}
+.btn.primary{background:var(--fg);color:var(--ink);border-color:transparent}
+.btn svg{width:18px;height:18px}
+.stage{position:relative;min-height:560px;display:grid;place-items:center;perspective:1200px}
+.phones{position:relative;width:min(300px,62vw);aspect-ratio:9/19;transform-style:preserve-3d}
+.phone{position:absolute;inset:0;border-radius:42px;padding:10px;background:#1c1c1f;box-shadow:0 0 0 1px #2c2c30,0 50px 100px -40px rgba(0,0,0,.8)}
+.phone.lapse{transform:translate(-34%,-6%) rotate(-9deg) scale(.9)}
+.phone.snip{transform:translate(18%,6%) rotate(5deg)}
+.scr{height:100%;border-radius:33px;overflow:hidden;padding:20px 14px;display:flex;flex-direction:column;gap:8px}
+.scr.s{background:var(--snip-ink);color:#f3f3ee}
+.scr.l{background:var(--cream);color:var(--ink)}
+.apph{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.apph b{font-family:var(--f-display);font-weight:800;font-size:20px}
+.scr.s .apph b{color:var(--snip)}
+.apph small{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+.tot{border-radius:18px;padding:12px 14px;background:var(--snip);color:var(--snip-ink)}
+.tot small{display:block;font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;opacity:.75}
+.tot strong{font-family:var(--f-display);font-weight:800;font-size:28px;font-variant-numeric:tabular-nums}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px;border-radius:12px;padding:10px 11px;font-size:12.5px}
+.scr.s .row{background:#18181a}
+.scr.s .row b{font-family:var(--f-mono);font-weight:500;color:var(--snip)}
+.scr.l .row{background:rgba(11,11,12,.06);font-weight:600}
+.dpill{font-family:var(--f-mono);font-size:10.5px;font-weight:500;padding:3px 8px;border-radius:999px;color:var(--ink)}
+.lapse-logo{display:flex;align-items:center;gap:6px}
+.lapse-logo svg{width:22px;height:22px}
+.note{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;opacity:.55;text-align:center;margin-top:auto}
+.pillf{position:absolute;display:flex;align-items:center;gap:9px;padding:10px 14px;border-radius:14px;background:rgba(21,21,23,.92);border:1px solid var(--line);font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 20px 40px -20px rgba(0,0,0,.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.pillf i{width:8px;height:8px;border-radius:50%;flex:none}
+.pf1{top:6%;right:-2%}.pf1 i{background:var(--snip)}
+.pf2{bottom:9%;left:-6%}.pf2 i{background:var(--purple)}
 
-.apps { margin-top: 40px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.app { position: relative; display: flex; flex-direction: column; gap: 16px; padding: 22px; border-radius: 22px; background: var(--ink-2); border: 1px solid var(--line); min-width: 0; }
-.app .top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.app img { width: 64px; height: 64px; border-radius: 16px; }
-.app h3 { margin: 0; font: 700 28px/1.1 var(--display); letter-spacing: -0.02em; }
-.app p { margin: 10px 0 0; color: var(--muted); font-size: 18px; line-height: 1.45; }
-.status { color: var(--lime); border: 1px solid rgba(198, 242, 94, 0.4); border-radius: 999px; padding: 5px 10px; white-space: nowrap; }
-.app .links { margin-top: auto; display: flex; flex-wrap: wrap; gap: 8px; }
-.app.lab { border-style: dashed; background: transparent; justify-content: space-between; min-height: 260px; }
-.lab .slot { width: 64px; height: 64px; border-radius: 16px; border: 1px dashed var(--line); display: grid; place-items: center; color: var(--muted); font: 700 14px var(--mono); }
-.lab h3 { color: var(--muted); }
+/* marquee */
+.marquee{padding-block:26px;border-block:1px solid var(--line);overflow:hidden;background:var(--surface)}
+.mrow{display:flex;width:max-content;will-change:transform}
+.mrow span{font-family:var(--f-display);font-weight:800;font-size:clamp(34px,6vw,86px);letter-spacing:-.03em;line-height:1.05;display:inline-flex;align-items:center;gap:.35em;padding-right:.35em;white-space:nowrap}
+.mrow .o{color:transparent;-webkit-text-stroke:1.5px var(--fg)}
+.mrow em{width:.42em;height:.42em;border-radius:.12em;flex:none;display:inline-block}
+.mrow em.a{background:var(--snip)}.mrow em.b{background:var(--purple)}.mrow em.c{background:var(--pink)}.mrow em.d{background:var(--orange)}
 
-.mission { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 48px; align-items: end; }
-.principles { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
-.principles li { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 12px; padding: 16px 0; border-bottom: 1px solid var(--line); font-size: 20px; line-height: 1.35; }
-.principles li span { color: var(--signal); padding-top: 4px; }
-.counter { margin-top: 28px; display: flex; align-items: baseline; gap: 14px; }
-.counter b { font: 400 clamp(56px, 10vw, 112px)/1 var(--display); color: var(--paper); font-variant-numeric: tabular-nums; }
-.counter span { color: var(--muted); }
+/* worlds */
+.worlds{position:relative;overflow:hidden}
+.worlds-in{min-height:100svh;display:flex;flex-direction:column;justify-content:center;gap:clamp(18px,3vh,34px);padding-block:90px 40px}
+.whead{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.h2{font-family:var(--f-display);font-weight:800;font-size:clamp(40px,6.4vw,94px);line-height:.92;letter-spacing:-.035em;margin:8px 0 0;text-wrap:balance}
+.track{display:flex;gap:clamp(16px,2vw,28px);width:max-content}
+.world{position:relative;width:min(84vw,540px);height:min(62svh,560px);min-height:410px;border-radius:30px;padding:clamp(20px,2.4vw,30px);display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
+.world.snip{background:var(--snip);color:var(--snip-ink);border-color:transparent}
+.world.lapse{background:var(--cream);color:var(--ink);border-color:transparent}
+.wtop{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.idx{font-family:var(--f-mono);font-size:13px;letter-spacing:.1em}
+.chip{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:999px;border:1.5px solid currentColor;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.chip i{width:7px;height:7px;border-radius:50%;background:currentColor}
+.art{flex:1;display:grid;place-items:center;min-height:0}
+.art svg{width:min(190px,44vw);height:auto}
+.wname{font-family:var(--f-display);font-weight:800;font-size:clamp(52px,6.4vw,92px);line-height:.88;letter-spacing:-.045em;margin:0}
+.wline{margin:10px 0 0;font-size:16px;max-width:38ch;opacity:.85}
+.wopen{margin-top:18px;align-self:flex-start;display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 20px;border-radius:999px;font-weight:700;background:var(--ink);color:var(--fg)}
+.world:not(.snip):not(.lapse) .wopen{background:var(--fg);color:var(--ink)}
+.wopen svg{width:18px;height:18px}
+.wbar{height:3px;background:var(--line);border-radius:3px;overflow:hidden}
+.wbar i{display:block;height:100%;background:var(--spectrum);transform-origin:0 50%;transform:scaleX(0)}
+.qm{font-family:var(--f-display);font-weight:800;font-size:150px;line-height:.8;background:var(--spectrum);-webkit-background-clip:text;background-clip:text;color:transparent}
 
-.contact { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 28px; }
-.mail { font: italic 400 clamp(30px, 5vw, 56px)/1.1 var(--serif); color: var(--paper); text-decoration: none; border-bottom: 1px solid var(--signal); overflow-wrap: anywhere; }
-footer { border-top: 1px solid var(--line); padding-block: 26px 40px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; color: var(--muted); }
-footer p { margin: 0; max-width: 60ch; font-size: 15px; line-height: 1.5; font-family: var(--serif); }
+/* detail */
+.detail{position:fixed;inset:0;z-index:80;overflow-y:auto;background:var(--surface);color:var(--fg);overscroll-behavior:contain}
+.detail.snip{background:var(--snip);color:var(--snip-ink)}
+.detail.lapse{background:var(--cream);color:var(--ink)}
+.dinner{max-width:1100px;margin:0 auto;padding-block:calc(26px + env(safe-area-inset-top,0px)) calc(48px + env(safe-area-inset-bottom,0px));display:grid;gap:22px}
+.dbar{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.close{width:52px;height:52px;border-radius:50%;border:1.5px solid currentColor;display:grid;place-items:center}
+.close svg{width:20px;height:20px}
+.dtitle{display:flex;align-items:center;gap:clamp(14px,3vw,30px);flex-wrap:wrap}
+.dtitle svg{width:clamp(80px,12vw,150px);height:auto;flex:none}
+.detail h2{font-family:var(--f-display);font-weight:800;font-size:clamp(70px,15vw,220px);line-height:.85;letter-spacing:-.05em;margin:0}
+.kick{font-size:clamp(20px,2.4vw,30px);font-weight:700;max-width:30ch;margin:0;line-height:1.25}
+.dbody{font-size:18px;max-width:58ch;margin:0;opacity:.85}
+.feats{list-style:none;padding:0;margin:6px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px}
+.feats li{border:1.5px solid currentColor;border-radius:20px;padding:18px;font-weight:600;display:flex;gap:12px}
+.feats li span{font-family:var(--f-mono);font-size:12px;opacity:.6;padding-top:3px}
+.dctas{display:flex;gap:12px;flex-wrap:wrap}
+.dbtn{display:inline-flex;align-items:center;min-height:52px;padding:0 22px;border-radius:999px;font-weight:700;border:1.5px solid currentColor;text-decoration:none}
+.dbtn.solid{background:var(--ink);color:var(--fg);border-color:var(--ink)}
+.detail:not(.snip):not(.lapse) .dbtn.solid{background:var(--fg);color:var(--ink);border-color:var(--fg)}
 
-@media (max-width: 860px) {
-  .apps { grid-template-columns: 1fr; }
-  .app.lab { min-height: 0; }
-  .mission { grid-template-columns: 1fr; gap: 28px; }
+/* demo */
+.section{padding-block:clamp(80px,12vw,150px)}
+.demo-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,5vw,72px);align-items:start}
+.demo-copy{min-width:0;position:sticky;top:110px}
+.demo-copy .h2 em{font-style:normal;color:var(--snip)}
+.demo-copy > p.lead{color:var(--muted);font-size:18px;max-width:42ch}
+.totals{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:26px}
+.total{border-radius:22px;padding:18px 20px;background:var(--surface);border:1px solid var(--line);min-width:0}
+.total.hot{background:var(--snip);color:var(--snip-ink);border-color:transparent}
+.total small{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.8;display:block}
+.total strong{font-family:var(--f-display);font-weight:800;font-size:clamp(28px,3.6vw,46px);font-variant-numeric:tabular-nums;line-height:1.1;display:block}
+.subs{list-style:none;margin:0;padding:0;display:grid;gap:10px;min-width:0;position:relative}
+.sub{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:14px 14px 14px 18px}
+.sico{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-family:var(--f-display);font-weight:800;flex:none;background:var(--surface-2);color:var(--snip)}
+.smain{flex:1;min-width:0}
+.smain b{display:block;font-weight:700}
+.smain small{color:var(--muted);font-size:13px}
+.sprice{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.sprice small{color:var(--muted)}
+.cut{min-width:48px;min-height:48px;border-radius:14px;display:grid;place-items:center;border:1px solid var(--line);background:var(--bg);transition:background .2s,color .2s}
+.cut svg{width:20px;height:20px}
+.cut:hover{background:var(--snip);color:var(--snip-ink);border-color:transparent}
+.restore{margin-top:14px;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);font-weight:600}
+.empty{border:1.5px dashed var(--line);border-radius:20px;padding:26px;text-align:center;color:var(--muted);margin-top:10px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:70;background:var(--fg);color:var(--ink);border-radius:999px;padding:8px 8px 8px 20px;display:flex;align-items:center;gap:14px;font-weight:600;box-shadow:0 20px 50px -20px rgba(0,0,0,.6);max-width:calc(100vw - 32px);transform:translate(-50%,160%);white-space:nowrap}
+.toast button{min-height:40px;padding:0 16px;border-radius:999px;background:var(--snip);color:var(--snip-ink);font-weight:700;flex:none}
+
+/* lapse time-lapse */
+.lapse-sec{--sbg:#0b0b0c;--sfg:#fff1dc;--smuted:#b5ac9e;background:var(--sbg);color:var(--sfg);position:relative;overflow:hidden}
+.lapse-in{min-height:100svh;display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,70px);align-items:center;padding-block:90px 50px}
+.lapse-copy{min-width:0}
+.lapse-copy .label{color:var(--smuted)}
+.lapse-copy .h2{display:flex;align-items:center;gap:14px}
+.lapse-copy .h2 svg{width:.9em;height:.9em;flex:none}
+.lapse-copy p.lead{color:var(--smuted);font-size:18px;max-width:42ch;margin:16px 0 0}
+.lapse-copy .facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.lapse-copy .facts span{font-family:var(--f-mono);font-size:12px;padding:7px 11px;border-radius:999px;border:1px solid currentColor}
+.clock{position:relative;display:grid;place-items:center;min-width:0}
+.ringwrap{position:relative;width:min(380px,78vw);aspect-ratio:1}
+.ringwrap svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ringwrap .track-c{stroke:currentColor;opacity:.12}
+.ringwrap .arc-c{stroke-linecap:round}
+.ringmid{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.days{font-family:var(--f-display);font-weight:800;font-size:clamp(70px,11vw,140px);line-height:.9;font-variant-numeric:tabular-nums;letter-spacing:-.04em}
+.ringmid small{display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--smuted);margin-top:6px}
+.items{display:grid;gap:8px;margin-top:24px;width:min(380px,86vw)}
+.item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 14px;border-radius:14px;border:1px solid color-mix(in srgb,var(--sfg) 16%,transparent);font-weight:600;font-size:14px}
+.item .left{font-family:var(--f-mono);font-size:12px;padding:4px 9px;border-radius:999px;color:var(--ink);white-space:nowrap}
+.item.done .left{background:var(--sfg)!important;color:var(--sbg)}
+.lnote{position:absolute;top:2%;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;white-space:nowrap;padding:9px 14px;border-radius:14px;background:var(--ink);color:var(--cream);font-size:13px;font-weight:600;box-shadow:0 20px 40px -18px rgba(0,0,0,.5);opacity:0}
+.lnote svg{width:16px;height:16px;color:var(--purple)}
+
+/* manifesto */
+.manifesto{font-family:var(--f-display);font-weight:800;font-size:clamp(32px,5.4vw,78px);line-height:1.02;letter-spacing:-.03em;margin:22px 0 0;max-width:18ch}
+.manifesto span{display:inline-block;margin-right:.24em}
+.manifesto .a{color:var(--snip)}.manifesto .b{color:var(--purple)}.manifesto .c{color:var(--pink)}.manifesto .d{color:var(--orange)}
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:clamp(48px,7vw,90px)}
+.pcard{border-radius:24px;border:1px solid var(--line);padding:24px;background:var(--surface);min-width:0}
+.pcard i{display:block;width:34px;height:6px;border-radius:6px;margin-bottom:22px}
+.pcard h3{font-family:var(--f-display);font-weight:800;font-size:24px;letter-spacing:-.02em;margin:0 0 8px;line-height:1.05}
+.pcard p{margin:0;color:var(--muted);font-size:15px}
+
+/* contact + footer */
+.contact{text-align:center}
+.big{font-family:var(--f-display);font-weight:800;font-size:clamp(66px,15vw,230px);line-height:.9;letter-spacing:-.05em;margin:18px 0 0;display:flex;justify-content:center;flex-wrap:wrap}
+.big span{display:inline-block}
+.big .sp{width:.25em}
+.big .dotc{background:var(--spectrum);-webkit-background-clip:text;background-clip:text;color:transparent}
+.contact p.lead{color:var(--muted);max-width:44ch;margin:22px auto 0;font-size:18px}
+.mailrow{margin-top:38px;display:inline-flex;align-items:center;gap:8px;padding:8px 8px 8px 22px;border-radius:999px;border:1px solid var(--line);background:var(--surface);max-width:100%;flex-wrap:wrap;justify-content:center}
+.mail{font-family:var(--f-mono);font-size:clamp(14px,2vw,19px);user-select:all;-webkit-user-select:all;overflow-wrap:anywhere}
+.appmails{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:16px}
+.appmail{display:flex;align-items:center;gap:12px;padding:6px 6px 6px 16px;border-radius:999px;border:1px solid var(--line);background:var(--bg);max-width:100%;flex-wrap:wrap}
+.am-k{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.am-k i{width:8px;height:8px;border-radius:3px;background:var(--lc)}
+.am-v{font-family:var(--f-mono);font-size:14px;user-select:all;-webkit-user-select:all;overflow-wrap:anywhere}
+.am-c{min-height:40px;padding:0 14px;border-radius:999px;background:var(--surface-2);font-weight:700;font-size:13px;transition:background .2s,color .2s}
+.am-c:hover{background:var(--lc);color:var(--ink)}
+.sheet .mails{display:grid;gap:10px;margin-top:12px}
+.sheet .mailbox .k{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;user-select:none}
+.copy{min-height:48px;min-width:112px;padding:0 18px;border-radius:999px;background:var(--fg);color:var(--ink);font-weight:700}
+.foot{padding-block:40px calc(24px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);overflow:hidden}
+.foot .wordbox{width:100%}
+.foot .fitword span{display:inline-block}
+.stripes{display:flex;height:8px;margin-top:22px;border-radius:8px;overflow:hidden}
+.stripes i{flex:1}
+
+.fgrid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr auto;gap:clamp(24px,3vw,44px);padding-bottom:clamp(40px,6vw,64px);border-bottom:1px solid var(--line);align-items:start}
+.fcol{min-width:0}
+.fbrand .brand{font-size:18px}
+.ftag{font-family:var(--f-display);font-weight:800;font-size:clamp(34px,3.6vw,52px);line-height:.95;letter-spacing:-.035em;margin:22px 0 0}
+.ftag em{font-style:normal;color:var(--snip)}
+.fsmall{color:var(--muted);font-size:15px;max-width:30ch;margin:14px 0 0}
+.fcol h3{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:6px 0 14px;font-weight:500}
+.fcol ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.flink{position:relative;white-space:nowrap;display:inline-flex;align-items:center;gap:10px;font-size:18px;font-weight:600;text-decoration:none;min-height:42px;--lc:var(--fg)}
+.flink::after{content:"";position:absolute;left:0;right:0;bottom:6px;height:2px;border-radius:2px;background:var(--lc);transform:scaleX(0);transform-origin:right;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.flink:hover::after,.flink:focus-visible::after{transform:scaleX(1);transform-origin:left}
+.flink .arr{width:16px;height:16px;opacity:0;transform:translate(-8px,4px) rotate(-45deg);transition:opacity .3s,transform .45s cubic-bezier(.34,1.56,.64,1);color:var(--lc)}
+.flink:hover .arr,.flink:focus-visible .arr{opacity:1;transform:rotate(-45deg)}
+.flink .sw{width:10px;height:10px;border-radius:3px;background:var(--lc);flex:none}
+.fbadge{font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border-radius:999px;border:1px solid var(--line);color:var(--muted);font-weight:500;white-space:nowrap}
+.totop{position:relative;width:112px;height:112px;border-radius:50%;display:grid;place-items:center;flex:none}
+.totop svg.ring{position:absolute;inset:0;width:100%;height:100%}
+.totop text{font-family:var(--f-mono);font-size:9.6px;letter-spacing:2.4px;fill:var(--muted);text-transform:uppercase}
+.totop .core{width:52px;height:52px;border-radius:50%;background:var(--fg);color:var(--ink);display:grid;place-items:center;transition:transform .4s cubic-bezier(.34,1.56,.64,1),background .3s}
+.totop:hover .core{transform:scale(1.12);background:var(--snip)}
+.totop .core svg{width:20px;height:20px}
+.fbottom{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:18px}
+.fbottom a{text-decoration:none}
+.fbottom a:hover{color:var(--fg)}
+
+/* legal / help sheet */
+.sheet{position:fixed;inset:0;z-index:85;background:var(--bg);color:var(--fg);overflow-y:auto;overscroll-behavior:contain}
+.sheet-bar{position:sticky;top:0;z-index:2;background:rgba(11,11,12,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding-block:calc(12px + env(safe-area-inset-top,0px)) 12px}
+.sheet-bar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;max-width:820px}
+.sheet-tabs{display:flex;gap:4px;flex-wrap:wrap}
+.sheet-tabs a{font-size:14px;font-weight:600;text-decoration:none;padding:8px 12px;border-radius:999px;min-height:40px;display:inline-flex;align-items:center;color:var(--muted)}
+.sheet-tabs a[aria-current="page"]{background:var(--fg);color:var(--ink)}
+.sheet .close{color:var(--fg)}
+.sheet-in{max-width:820px;margin:0 auto;padding-block:clamp(36px,6vw,70px) calc(60px + env(safe-area-inset-bottom,0px))}
+.sheet h2{font-family:var(--f-display);font-weight:800;font-size:clamp(44px,7vw,84px);line-height:.92;letter-spacing:-.04em;margin:10px 0 0}
+.sheet .upd{margin-top:14px}
+.sheet .intro{font-size:19px;color:var(--fg);margin:26px 0 0;max-width:60ch}
+.sheet h3{font-family:var(--f-display);font-weight:800;font-size:22px;letter-spacing:-.01em;margin:38px 0 8px;display:flex;align-items:center;gap:10px}
+.sheet h3 i{width:10px;height:10px;border-radius:3px;flex:none}
+.sheet p,.sheet li{color:var(--muted);font-size:16px;max-width:65ch}
+.sheet ul{padding-left:20px;margin:8px 0}
+.sheet strong{color:var(--fg);font-weight:600}
+.sheet .mailbox{margin-top:12px;display:inline-flex;align-items:center;gap:8px;padding:8px 8px 8px 18px;border-radius:999px;border:1px solid var(--line);background:var(--surface);flex-wrap:wrap;max-width:100%}
+.sheet .mailbox span{font-family:var(--f-mono);font-size:15px;color:var(--fg);user-select:all;overflow-wrap:anywhere}
+.faq{border-top:1px solid var(--line);margin-top:22px}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 0;font-weight:700;font-size:17px;color:var(--fg);min-height:48px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--f-mono);font-size:22px;color:var(--muted);transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{margin:0 0 18px}
+
+@media (max-width:900px){
+  .hero-grid,.demo-grid,.lapse-in{grid-template-columns:1fr}
+  .stage{min-height:480px}
+  .demo-copy{position:static}
+  .pgrid{grid-template-columns:1fr 1fr}
+  .lapse-in{padding-block:80px 30px;gap:18px}
+  .lapse-copy p.lead{font-size:16px;margin-top:10px}
+  .ringwrap{width:min(250px,62vw)}
+  .items{margin-top:14px}
+  .lapse-copy .facts{margin-top:12px}
+  .fgrid{grid-template-columns:1fr 1fr 1fr}
+  .fbrand{grid-column:1/-1}
+  .totop{grid-column:1/-1;justify-self:end;margin-top:-40px}
+}
+@media (max-width:560px){
+  .brand .bw{display:none}
+  .navlinks a{padding:9px 10px;font-size:13px}
+  .pf1{right:0}.pf2{left:0}
+  .pgrid{grid-template-columns:1fr}
+  .world{min-height:390px}
+  .item{padding:9px 12px;font-size:13px}
+  .fgrid{grid-template-columns:1fr 1fr}
+  .totop{margin-top:0;justify-self:start;width:96px;height:96px}
+  .flink{font-size:16px}
+  .fbadge{display:none}
+  .appmails{display:grid;gap:10px;justify-content:stretch}
+  .appmail,.sheet .mailbox{display:grid;grid-template-columns:1fr auto;align-items:center;gap:4px 10px;border-radius:18px;padding:12px 8px 12px 16px;width:100%;text-align:left}
+  .am-k,.sheet .mailbox .k{grid-column:1/-1}
+  .am-v,.sheet .mailbox span{font-size:13.5px}
+  .sheet .mailbox .copy{min-width:84px;min-height:44px}
 }
 </style>
+
 </head>
 <body>
+<a class="sr" href="#main">Skip to content</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<header class="nav gut" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Drakiverse Studio home"><span class="dot" aria-hidden="true"></span><span class="bw">DRAKIVERSE</span></a>
+    <nav class="navlinks" id="navlinks" aria-label="Sections">
+      <span class="navpill" id="navpill" aria-hidden="true"></span>
+      <a href="#worlds">Apps</a><a href="#demo">Snip</a><a href="#lapse">Lapse</a><a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
 
-<div class="universe" id="universe">
-  <div class="stage" id="stage">
-    <canvas id="gl" aria-hidden="true"></canvas>
-    <canvas id="mark" aria-hidden="true"></canvas>
-    <div class="warpglow" id="warpglow" aria-hidden="true"></div>
-    <div class="fallback-title" aria-hidden="true">DRAKIVERSE.<em>studio</em></div>
-    <button class="pill sound" id="soundBtn" type="button" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6h3l4-3v10l-4-3H2z" fill="currentColor"/><path id="soundWaves" d="M11 5.5c1 .8 1 4.2 0 5M12.8 3.8c2 1.8 2 6.6 0 8.4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity=".35"/></svg><span>Sound off</span></button>
-    <div class="hud mono" aria-hidden="true">
-      <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-      <div class="row top"><span>✶ Drakiverse Studio — Est. 2026</span><span class="num right hide-sm" id="coords">X +0.00 · Y +0.00 · Z +16.0</span></div>
-      <div class="row bottom"><span class="num" id="phase">01 / Formation</span><span class="right hide-sm" id="count2">Stars 0</span></div>
-    </div>
-    <div class="story" id="story">
-      <div class="ov ov-hint" data-from="-1" data-to="0.07">
-        <p class="tagline">An independent app studio from Canada.<br>We make simple, private apps for everyday life.</p>
-        <span class="arrow" aria-hidden="true"></span>
-        <span class="mono">Scroll to explore</span>
-        <span class="mono" style="opacity:.6">Touch the stars · Tap to scatter</span>
+<main id="main">
+  <section class="hero gut" id="top">
+    <div class="wrap hero-grid">
+      <div class="hero-copy" id="heroCopy">
+        <p class="label h-rise">Drakiverse Studio · Canada</p>
+        <h1 aria-label="Small apps. Big relief.">
+          <span class="line" aria-hidden="true" data-split>Small apps.</span>
+          <span class="line" aria-hidden="true"><span data-split>Big </span><span class="cycler" id="cycler"><span class="mask"><span>r</span></span><span class="mask"><span>e</span></span><span class="mask"><span>l</span></span><span class="mask"><span>i</span></span><span class="mask"><span>e</span></span><span class="mask"><span>f</span></span><span class="mask"><span>.</span></span></span></span>
+        </h1>
+        <p class="hero-sub h-rise">We build <b>small apps that each fix one everyday annoyance</b>, like forgotten subscriptions and things that quietly expire. <b>Android first, iOS on the way.</b></p>
+        <div class="ctas h-rise">
+          <a class="btn primary magnetic" href="#worlds">Meet the apps <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn magnetic" href="#demo">Try Snip live</a>
+        </div>
       </div>
-      <div class="ov ov-line" data-from="0.12" data-to="0.34">
-        <h2>We build apps that make everyday life <em>a little simpler.</em></h2>
-      </div>
-      <div class="ov ov-line" data-from="0.38" data-to="0.58">
-        <h2>Private by design. <em>No ads. No clutter.</em></h2>
-        <p>Each app does one job well, keeps your data on your phone, and is free to start.</p>
-      </div>
-      <div class="ov ov-card" data-from="0.68" data-to="2">
-        <article class="snip-card">
-          <div class="top">
-            <img src="data:image/png;base64,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" alt="Snip app icon" width="56" height="56">
-            <div><div class="mono kicker">App 01 · Coming soon</div><h3>Snip</h3></div>
+      <div class="stage" id="stage">
+        <div class="phones" id="phones">
+          <div class="phone lapse" id="phL">
+            <div class="scr l" role="img" aria-label="Example Lapse screen with three countdowns">
+              <div class="apph"><span class="lapse-logo"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M28 22V78H78" fill="none" stroke="#9d8cff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="M39 22V67H78" fill="none" stroke="#ff8fc7" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="M50 22V56H78" fill="none" stroke="#ffa03a" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg><b>lapse</b></span><small>Coming up</small></div>
+              <div class="row"><span>Milk</span><span class="dpill" style="background:var(--orange)">2 days</span></div>
+              <div class="row"><span>Hydro bill</span><span class="dpill" style="background:var(--pink)">6 days</span></div>
+              <div class="row"><span>Car insurance</span><span class="dpill" style="background:var(--pink)">41 days</span></div>
+              <div class="row"><span>Passport</span><span class="dpill" style="background:var(--purple)">140 days</span></div>
+              <div class="note">Example data</div>
+            </div>
           </div>
-          <p>Track your subscriptions, get reminded before every charge, and cancel the ones you forget. No bank login, no account.</p>
-          <div class="links"><a class="pill lime" href="https://drakiverse.studio/snipapp/">Visit Snip</a><a class="pill" href="#apps">All apps</a></div>
+          <div class="phone snip" id="phS">
+            <div class="scr s" role="img" aria-label="Example Snip screen totalling $77.47 a month">
+              <div class="apph"><b>Snip</b><small>This month</small></div>
+              <div class="tot"><small>Per month</small><strong>$77.47</strong></div>
+              <div class="row"><span>Video streaming</span><b>$16.49</b></div>
+              <div class="row"><span>Gym</span><b>$45.00</b></div>
+              <div class="row"><span>Music</span><b>$11.99</b></div>
+              <div class="row"><span>Cloud storage</span><b>$3.99</b></div>
+              <div class="note">Example data</div>
+            </div>
+          </div>
+        </div>
+        <div class="pillf pf1" id="pf1"><i></i>Snip · Cloud storage renews in 2 days</div>
+        <div class="pillf pf2" id="pf2"><i></i>Lapse · Passport: 140 days left</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="mrow" id="m1"></div>
+    <div class="mrow" id="m2"></div>
+  </div>
+
+  <section class="worlds" id="worlds">
+    <div class="worlds-in">
+      <div class="whead wrap gut">
+        <div><p class="label">The apps</p><h2 class="h2">Each app is<br>its own world.</h2></div>
+        <p class="label" id="whint">Keep scrolling →</p>
+      </div>
+      <div class="track gut" id="track">
+        <article class="world snip">
+          <div class="wtop"><span class="idx">App 01</span><span class="chip"><i></i>Coming to Google Play</span></div>
+          <div class="art"><svg viewBox="0 0 100 100" role="img" aria-label="Snip logo, a card cut in two">
+            <defs><clipPath id="cl1"><polygon points="0,0 56,0 38,100 0,100"/></clipPath><clipPath id="cr1"><polygon points="64,0 100,0 100,100 46,100"/></clipPath></defs>
+            <rect width="100" height="100" rx="24" fill="#0b0b0b"/>
+            <g class="half-l"><g clip-path="url(#cl1)"><rect x="14" y="26" width="72" height="48" rx="9" fill="#c8ff2e"/><rect x="14" y="36" width="72" height="8" fill="#0b0b0b"/></g></g>
+            <g class="half-r"><g clip-path="url(#cr1)"><rect x="14" y="26" width="72" height="48" rx="9" fill="#c8ff2e"/><rect x="14" y="36" width="72" height="8" fill="#0b0b0b"/></g></g>
+          </svg></div>
+          <h3 class="wname">Snip</h3>
+          <p class="wline">Find every subscription you pay for, get a heads-up before renewals, and cut what you forgot.</p>
+          <button class="wopen" data-open="snip"><span>Open Snip</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </article>
+        <article class="world lapse">
+          <div class="wtop"><span class="idx">App 02</span><span class="chip"><i></i>In development</span></div>
+          <div class="art"><svg viewBox="0 0 100 100" role="img" aria-label="Lapse logo, three retro stripes forming an L">
+            <rect width="100" height="100" rx="24" fill="#fff1dc" stroke="#0b0b0c" stroke-opacity=".08"/>
+            <path class="st" d="M28 22V78H78" fill="none" stroke="#9d8cff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+            <path class="st" d="M39 22V67H78" fill="none" stroke="#ff8fc7" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+            <path class="st" d="M50 22V56H78" fill="none" stroke="#ffa03a" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg></div>
+          <h3 class="wname">Lapse</h3>
+          <p class="wline">Everything that expires or comes due, from passports to bills, counting down in one place.</p>
+          <button class="wopen" data-open="lapse"><span>Open Lapse</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </article>
+        <article class="world">
+          <div class="wtop"><span class="idx">App 03</span><span class="chip"><i></i>In the lab</span></div>
+          <div class="art"><span class="qm" aria-hidden="true">?</span></div>
+          <h3 class="wname">Next</h3>
+          <p class="wline">Something new is being sketched. Got an everyday annoyance an app could fix?</p>
+          <button class="wopen" data-open="next"><span>See what's next</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </article>
       </div>
-    </div>
-  </div>
-  <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Drakiverse Studio, an independent app studio from Canada</h1>
-</div>
-
-
-<main class="gutter">
-  <section id="apps" aria-labelledby="apps-title">
-    <div class="eyebrow mono">Apps</div>
-    <h2 id="apps-title">Small apps that <em>do one thing</em> really well.</h2>
-    <p class="lede">Each app solves one everyday problem, stays private, and never charges a monthly fee for something simple.</p>
-    <div class="apps">
-      <article class="app">
-        <div class="top"><img src="data:image/png;base64,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" alt="Snip app icon" width="64" height="64"><span class="status mono">Coming soon</span></div>
-        <div><h3>Snip</h3><p>Track your subscriptions, get reminded before every charge, and cancel the ones you forget. No bank login, no account.</p></div>
-        <div class="links"><a class="pill" href="https://drakiverse.studio/snipapp/">Visit Snip</a><a class="pill" href="https://drakiverse.studio/snipapp/privacy.html">Privacy</a></div>
-      </article>
-      <article class="app lab">
-        <div class="top"><span class="slot">02</span><span class="mono" style="color:var(--muted)">In the lab</span></div>
-        <div><h3>Next app</h3><p>Being designed now. Check back soon.</p></div>
-      </article>
-      <article class="app lab">
-        <div class="top"><span class="slot">03</span><span class="mono" style="color:var(--muted)">Planned</span></div>
-        <div><h3>And more</h3><p>More ideas are on the drawing board.</p></div>
-      </article>
+      <div class="wrap gut"><div class="wbar"><i id="wbar"></i></div></div>
     </div>
   </section>
 
-  <section aria-labelledby="mission-title">
-    <div class="mission">
-      <div>
-        <div class="eyebrow mono">The studio</div>
-        <h2 id="mission-title">An independent studio <em>from Canada.</em></h2>
-        <p class="lede" style="max-width:36ch">Drakiverse Studio designs and builds mobile apps that solve everyday problems simply and privately. Snip is the first, with more on the way.</p>
+  <section class="section gut" id="demo">
+    <div class="wrap demo-grid">
+      <div class="demo-copy">
+        <p class="label">Try Snip</p>
+        <h2 class="h2">Cut what<br>you <em>forgot.</em></h2>
+        <p class="lead">Tap the scissors on anything you don't use. Watch your monthly total drop and your yearly savings climb.</p>
+        <div class="totals">
+          <div class="total"><small>You pay / month</small><strong id="tMonth">$170.45</strong></div>
+          <div class="total hot"><small>Saved / year</small><strong id="tSaved">$0.00</strong></div>
+        </div>
+        <p class="sr" id="demoLive" aria-live="polite"></p>
+        <p class="label" style="margin-top:14px">Example subscriptions, not real data</p>
       </div>
-      <ul class="principles">
-        <li><span class="mono">01</span>Your data stays on your phone. No accounts, no tracking.</li>
-        <li><span class="mono">02</span>Free to start. When there’s a paid upgrade, you pay once.</li>
-        <li><span class="mono">03</span>No ads, ever. Just the tool you came for.</li>
-        <li><span class="mono">04</span>Built carefully, shipped often, improved by your feedback.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section aria-labelledby="contact-title">
-    <div class="contact">
-      <div>
-        <div class="eyebrow mono">Contact</div>
-        <h2 id="contact-title">Say <em>hello.</em></h2>
+      <div style="min-width:0">
+        <ul class="subs" id="subs"></ul>
+        <div class="empty" id="empty" hidden></div>
+        <button class="restore" id="restore" type="button" hidden>Restore all</button>
       </div>
-      <a class="mail" href="mailto:drakiverse.studio@gmail.com">drakiverse.studio@gmail.com</a>
     </div>
   </section>
 
-  <footer>
-    <span class="mono">© 2026 Drakiverse Studio</span>
-    <p>This website uses no cookies, analytics or tracking. It loads fonts from Google Fonts, so your browser connects to Google, which may see your IP address.</p>
-  </footer>
+  <section class="lapse-sec gut" id="lapse">
+    <div class="wrap lapse-in">
+      <div class="lapse-copy">
+        <p class="label">Meet Lapse · In development</p>
+        <h2 class="h2"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="ls" d="M28 22V78H78" fill="none" stroke="#9d8cff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path class="ls" d="M39 22V67H78" fill="none" stroke="#ff8fc7" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path class="ls" d="M50 22V56H78" fill="none" stroke="#ffa03a" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></svg>Scroll is time.</h2>
+        <p class="lead">Lapse counts down everything that expires or comes due: passports, warranties, insurance, food, medication and upcoming bills. Keep scrolling and watch a few months pass.</p>
+        <div class="facts"><span>Free for 5 items</span><span>Pro unlock $3.99</span><span>Android first, iOS next</span></div>
+      </div>
+      <div class="clock">
+        <div class="lnote" id="lnote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>Lapse · Passport: 140 days left</div>
+        <div class="ringwrap">
+          <svg viewBox="0 0 200 200" aria-hidden="true">
+            <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9d8cff"/><stop offset=".5" stop-color="#ff8fc7"/><stop offset="1" stop-color="#ffa03a"/></linearGradient></defs>
+            <circle class="track-c" cx="100" cy="100" r="86" fill="none" stroke-width="12"/>
+            <circle class="arc-c" id="arc" cx="100" cy="100" r="86" fill="none" stroke="url(#lg)" stroke-width="12" stroke-dasharray="540.35" stroke-dashoffset="0"/>
+          </svg>
+          <div class="ringmid"><div><div class="days" id="days">214</div><small>days until your passport expires</small></div></div>
+        </div>
+        <div class="items" id="items" aria-label="Example Lapse items">
+          <div class="item" data-d="2"><span>Milk</span><span class="left" style="background:var(--orange)">2 days</span></div>
+          <div class="item" data-d="6"><span>Hydro bill</span><span class="left" style="background:var(--pink)">6 days</span></div>
+          <div class="item" data-d="41"><span>Car insurance</span><span class="left" style="background:var(--pink)">41 days</span></div>
+          <div class="item" data-d="118"><span>Laptop warranty</span><span class="left" style="background:var(--purple)">118 days</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section gut" id="studio">
+    <div class="wrap">
+      <p class="label">The studio</p>
+      <p class="manifesto" id="manifesto">We make small apps that do <span class="a">one</span> <span class="b">job</span> <span class="c">really</span> <span class="d">well.</span> Free to start. Pay once. Android first, iOS on the way.</p>
+      <div class="pgrid" id="pgrid">
+        <div class="pcard"><i style="background:var(--snip)"></i><h3>One app, one job</h3><p>Each app fixes a single everyday annoyance and stays out of your way.</p></div>
+        <div class="pcard"><i style="background:var(--purple)"></i><h3>Free to start</h3><p>The free version is genuinely useful. Upgrade only if it earns its spot.</p></div>
+        <div class="pcard"><i style="background:var(--pink)"></i><h3>Pay once</h3><p>Upgrades are a single purchase. No subscriptions to unlock features.</p></div>
+        <div class="pcard"><i style="background:var(--orange)"></i><h3>Android, then iOS</h3><p>We launch on Google Play first, with the App Store on the way.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section gut contact" id="contact">
+    <div class="wrap">
+      <p class="label">Contact</p>
+      <h2 class="big" id="big" aria-label="Say hello."></h2>
+      <p class="lead">Feedback, bug reports, partnerships or the annoyance you want our next app to fix. Every message gets read.</p>
+      <div class="mailrow"><span class="mail" id="mail">hello@drakiverse.studio</span><button class="copy" id="copy" type="button">Copy</button></div>
+      <div class="appmails">
+        <div class="appmail" style="--lc:var(--snip)"><span class="am-k"><i></i>Snip support</span><span class="am-v">snip@drakiverse.studio</span><button class="am-c" type="button" data-copy-text="snip@drakiverse.studio" aria-label="Copy Snip support email">Copy</button></div>
+        <div class="appmail" style="--lc:var(--purple)"><span class="am-k"><i></i>Lapse support</span><span class="am-v">lapse@drakiverse.studio</span><button class="am-c" type="button" data-copy-text="lapse@drakiverse.studio" aria-label="Copy Lapse support email">Copy</button></div>
+      </div>
+      <p class="label" id="copyLive" aria-live="polite" style="margin-top:12px;min-height:1.4em"></p>
+    </div>
+  </section>
 </main>
 
+<footer class="foot gut" id="footer">
+  <div class="wrap">
+    <div class="fgrid">
+      <div class="fcol fbrand fin">
+        <a class="brand" href="#top" aria-label="Drakiverse Studio, back to top"><span class="dot" aria-hidden="true"></span><span>DRAKIVERSE</span></a>
+        <p class="ftag">Small apps.<br><em>Big relief.</em></p>
+        <p class="fsmall">An independent app studio from Canada. Android first, iOS on the way.</p>
+      </div>
+      <nav class="fcol fin" aria-label="Apps">
+        <h3>Apps</h3>
+        <ul>
+          <li><a class="flink" href="#demo" style="--lc:var(--snip)"><span class="sw" aria-hidden="true"></span>Snip<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+          <li><a class="flink" href="#lapse" style="--lc:var(--purple)"><span class="sw" aria-hidden="true"></span>Lapse<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+          <li><a class="flink" href="#contact" style="--lc:var(--orange)"><span class="sw" aria-hidden="true"></span>App 03 <span class="fbadge">In the lab</span></a></li>
+        </ul>
+      </nav>
+      <nav class="fcol fin" aria-label="Legal">
+        <h3>Legal</h3>
+        <ul>
+          <li><a class="flink" href="#privacy" style="--lc:var(--pink)">Privacy Policy<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+          <li><a class="flink" href="#terms" style="--lc:var(--pink)">Terms of Service<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+        </ul>
+      </nav>
+      <nav class="fcol fin" aria-label="Support">
+        <h3>Support</h3>
+        <ul>
+          <li><a class="flink" href="#help" style="--lc:var(--snip)">Help &amp; Support<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+          <li><a class="flink" href="#contact" style="--lc:var(--snip)">Contact<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+        </ul>
+      </nav>
+      <a class="totop fin" href="#top" id="totop" aria-label="Back to top">
+        <svg class="ring" id="toRing" viewBox="0 0 112 112" aria-hidden="true"><defs><path id="tcirc" d="M56,56 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs><text><textPath href="#tcirc">Back to top · Back to top · </textPath></text></svg>
+        <span class="core" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg></span>
+      </a>
+    </div>
+    <div class="wordbox" style="margin-top:clamp(32px,5vw,56px)"><p class="fitword" id="footword" aria-label="Drakiverse">DRAKIVERSE</p></div>
+    <div class="stripes" aria-hidden="true"><i style="background:var(--snip)"></i><i style="background:var(--purple)"></i><i style="background:var(--pink)"></i><i style="background:var(--orange)"></i></div>
+    <div class="fbottom label"><span>© 2026 Drakiverse Studio · Made in Canada</span><span><a href="#privacy">Privacy</a> · <a href="#terms">Terms</a> · <a href="#help">Help</a></span></div>
+  </div>
+</footer>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" hidden></div>
+
+<div class="detail gut" id="detail" role="dialog" aria-modal="true" aria-labelledby="dTitle" hidden></div>
+<div class="toast" id="toast" role="status"><span id="toastText"></span><button id="undo" type="button">Undo</button></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js"></script>
 <script>
-// Original generative melodic deep-house soundtrack (Web Audio, no files, no samples).
-// Starts only when the visitor taps the Sound button. Scrolling opens the filter and lifts the energy.
-window.DrakiAudio = (function () {
-  var BPM = 118, BEAT = 60 / BPM, SIX = BEAT / 4;
-  // Original 8-bar progression, two bars per chord: Am9 - Fmaj7 - C(add9) - G6
-  var PROG = [
-    { bass: 55.0,  pad: [220.0, 261.63, 329.63, 392.0, 493.88], arp: [440.0, 523.25, 659.25, 783.99, 987.77] },
-    { bass: 43.65, pad: [174.61, 220.0, 261.63, 329.63, 392.0], arp: [349.23, 440.0, 523.25, 659.25, 783.99] },
-    { bass: 65.41, pad: [196.0, 261.63, 329.63, 392.0, 587.33], arp: [523.25, 587.33, 659.25, 783.99, 1046.5] },
-    { bass: 49.0,  pad: [196.0, 246.94, 293.66, 329.63, 392.0], arp: [392.0, 493.88, 587.33, 659.25, 783.99] }
-  ];
-  var ARP_STEPS = [1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1];
-  var ARP_ORDER = [0, 2, 1, 3, 2, 4, 3, 1, 0, 2, 4, 3, 1, 2, 3, 4];
+(function(){
+"use strict";
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const money=v=>"$"+v.toFixed(2);
+const safe=(name,fn)=>{try{fn()}catch(e){console.error("["+name+"]",e)}};
+const G=window.gsap, ST=window.ScrollTrigger, FL=window.Flip;
+const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const motion=!!(G&&ST)&&!RM;
+if(G){G.registerPlugin(...[ST,FL].filter(Boolean))}
 
-  var ac = null, bus = null, on = false, timer = 0, nextTime = 0, step = 0, scroll = 0;
+/* ---------- helpers ---------- */
+function splitChars(el){
+  const text=el.textContent;el.textContent="";
+  return [...text].map(ch=>{const m=document.createElement("span");m.className="mask";const s=document.createElement("span");s.textContent=ch===" "?" ":ch;m.appendChild(s);el.appendChild(m);return s});
+}
+function fitWord(el){el.style.fontSize="100px";const w=el.getBoundingClientRect().width;const avail=el.parentElement.clientWidth;if(w>0)el.style.fontSize=(100*avail/w*.995)+"px"}
 
-  function makeImpulse(ctx, seconds) {
-    var len = Math.floor(ctx.sampleRate * seconds), buf = ctx.createBuffer(2, len, ctx.sampleRate);
-    for (var c = 0; c < 2; c++) { var d = buf.getChannelData(c); for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3); }
-    return buf;
-  }
+/* ---------- static content builders (always run) ---------- */
+safe("marquee-build",()=>{
+  const A=["Snip","Lapse","Free to start","Pay once","Android first","iOS next"], B=["One app","One job","No clutter","Small fixes","Big relief","Made in Canada"];
+  const dots=["a","b","c","d"];
+  const make=items=>items.map((t,i)=>`<span class="${i%2?"o":""}">${t}<em class="${dots[i%4]}"></em></span>`).join("");
+  $("#m1").innerHTML=make(A).repeat(2);$("#m2").innerHTML=make(B).repeat(2);
+});
+const bigLetters=[];
+safe("big-build",()=>{
+  const big=$("#big");
+  [..."Say hello."].forEach(ch=>{const s=document.createElement("span");s.setAttribute("aria-hidden","true");if(ch===" ")s.className="sp";else{s.textContent=ch;if(ch===".")s.className="dotc";bigLetters.push(s)}big.appendChild(s)});
+});
+const footWord=$("#footword");let footLetters=[];
+safe("foot-build",()=>{footWord.innerHTML=[..."DRAKIVERSE"].map(c=>`<span aria-hidden="true">${c}</span>`).join("");footLetters=$$("span",footWord);fitWord(footWord);addEventListener("resize",()=>fitWord(footWord));document.fonts&&document.fonts.ready.then(()=>{fitWord(footWord);ST&&ST.refresh()})});
 
-  // Build the mixing graph on any AudioContext (real or offline).
-  function build(ctx) {
-    var b = { ctx: ctx };
-    b.master = ctx.createGain(); b.master.gain.value = 0;
-    var comp = ctx.createDynamicsCompressor(); comp.threshold.value = -16; comp.ratio.value = 3; comp.attack.value = 0.01; comp.release.value = 0.2;
-    b.master.connect(comp); comp.connect(ctx.destination);
-    b.verb = ctx.createConvolver(); b.verb.buffer = makeImpulse(ctx, 3.2);
-    var verbOut = ctx.createGain(); verbOut.gain.value = 0.5; b.verb.connect(verbOut); verbOut.connect(b.master);
-    // ping-pong delay for the melody
-    var dl = ctx.createDelay(1), dr = ctx.createDelay(1); dl.delayTime.value = SIX * 3; dr.delayTime.value = SIX * 3;
-    var fb = ctx.createGain(); fb.gain.value = 0.38;
-    var pl = ctx.createStereoPanner(), pr = ctx.createStereoPanner(); pl.pan.value = -0.7; pr.pan.value = 0.7;
-    var dTone = ctx.createBiquadFilter(); dTone.type = 'lowpass'; dTone.frequency.value = 3200;
-    b.delayIn = ctx.createGain(); b.delayIn.gain.value = 0.45;
-    b.delayIn.connect(dl); dl.connect(dTone); dTone.connect(pl); pl.connect(b.master); dTone.connect(dr); dr.connect(pr); pr.connect(b.master); dr.connect(fb); fb.connect(dl); pr.connect(b.verb);
-    // sidechain "pump": pads and bass duck on every kick
-    b.duck = ctx.createGain(); b.duck.gain.value = 1;
-    b.padFilter = ctx.createBiquadFilter(); b.padFilter.type = 'lowpass'; b.padFilter.frequency.value = 900; b.padFilter.Q.value = 0.7;
-    b.padFilter.connect(b.duck); b.duck.connect(b.master); b.duck.connect(b.verb);
-    b.arpFilter = ctx.createBiquadFilter(); b.arpFilter.type = 'lowpass'; b.arpFilter.frequency.value = 2600;
-    b.arpBus = ctx.createGain(); b.arpBus.gain.value = 0.9;
-    b.arpFilter.connect(b.arpBus); b.arpBus.connect(b.master); b.arpBus.connect(b.delayIn); b.arpBus.connect(b.verb);
-    b.drums = ctx.createGain(); b.drums.gain.value = 0.9; b.drums.connect(b.master);
-    var nb = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate), nd = nb.getChannelData(0);
-    for (var i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
-    b.noise = nb;
-    return b;
-  }
+/* ---------- nav pill + copy (no library needed) ---------- */
+safe("navpill",()=>{
+  const pill=$("#navpill"),links=$$("#navlinks a");
+  links.forEach(a=>{const on=()=>{links.forEach(l=>l.classList.toggle("hot",l===a));const st={width:a.offsetWidth+"px",x:a.offsetLeft,opacity:1};
+    if(G)G.to(pill,{...st,duration:.45,ease:"back.out(1.6)"});else Object.assign(pill.style,{width:st.width,transform:`translateX(${st.x}px)`,opacity:1})};
+    a.addEventListener("pointerenter",on);a.addEventListener("focus",on);a.addEventListener("blur",()=>{a.classList.remove("hot");pill.style.opacity=0})});
+  $("#navlinks").addEventListener("pointerleave",()=>{links.forEach(l=>l.classList.remove("hot"));G?G.to(pill,{opacity:0,duration:.2}):pill.style.opacity=0});
+});
+safe("copy-apps",()=>{
+  $$("[data-copy-text]").forEach(b=>b.addEventListener("click",()=>{const v=b.dataset.copyText;const ok=()=>{b.textContent="Copied";if(G)G.fromTo(b,{scale:.85},{scale:1,duration:.6,ease:"elastic.out(1,.4)"});setTimeout(()=>b.textContent="Copy",2000)};
+    const sel=()=>{const r=document.createRange();r.selectNodeContents(b.previousElementSibling);const x=getSelection();x.removeAllRanges();x.addRange(r)};
+    try{navigator.clipboard.writeText(v).then(ok,sel)}catch(e){sel()}}));
+});
+safe("copy",()=>{
+  const btn=$("#copy"),live=$("#copyLive"),mail=$("#mail");
+  btn.addEventListener("click",()=>{const ok=()=>{btn.textContent="Copied";live.textContent="Email copied";if(G)G.fromTo(btn,{scale:.9},{scale:1,duration:.6,ease:"elastic.out(1,.4)"});setTimeout(()=>{btn.textContent="Copy";live.textContent=""},2200)};
+    const sel=()=>{const r=document.createRange();r.selectNodeContents(mail);const s=getSelection();s.removeAllRanges();s.addRange(r);live.textContent="Email selected, copy it from here"};
+    try{navigator.clipboard.writeText(mail.textContent.trim()).then(ok,sel)}catch(e){sel()}});
+});
 
-  function env(g, t, a, peak, d) {
-    g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(peak, t + a); g.gain.exponentialRampToValueAtTime(0.0001, t + a + d);
-  }
-  function kick(b, t, vol) {
-    var ctx = b.ctx, o = ctx.createOscillator(), g = ctx.createGain();
-    o.frequency.setValueAtTime(130, t); o.frequency.exponentialRampToValueAtTime(44, t + 0.12);
-    env(g, t, 0.004, vol, 0.42); o.connect(g); g.connect(b.drums); o.start(t); o.stop(t + 0.5);
-    // pump the pads/bass
-    b.duck.gain.cancelScheduledValues(t); b.duck.gain.setValueAtTime(0.3, t); b.duck.gain.linearRampToValueAtTime(1, t + BEAT * 0.85);
-  }
-  function noiseHit(b, t, type, freq, vol, dec, dest) {
-    var ctx = b.ctx, s = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain();
-    s.buffer = b.noise; f.type = type; f.frequency.value = freq; f.Q.value = type === 'bandpass' ? 1.2 : 0.7;
-    env(g, t, 0.002, vol, dec); s.connect(f); f.connect(g); g.connect(dest || b.drums); s.start(t, Math.random() * 0.5); s.stop(t + dec + 0.05);
-  }
-  function bass(b, t, f, vol) {
-    var ctx = b.ctx, o = ctx.createOscillator(), o2 = ctx.createOscillator(), lp = ctx.createBiquadFilter(), g = ctx.createGain();
-    o.type = 'sine'; o.frequency.value = f; o2.type = 'triangle'; o2.frequency.value = f * 2;
-    var g2 = ctx.createGain(); g2.gain.value = 0.25; o2.connect(g2); g2.connect(lp);
-    lp.type = 'lowpass'; lp.frequency.value = 320; o.connect(lp); lp.connect(g); g.connect(b.duck);
-    env(g, t, 0.01, vol, SIX * 1.6); o.start(t); o2.start(t); o.stop(t + SIX * 2); o2.stop(t + SIX * 2);
-  }
-  function pad(b, t, notes, dur) {
-    var ctx = b.ctx;
-    notes.forEach(function (f, k) {
-      [-7, 7].forEach(function (cents) {
-        var o = ctx.createOscillator(), g = ctx.createGain();
-        o.type = 'sawtooth'; o.frequency.value = f; o.detune.value = cents + (Math.random() * 4 - 2);
-        var v = 0.016;
-        g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + 1.2);
-        g.gain.setValueAtTime(v, t + dur - 0.3); g.gain.linearRampToValueAtTime(0, t + dur + 1.2);
-        o.connect(g); g.connect(b.padFilter); o.start(t); o.stop(t + dur + 1.3);
-      });
-    });
-  }
-  function pluck(b, t, f, vol) {
-    var ctx = b.ctx, o = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain();
-    o.type = 'triangle'; o.frequency.value = f; o2.type = 'sine'; o2.frequency.value = f * 2.001;
-    var g2 = ctx.createGain(); g2.gain.value = 0.3; o2.connect(g2); g2.connect(g); o.connect(g); g.connect(b.arpFilter);
-    env(g, t, 0.005, vol, 0.32); o.start(t); o2.start(t); o.stop(t + 0.4); o2.stop(t + 0.4);
-  }
+/* ---------- Snip demo (works with or without GSAP) ---------- */
+safe("demo",()=>{
+  const SUBS=[{id:1,name:"Video streaming",cat:"Entertainment",price:16.49,c:"V"},{id:2,name:"Music",cat:"Entertainment",price:11.99,c:"M"},{id:3,name:"Gym membership",cat:"Health",price:45,c:"G"},{id:4,name:"Cloud storage",cat:"Utilities",price:3.99,c:"C"},{id:5,name:"Language app",cat:"Learning",price:14.99,c:"L"},{id:6,name:"News",cat:"Reading",price:8,c:"N"},{id:7,name:"Meal kit",cat:"Food",price:69.99,c:"K"}];
+  const TOTAL=SUBS.reduce((a,s)=>a+s.price,0);
+  const list=$("#subs"),empty=$("#empty"),restore=$("#restore"),live=$("#demoLive"),tM=$("#tMonth"),tS=$("#tSaved"),toast=$("#toast"),toastText=$("#toastText");
+  const active=new Set(SUBS.map(s=>s.id)), shown={m:TOTAL,s:0};
+  const sc='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.12 15.88M14.47 14.48 20 20M8.12 8.12 12 12"/></svg>';
+  const li=s=>{const e=document.createElement("li");e.className="sub";e.dataset.id=s.id;e.dataset.flipId="s"+s.id;e.innerHTML=`<span class="sico" aria-hidden="true">${s.c}</span><span class="smain"><b>${s.name}</b><small>${s.cat}</small></span><span class="sprice">${money(s.price)}<small>/mo</small></span><button class="cut" type="button" aria-label="Cut ${s.name}">${sc}</button>`;return e};
+  SUBS.forEach(s=>list.appendChild(li(s)));
+  const render=()=>{tM.textContent=money(shown.m);tS.textContent=money(shown.s)};
+  function totals(msg){const m=SUBS.filter(s=>active.has(s.id)).reduce((a,s)=>a+s.price,0);const sv=(TOTAL-m)*12;
+    if(G)G.to(shown,{m,s:sv,duration:.9,ease:"power3.out",onUpdate:render,overwrite:true});else{shown.m=m;shown.s=sv;render()}
+    empty.hidden=active.size>0;if(!active.size)empty.textContent=`All cut. That's ${money(TOTAL*12)} a year back in your pocket.`;restore.hidden=active.size===SUBS.length;if(msg)live.textContent=msg+` You now pay ${money(m)} a month.`}
+  let lastCut=null,tt;
+  const showToast=on=>{if(G)G.to(toast,{yPercent:on?0:160,xPercent:-50,x:0,duration:on?.6:.3,ease:on?"back.out(1.7)":"power2.in"});toast.style.transform=G?toast.style.transform:(on?"translate(-50%,0)":"translate(-50%,160%)")};
+  if(G)G.set(toast,{xPercent:-50,yPercent:160,left:"50%",x:0});
+  function cut(id){const el=list.querySelector(`[data-id="${id}"]`);if(!el||el.dataset.gone)return;el.dataset.gone=1;const s=SUBS.find(x=>x.id===id);active.delete(id);totals(`Cut ${s.name}.`);
+    lastCut=s;toastText.textContent=`Saved ${money(s.price*12)} a year`;showToast(true);clearTimeout(tt);tt=setTimeout(()=>showToast(false),4500);
+    if(motion&&FL){const state=FL.getState(".sub");el.style.display="none";FL.from(state,{duration:.6,ease:"power3.inOut",absolute:true,onLeave:els=>G.to(els,{opacity:0,x:-140,rotation:-6,duration:.4,ease:"power2.in"}),onComplete:()=>el.remove()})}
+    else el.remove()}
+  function insert(s,delay=0){if(list.querySelector(`[data-id="${s.id}"]`))return;const e=li(s);const state=motion&&FL?FL.getState(".sub"):null;const next=$$(".sub",list).find(x=>+x.dataset.id>s.id);list.insertBefore(e,next||null);
+    if(state)FL.from(state,{duration:.6,ease:"power3.inOut",onEnter:els=>G.fromTo(els,{opacity:0,scale:.85,y:-20},{opacity:1,scale:1,y:0,duration:.6,delay,ease:"back.out(1.6)"})})}
+  list.addEventListener("click",e=>{const b=e.target.closest(".cut");if(b)cut(+b.closest(".sub").dataset.id)});
+  $("#undo").addEventListener("click",()=>{if(!lastCut)return;const s=lastCut;lastCut=null;active.add(s.id);insert(s);totals(`Restored ${s.name}.`);showToast(false);clearTimeout(tt)});
+  restore.addEventListener("click",()=>{let k=0;SUBS.forEach(s=>{if(!active.has(s.id)){active.add(s.id);insert(s,k++*.06)}});totals("Restored all.");showToast(false)});
+});
 
-  // Everything that happens on one 16th-note step.
-  function scheduleStep(b, n, t, energy) {
-    var bar = Math.floor(n / 16), s16 = n % 16, chord = PROG[Math.floor(bar / 2) % 4];
-    var drumsIn = bar >= 4, full = bar >= 8;
-    if (s16 === 0 && bar % 2 === 0) pad(b, t, chord.pad, BEAT * 8);
-    if (ARP_STEPS[s16] && bar >= 2) pluck(b, t, chord.arp[ARP_ORDER[s16]], 0.05 + energy * 0.03);
-    if (drumsIn) {
-      if (s16 % 4 === 0) kick(b, t, 0.85);
-      if (s16 % 4 === 2) { noiseHit(b, t, 'highpass', 8000, 0.09, 0.09); bass(b, t, chord.bass, 0.42); }
-      if (full && (s16 === 4 || s16 === 12)) noiseHit(b, t, 'bandpass', 1600, 0.12, 0.16, b.verb);
-      if (full) noiseHit(b, t, 'highpass', 10000, s16 % 2 ? 0.018 : 0.03, 0.035);
-    }
-  }
-
-  function tick() {
-    if (!on) return;
-    while (nextTime < ac.currentTime + 0.25) { scheduleStep(bus, step, nextTime, scroll); nextTime += SIX; step++; }
-  }
-
-  return {
-    get on() { return on; },
-    toggle: function () {
-      if (!ac) { ac = new (window.AudioContext || window.webkitAudioContext)(); bus = build(ac); }
-      on = !on;
-      var now = ac.currentTime;
-      if (on) {
-        ac.resume();
-        bus.master.gain.cancelScheduledValues(now); bus.master.gain.setValueAtTime(bus.master.gain.value, now); bus.master.gain.linearRampToValueAtTime(0.85, now + 2);
-        if (!timer) { nextTime = now + 0.1; timer = setInterval(tick, 50); }
-        tick();
-      } else {
-        bus.master.gain.cancelScheduledValues(now); bus.master.gain.setValueAtTime(bus.master.gain.value, now); bus.master.gain.linearRampToValueAtTime(0, now + 1.2);
-        setTimeout(function () { if (!on) { clearInterval(timer); timer = 0; step = 0; ac.suspend(); } }, 1400);
-      }
-      return on;
-    },
-    setScroll: function (s) {
-      scroll = s;
-      if (ac && on) {
-        bus.padFilter.frequency.setTargetAtTime(700 + s * 2600, ac.currentTime, 0.5);
-        bus.arpFilter.frequency.setTargetAtTime(2200 + s * 3500, ac.currentTime, 0.5);
-      }
-    },
-    shimmer: function () {},
-    // For previews: render N seconds offline and return the AudioBuffer.
-    render: function (seconds, sampleRate) {
-      var ctx = new OfflineAudioContext(2, Math.floor(seconds * sampleRate), sampleRate), b = build(ctx);
-      b.master.gain.setValueAtTime(0, 0); b.master.gain.linearRampToValueAtTime(0.85, 2);
-      var steps = Math.floor(seconds / SIX);
-      for (var n = 0; n < steps; n++) {
-        var e = Math.min(1, n / steps * 1.5);
-        if (n % 16 === 0) { b.padFilter.frequency.setValueAtTime(700 + e * 2600, n * SIX); b.arpFilter.frequency.setValueAtTime(2200 + e * 3500, n * SIX); }
-        scheduleStep(b, n, n * SIX + 0.05, e);
-      }
-      return ctx.startRendering();
-    }
+/* ---------- detail panel (card → full screen) ---------- */
+safe("detail",()=>{
+  const LOGO_S='<svg viewBox="0 0 100 100" aria-hidden="true"><defs><clipPath id="cl2"><polygon points="0,0 56,0 38,100 0,100"/></clipPath><clipPath id="cr2"><polygon points="64,0 100,0 100,100 46,100"/></clipPath></defs><rect width="100" height="100" rx="24" fill="#0b0b0b"/><g clip-path="url(#cl2)"><rect x="14" y="26" width="72" height="48" rx="9" fill="#c8ff2e"/><rect x="14" y="36" width="72" height="8" fill="#0b0b0b"/></g><g clip-path="url(#cr2)" transform="translate(3,-2)"><rect x="14" y="26" width="72" height="48" rx="9" fill="#c8ff2e"/><rect x="14" y="36" width="72" height="8" fill="#0b0b0b"/></g></svg>';
+  const LOGO_L='<svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="24" fill="#fff1dc" stroke="#0b0b0c" stroke-opacity=".12"/><path d="M28 22V78H78" fill="none" stroke="#9d8cff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="M39 22V67H78" fill="none" stroke="#ff8fc7" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="M50 22V56H78" fill="none" stroke="#ffa03a" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const D={
+    snip:{tone:"snip",num:"App 01 · Coming to Google Play",name:"Snip",logo:LOGO_S,kick:"A subscription tracker.",body:"Snip puts every recurring charge in one list, warns you before something renews, and shows what you really spend each month and each year.",feats:["Every subscription in one list","A heads-up before anything renews","Monthly and yearly totals","Free. Snip Pro is a one-time purchase."],cta:["#demo","Try the live demo"]},
+    lapse:{tone:"lapse",num:"App 02 · In development",name:"Lapse",logo:LOGO_L,kick:"An all-in-one expiry tracker.",body:"If it expires or comes due, it goes in Lapse. Passports, warranties, insurance, food, medication and upcoming bills, all counting down, with reminders before the date, not after.",feats:["Documents, warranties and insurance","Food and medication","Upcoming bills","Free for 5 items. Pro unlock for $3.99."],cta:["#lapse","Watch time pass"]},
+    next:{tone:"",num:"App 03 · In the lab",name:"Next",logo:"",kick:"The next small fix.",body:"We keep a running list of little things that waste people's time. If something bugs you every week and an app could make it go away, tell us.",feats:["One problem per app","Android first, iOS next","Free to start, fair to upgrade","Your idea could be App 03"],cta:["#contact","Suggest an idea"]}
   };
-})();
+  const det=$("#detail");let state=null;
+  const inset=r=>{const vw=document.documentElement.clientWidth,vh=innerHeight;return `inset(${r.top}px ${vw-r.right}px ${vh-r.bottom}px ${r.left}px round 30px)`};
+  function open(id,btn){const w=D[id],card=btn.closest(".world");state={btn,card};
+    det.className="detail gut "+w.tone;
+    det.innerHTML=`<div class="dinner"><div class="dbar di"><span class="idx">${w.num}</span><button class="close" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+      <div class="dtitle di">${w.logo}<h2 id="dTitle">${w.name}</h2></div><p class="kick di">${w.kick}</p><p class="dbody di">${w.body}</p>
+      <ul class="feats">${w.feats.map((f,i)=>`<li class="di"><span>0${i+1}</span>${f}</li>`).join("")}</ul>
+      <div class="dctas di"><a class="dbtn solid" href="${w.cta[0]}" data-jump="${w.cta[0]}">${w.cta[1]}</a><button class="dbtn" type="button" data-back>Back to the apps</button></div></div>`;
+    det.hidden=false;det.scrollTop=0;document.documentElement.style.overflow="hidden";
+    if(motion){const tl=G.timeline();tl.fromTo(det,{clipPath:inset(card.getBoundingClientRect())},{clipPath:"inset(0px 0px 0px 0px round 0px)",duration:.95,ease:"expo.inOut"})
+      .from($$(".di",det),{y:60,opacity:0,duration:.8,stagger:.06,ease:"expo.out"},"-=.45")}
+    setTimeout(()=>{const c=$(".close",det);c&&c.focus({preventScroll:true})},60)}
+  function close(then){if(!state)return;const {btn,card}=state;state=null;
+    const done=()=>{det.hidden=true;det.innerHTML="";document.documentElement.style.overflow="";if(then)then();else btn.focus({preventScroll:true})};
+    if(motion){G.timeline({onComplete:done}).to($$(".di",det),{opacity:0,y:-20,duration:.2,stagger:.015}).to(det,{clipPath:inset(card.getBoundingClientRect()),duration:.6,ease:"expo.inOut"},"-=.05")}else done()}
+  $$("[data-open]").forEach(b=>b.addEventListener("click",()=>open(b.dataset.open,b)));
+  det.addEventListener("click",e=>{if(e.target.closest(".close")||e.target.closest("[data-back]"))close();const j=e.target.closest("[data-jump]");if(j){e.preventDefault();const h=j.dataset.jump;close(()=>{const el=$(h);el&&el.scrollIntoView({behavior:RM?"auto":"smooth"})})}});
+  addEventListener("keydown",e=>{if(!state)return;if(e.key==="Escape")close();if(e.key==="Tab"){const f=$$("a,button",det);const a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}});
+});
 
-(function () {
-  var root = document.documentElement;
-  var universe = document.getElementById('universe');
-  var stage = document.getElementById('stage');
-  var canvas = document.getElementById('gl');
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduce) { root.classList.add('calm'); universe.appendChild(document.getElementById('story')); }
 
-  var soundBtn = document.getElementById('soundBtn');
-  soundBtn.addEventListener('click', function () {
-    var on = window.DrakiAudio.toggle();
-    soundBtn.setAttribute('aria-pressed', String(on));
-    soundBtn.querySelector('span').textContent = on ? 'Sound on' : 'Sound off';
-  });
-
-  var gl = canvas.getContext('webgl', { antialias: false, alpha: false, premultipliedAlpha: false, powerPreference: 'high-performance' });
-  if (!gl) { root.classList.add('nogl'); showAllOverlays(); return; }
-
-  var small = Math.min(window.innerWidth, window.innerHeight) < 700;
-  var N = small ? 9000 : 16000;
-  var W = 1, H = 1, DPR = 1, FOV = 50 * Math.PI / 180;
-
-  // ---------- shaders ----------
-  var vs = 'attribute vec3 aPos;attribute vec3 aCol;attribute float aSize;uniform mat4 uProj;uniform mat4 uView;uniform float uScale;varying vec3 vCol;varying float vFade;' +
-    'void main(){vec4 mv=uView*vec4(aPos,1.0);gl_Position=uProj*mv;float d=max(-mv.z,0.05);gl_PointSize=clamp(aSize*uScale/d,1.0,64.0);vCol=aCol;vFade=smoothstep(0.15,1.6,d);}';
-  var fs = 'precision mediump float;varying vec3 vCol;varying float vFade;' +
-    'void main(){vec2 c=gl_PointCoord-0.5;float r=length(c);float a=smoothstep(0.5,0.0,r);a=a*a;gl_FragColor=vec4(vCol*a*vFade,1.0);}';
-  function shader(type, src) { var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; }
-  var prog = gl.createProgram();
-  gl.attachShader(prog, shader(gl.VERTEX_SHADER, vs)); gl.attachShader(prog, shader(gl.FRAGMENT_SHADER, fs));
-  gl.linkProgram(prog);
-  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { root.classList.add('nogl'); showAllOverlays(); return; }
-  gl.useProgram(prog);
-  var loc = {
-    pos: gl.getAttribLocation(prog, 'aPos'), col: gl.getAttribLocation(prog, 'aCol'), size: gl.getAttribLocation(prog, 'aSize'),
-    proj: gl.getUniformLocation(prog, 'uProj'), view: gl.getUniformLocation(prog, 'uView'), scale: gl.getUniformLocation(prog, 'uScale')
+/* ---------- legal & help sheet (hash routes: #privacy #terms #help) ---------- */
+safe("sheet",()=>{
+  const EMAIL="hello@drakiverse.studio", SNIP="snip@drakiverse.studio", LAPSE="lapse@drakiverse.studio", UPD="Last updated October 26, 2026";
+  const box=(addr,label)=>`<div class="mailbox">${label?`<b class="k">${label}</b>`:""}<span>${addr}</span><button class="copy" type="button" data-copy="${addr}">Copy</button></div>`;
+  const mailbox=box(EMAIL);
+  const allMail=`<div class="mails">${box(EMAIL,"General")}${box(SNIP,"Snip")}${box(LAPSE,"Lapse")}</div>`;
+  const sec=(c,t,body)=>`<h3 class="si"><i style="background:var(${c})"></i>${t}</h3>${body}`;
+  const PAGES={
+    privacy:{title:"Privacy Policy",html:`<p class="intro si">Drakiverse Studio makes small apps that respect your privacy. This policy explains what happens to your information when you use our apps and this website.</p>
+      ${sec("--fg","Who we are",`<p class="si">Drakiverse Studio is an independent app developer based in Canada. You can reach us any time at ${EMAIL}, or at ${SNIP} and ${LAPSE} for app-specific questions.</p>`)}
+      ${sec("--snip","Snip",`<ul class="si"><li><strong>Your data stays on your phone.</strong> The subscriptions you add are stored on your device. We don't run servers, so we never receive them.</li><li><strong>No account needed.</strong> Snip doesn't ask you to sign up or log in.</li><li><strong>We don't sell or share personal information.</strong> We don't collect it in the first place.</li><li><strong>Purchases go through Google Play.</strong> If you buy Snip Pro, Google handles the payment. We never see your card details.</li></ul>`)}
+      ${sec("--purple","Lapse",`<p class="si">Lapse is in development and is being built the same way: your items stay on your device, with no account required. We'll update this policy with any Lapse-specific details before it launches.</p>`)}
+      ${sec("--pink","This website",`<p class="si">This site has no sign-up and no contact forms. It loads fonts from Google Fonts and code from a public content network (cdnjs), which means those services receive standard technical information such as your IP address when the page loads.</p>`)}
+      ${sec("--orange","Children",`<p class="si">Our apps are general-audience tools and aren't designed for children under 13. We don't knowingly collect information from anyone.</p>`)}
+      ${sec("--fg","Changes and contact",`<p class="si">If this policy changes, we'll update this page and the date above. Questions? Write to us.</p><div class="si">${mailbox}</div>`)}`},
+    terms:{title:"Terms of Service",html:`<p class="intro si">These terms apply when you use apps made by Drakiverse Studio, including Snip and Lapse. By using our apps, you agree to them.</p>
+      ${sec("--snip","Using our apps",`<p class="si">You can use the free version of each app for personal use. Please don't copy, resell or reverse-engineer the apps.</p>`)}
+      ${sec("--purple","One-time purchases",`<p class="si">Upgrades like Snip Pro are a single, one-time purchase made through Google Play (and later the App Store). They're tied to your store account, so you can restore them on a new phone. Refunds follow the store's refund policy.</p>`)}
+      ${sec("--pink","Reminders are a helping hand",`<p class="si">Our apps help you keep track of renewals, bills and expiry dates, but notifications can be delayed or missed, for example if your phone is off or notifications are disabled. Please don't rely on our apps as your only reminder for important dates like passport renewals or bill payments.</p>`)}
+      ${sec("--orange","No warranty",`<p class="si">The apps are provided "as is". We work hard to keep them accurate and reliable, but we can't guarantee they'll always be error-free. To the extent the law allows, Drakiverse Studio isn't liable for losses caused by using or being unable to use the apps.</p>`)}
+      ${sec("--fg","Changes and governing law",`<p class="si">We may update these terms as our apps evolve, and we'll change the date above when we do. These terms are governed by the laws of the Province of Ontario and the federal laws of Canada that apply there.</p><div class="si">${mailbox}</div>`)}`},
+    help:{title:"Help & Support",html:`<p class="intro si">Got a question or found a bug? Start here. If you can't find the answer, email us and we'll get back to you.</p>
+      <div class="faq si">
+        <details><summary>Is Snip free?</summary><p>Yes. Snip is free to use. Snip Pro is an optional one-time purchase, not a subscription.</p></details>
+        <details><summary>Where is my data stored?</summary><p>On your phone. We don't run servers and you don't need an account, so your subscriptions and items never leave your device.</p></details>
+        <details><summary>I bought Pro. How do I get it on a new phone?</summary><p>Sign in to Google Play with the same Google account you used to buy it, reinstall the app, and your purchase will be restored.</p></details>
+        <details><summary>When is Lapse coming out?</summary><p>Lapse is in development right now. Email us if you'd like to hear when it launches.</p></details>
+        <details><summary>Are your apps on iPhone?</summary><p>Not yet. We're launching on Android first, and iOS is on the way.</p></details>
+        <details><summary>Can I suggest an app idea?</summary><p>Please do. If an everyday annoyance bugs you every week, tell us. It might become App 03.</p></details>
+      </div>
+      ${sec("--snip","Contact us",`<p class="si">For help with an app, email its support address. For anything else, say hello. Including your phone model and the app version helps us fix things faster.</p><div class="si">${allMail}</div>`)}`}
   };
+  const sh=$("#sheet");let current=null,lastFocus=null;
+  const tabs=k=>Object.entries(PAGES).map(([id,p])=>`<a href="#${id}" ${id===k?'aria-current="page"':""}>${p.title}</a>`).join("");
+  function fill(k){const p=PAGES[k];sh.innerHTML=`<div class="sheet-bar gut"><div class="wrap"><nav class="sheet-tabs" aria-label="Legal and support pages">${tabs(k)}</nav><button class="close" type="button" aria-label="Close" data-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div></div>
+    <div class="sheet-in gut"><p class="label si">Drakiverse Studio</p><h2 id="sheetTitle" class="si">${p.title}</h2><p class="label upd si">${UPD}</p>${p.html}</div>`;sh.scrollTop=0}
+  function open(k){
+    if(current===k)return;const first=!current;current=k;
+    if(first){lastFocus=document.activeElement;fill(k);sh.hidden=false;document.documentElement.style.overflow="hidden";
+      if(motion){G.timeline().fromTo(sh,{yPercent:100,borderRadius:"40px 40px 0 0"},{yPercent:0,borderRadius:"0px 0px 0 0",duration:.9,ease:"expo.out"}).from($$(".si",sh),{y:40,opacity:0,duration:.7,stagger:.04,ease:"expo.out"},"-=.5")}}
+    else{if(motion){G.to($$(".sheet-in",sh),{opacity:0,y:-20,duration:.2,onComplete:()=>{fill(k);G.from($$(".si",sh),{y:30,opacity:0,duration:.6,stagger:.035,ease:"expo.out"})}})}else fill(k)}
+    setTimeout(()=>{const c=$("[data-close]",sh);c&&c.focus({preventScroll:true})},80)}
+  function close(){if(!current)return;current=null;
+    const done=()=>{sh.hidden=true;sh.innerHTML="";document.documentElement.style.overflow="";lastFocus&&lastFocus.focus&&lastFocus.focus({preventScroll:true})};
+    try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}
+    if(motion)G.to(sh,{yPercent:100,duration:.6,ease:"expo.in",onComplete:done});else done()}
+  const route=()=>{const k=location.hash.slice(1);if(PAGES[k])open(k);else if(current)close()};
+  addEventListener("hashchange",route);route();
+  sh.addEventListener("click",e=>{if(e.target.closest("[data-close]"))close();
+    const cp=e.target.closest("[data-copy]");if(cp){const done=()=>{cp.textContent="Copied";setTimeout(()=>cp.textContent="Copy",2000)};try{navigator.clipboard.writeText(cp.dataset.copy).then(done,()=>{const r=document.createRange();r.selectNodeContents(cp.previousElementSibling);getSelection().removeAllRanges();getSelection().addRange(r)})}catch(err){}}});
+  addEventListener("keydown",e=>{if(!current)return;if(e.key==="Escape")close();if(e.key==="Tab"){const f=$$("a,button,summary",sh);const a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}});
+});
 
-  // ---------- particle data ----------
-  var P = new Float32Array(N * 3), Cc = new Float32Array(N * 3), S = new Float32Array(N);
-  var G = new Float32Array(N * 3), T = new Float32Array(N * 3), PL = new Float32Array(N * 3);
-  var GC = new Float32Array(N * 3), PC = new Float32Array(N * 3);
-  var RA = new Float32Array(N), RR = new Float32Array(N), RZ = new Float32Array(N), RI = new Float32Array(N);
-  var OFF = new Float32Array(N * 3), VEL = new Float32Array(N * 3), DELAY = new Float32Array(N);
-  function rnd(i, k) { var x = Math.sin(i * 12.9898 + k * 78.233) * 43758.5453; return x - Math.floor(x); }
-  function gauss(i, k) { return (rnd(i, k) + rnd(i, k + 1) + rnd(i, k + 2) - 1.5) / 1.5; }
+/* ---------- Lapse time-lapse update fn (used by scroll or shown static) ---------- */
+const lapseState={t:0};
+function renderLapse(){
+  const days=$("#days"),arc=$("#arc"),items=$$("#items .item");
+  const el=Math.round(lapseState.t);const pass=Math.max(0,214-el);
+  days.textContent=pass;arc.style.strokeDashoffset=(540.35*(1-pass/214)).toFixed(1);
+  items.forEach(it=>{const left=+it.dataset.d-el;const tag=it.querySelector(".left");const done=left<=0;
+    if(done!==it.classList.contains("done")){it.classList.toggle("done",done);if(G&&motion)G.fromTo(tag,{scale:1.35},{scale:1,duration:.6,ease:"elastic.out(1,.4)"})}
+    tag.textContent=done?(it.dataset.d==="6"?"Paid ✓":"Handled ✓"):left+(left===1?" day":" days")});
+  const ln=$("#lnote");const show=pass<=142&&pass>=95;if(ln.dataset.on!==String(show)){ln.dataset.on=show;if(G)G.to(ln,{opacity:show?1:0,y:show?0:-12,duration:.4,ease:"back.out(1.7)"});else ln.style.opacity=show?1:0}
+}
 
-  var R = 11;
-  for (var i = 0; i < N; i++) {
-    var i3 = i * 3;
-    // Galaxy: three spiral arms in the XZ plane plus a bright core.
-    var core = rnd(i, 1) < 0.18;
-    var r = core ? Math.pow(rnd(i, 2), 1.8) * 2.2 : 1.2 + Math.pow(rnd(i, 2), 1.3) * R;
-    var arm = Math.floor(rnd(i, 3) * 3);
-    var ang = arm * Math.PI * 2 / 3 + r * 0.42 + gauss(i, 4) * (core ? 3 : 0.32);
-    G[i3] = Math.cos(ang) * r + gauss(i, 7) * 0.35;
-    G[i3 + 1] = gauss(i, 10) * (core ? 0.55 : 0.28) * (1.2 - r / (R + 2));
-    G[i3 + 2] = Math.sin(ang) * r + gauss(i, 13) * 0.35;
-    var m = Math.min(1, r / R), star = rnd(i, 16) < 0.12;
-    if (star) { GC[i3] = 1; GC[i3 + 1] = 0.97; GC[i3 + 2] = 0.92; }
-    else if (core) { GC[i3] = 1; GC[i3 + 1] = 0.55 + rnd(i, 17) * 0.3; GC[i3 + 2] = 0.3 + rnd(i, 18) * 0.2; }
-    else {
-      // orange near the core -> violet -> electric blue at the edge
-      GC[i3] = 1 - m * 0.84; GC[i3 + 1] = 0.36 - m * 0.1 + rnd(i, 19) * 0.08; GC[i3 + 2] = 0.12 + m * 0.88;
-    }
-    S[i] = (star ? 0.11 : core ? 0.075 : 0.06) * (0.6 + rnd(i, 20) * 0.8);
-    // Planet (Snip, App 01): a lime sphere with a tilted ring.
-    if (i % 5 < 2) {
-      var u = rnd(i, 21) * 2 - 1, th = rnd(i, 22) * Math.PI * 2, sr = 2.3 * Math.sqrt(1 - u * u);
-      PL[i3] = Math.cos(th) * sr; PL[i3 + 1] = u * 2.3; PL[i3 + 2] = Math.sin(th) * sr;
-      var shade = 0.55 + 0.45 * Math.max(0, (PL[i3] * -0.5 + PL[i3 + 1] * 0.6 + PL[i3 + 2] * 0.6) / 2.3);
-      PC[i3] = 0.78 * shade; PC[i3 + 1] = 0.95 * shade; PC[i3 + 2] = 0.37 * shade;
-    } else {
-      var rr = 3.2 + Math.pow(rnd(i, 23), 0.7) * 2.6, ta = rnd(i, 24) * Math.PI * 2, tilt = 0.42;
-      var x = Math.cos(ta) * rr, z = Math.sin(ta) * rr, y = gauss(i, 25) * 0.05;
-      PL[i3] = x; PL[i3 + 1] = y * Math.cos(tilt) - z * Math.sin(tilt); PL[i3 + 2] = y * Math.sin(tilt) + z * Math.cos(tilt);
-      var lime = rnd(i, 26) < 0.7;
-      PC[i3] = lime ? 0.62 : 1; PC[i3 + 1] = lime ? 0.78 : 0.45; PC[i3 + 2] = lime ? 0.3 : 0.2;
-    }
-    DELAY[i] = rnd(i, 27) * 0.7;
-    // Warp: a tunnel of stars around the camera's path (built in camera space each frame)
-    // groups of 6 stars line up into one streak
-    var wg = Math.floor(i / 6) + 7;
-    RA[i] = rnd(wg, 71) * Math.PI * 2;
-    RR[i] = 1.3 + Math.pow(rnd(wg, 72), 0.8) * 5.5;
-    RZ[i] = rnd(wg, 75); RI[i] = rnd(wg, 76) < 0.25 ? 1 : 0;
-  }
+/* ---------- MOTION LAYER (GSAP) ---------- */
+if(!motion){safe("static-lapse",()=>{lapseState.t=0;renderLapse()});return}
 
-  // ---------- text targets: sample the word from an offscreen canvas ----------
-  // ---------- the logo: "DRAKIVERSE." on one line with an italic "studio" underneath ----------
-  var MARK = { cw: 1600, ch: 520, sc: 1 };
-  var TC = new Float32Array(N); // 1 = particle belongs to "studio" (orange), 0 = main word
-  function drawMark(x, s, cx, cy, mainColor, subColor, glow) {
-    // s = pixels per logo unit; the logo is designed in a 1600 x 520 box centred on (cx, cy)
-    var size = 300 * s;
-    x.textBaseline = 'alphabetic'; x.textAlign = 'center';
-    x.font = '700 ' + size + "px 'DrakiMark', 'Arial Narrow', Impact, sans-serif";
-    if (glow) { x.shadowColor = 'rgba(255, 90, 31, 0.55)'; x.shadowBlur = glow; }
-    x.fillStyle = mainColor; x.fillText('DRAKIVERSE.', cx, cy + 95 * s);
-    var mainW = x.measureText('DRAKIVERSE.').width;
-    x.font = 'italic 400 ' + size * 0.42 + "px 'DrakiSerif', 'Instrument Serif', Georgia, serif";
-    x.textAlign = 'right'; x.fillStyle = subColor;
-    x.fillText('studio', cx + mainW / 2 - 18 * s, cy + 210 * s);
-    x.shadowBlur = 0; x.textAlign = 'left';
-  }
-  function markScale() {
-    // fit the logo across most of the screen width on any phone or desktop
-    var aspect = W / H, halfW = Math.tan(FOV / 2) * 16 * aspect;
-    var probe = document.createElement('canvas').getContext('2d');
-    probe.font = "700 300px 'DrakiMark', 'Arial Narrow', Impact, sans-serif";
-    var wordW = probe.measureText('DRAKIVERSE.').width;
-    var worldW = halfW * 2 * (aspect < 0.9 ? 0.9 : 0.66);
-    MARK.halfW = worldW / 2;
-    return { sc: worldW / wordW, wordW: wordW };
-  }
-  function buildText() {
-    var cw = MARK.cw, ch = MARK.ch, c = document.createElement('canvas'); c.width = cw; c.height = ch;
-    var x = c.getContext('2d');
-    var m = markScale(); MARK.sc = m.sc;
-    var fit = Math.min(1, (cw * 0.96) / m.wordW);
-    drawMark(x, fit, cw / 2, ch / 2, '#ffffff', '#ff0000', 0);
-    var data = x.getImageData(0, 0, cw, ch).data, pts = [], step = small ? 3 : 2;
-    for (var yy = 0; yy < ch; yy += step) for (var xx = 0; xx < cw; xx += step) {
-      var o = (yy * cw + xx) * 4;
-      if (data[o + 3] > 140) { var st = data[o + 1] < 120 ? 1 : 0; pts.push(xx, yy, st); if (st) pts.push(xx, yy, st, xx, yy, st); }
-    }
-    var count = pts.length / 3, sc = MARK.sc / fit;
-    MARK.unit = sc; // world units per logo-canvas pixel
-    for (var i = 0; i < N; i++) {
-      var k = Math.floor(rnd(i, 30) * count) * 3, i3 = i * 3;
-      T[i3] = (pts[k] - cw / 2) * sc + (rnd(i, 31) - 0.5) * sc * step * 0.6;
-      T[i3 + 1] = -(pts[k + 1] - ch / 2) * sc + (rnd(i, 32) - 0.5) * sc * step * 0.6;
-      T[i3 + 2] = (rnd(i, 33) - 0.5) * 0.06;
-      TC[i] = pts[k + 2];
-    }
-    MARK.fit = fit;
-  }
+const heroChars=[];
+safe("hero-prep",()=>{
+  $$("[data-split]").forEach(el=>heroChars.push(...splitChars(el)));
+  heroChars.push(...splitChars($("#cycler")));
+  G.set(heroChars,{yPercent:115});
+  G.set(".h-rise",{y:28,opacity:0});
+  G.set("#phL",{y:180,opacity:0,rotation:-20});G.set("#phS",{y:220,opacity:0,rotation:14});
+  G.set(["#pf1","#pf2"],{scale:.4,opacity:0});
+});
 
-  // Crisp logo layer: once the stars arrive, a sharp version of the logo settles on top of them.
-  var markCanvas = document.getElementById('mark'), mctx = markCanvas.getContext('2d'), markAlpha = 0, markDrawn = -1;
-  function drawCrisp(alpha, radius) {
-    if (Math.abs(alpha - markDrawn) < 0.004) return;
-    markDrawn = alpha;
-    mctx.setTransform(1, 0, 0, 1, 0, 0); mctx.clearRect(0, 0, markCanvas.width, markCanvas.height);
-    if (alpha <= 0.004) return;
-    var pxPerWorld = (H / 2) / (Math.tan(FOV / 2) * radius);
-    var s = MARK.unit * pxPerWorld * MARK.fit * DPR;
-    mctx.globalAlpha = alpha;
-    drawMark(mctx, s, markCanvas.width / 2, markCanvas.height / 2, '#F3EEE6', '#FF5A1F', 28 * DPR * s);
-    mctx.globalAlpha = 1;
-  }
+function heroIntro(){
+  const tl=G.timeline({defaults:{ease:"expo.out"}});
+  tl.to(heroChars,{yPercent:0,duration:1.1,stagger:.028})
+    .to(".h-rise",{y:0,opacity:1,duration:.9,stagger:.1},.35)
+    .to("#phL",{y:0,opacity:1,rotation:0,duration:1.4,ease:"elastic.out(1,.7)"},.25)
+    .to("#phS",{y:0,opacity:1,rotation:0,duration:1.4,ease:"elastic.out(1,.7)"},.4)
+    .to(["#pf1","#pf2"],{scale:1,opacity:1,duration:.9,stagger:.15,ease:"back.out(2)"},.9);
+  tl.add(startCycler,1.4);
+}
 
-  // ---------- buffers ----------
-  function buffer(data, attr, n) {
-    var b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, data, gl.DYNAMIC_DRAW);
-    gl.enableVertexAttribArray(attr); gl.vertexAttribPointer(attr, n, gl.FLOAT, false, 0, 0); return b;
-  }
-  var SZ = new Float32Array(N);
-  var bPos = buffer(P, loc.pos, 3), bCol = buffer(Cc, loc.col, 3), bSize = buffer(SZ, loc.size, 1);
-  gl.disable(gl.DEPTH_TEST); gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE);
+/* loader */
+safe("loader",()=>{
+  const L=document.createElement("div");L.className="loader gut";L.setAttribute("aria-hidden","true");
+  L.innerHTML=`<div class="top label"><span>Independent app studio</span><span>Canada</span></div><div><div class="count" id="lc">0</div><div class="wordbox"><span class="fitword" id="lw">DRAKIVERSE</span></div><div class="bar"><i id="lb"></i></div></div>`;
+  document.body.appendChild(L);
+  const lw=$("#lw",L);const chars=splitChars(lw);fitWord(lw);
+  const c={v:0};
+  const tl=G.timeline({onComplete:()=>L.remove()});
+  tl.from(chars,{yPercent:115,duration:.9,stagger:.045,ease:"expo.out"})
+    .to(c,{v:100,duration:1.5,ease:"power2.inOut",onUpdate:()=>$("#lc",L).textContent=Math.round(c.v)},0)
+    .to($("#lb",L),{scaleX:1,duration:1.5,ease:"power2.inOut"},0)
+    .to(chars,{yPercent:-115,duration:.6,stagger:.025,ease:"expo.in"},1.65)
+    .to(L,{clipPath:"inset(0% 0% 100% 0%)",duration:.9,ease:"expo.inOut"},2.05)
+    .add(heroIntro,2.25);
+  L.style.clipPath="inset(0% 0% 0% 0%)";
+  setTimeout(()=>{if(L.isConnected){L.remove();G.set([heroChars,".h-rise","#phL","#phS","#pf1","#pf2"].flat(),{clearProps:"all"})}},7000);
+});
 
-  // ---------- math ----------
-  function perspective(fovy, aspect, near, far) {
-    var f = 1 / Math.tan(fovy / 2), nf = 1 / (near - far);
-    return new Float32Array([f / aspect, 0, 0, 0, 0, f, 0, 0, 0, 0, (far + near) * nf, -1, 0, 0, 2 * far * near * nf, 0]);
-  }
-  function lookAt(e, t, u) {
-    var zx = e[0] - t[0], zy = e[1] - t[1], zz = e[2] - t[2], zl = Math.hypot(zx, zy, zz) || 1; zx /= zl; zy /= zl; zz /= zl;
-    var xx = u[1] * zz - u[2] * zy, xy = u[2] * zx - u[0] * zz, xz = u[0] * zy - u[1] * zx, xl = Math.hypot(xx, xy, xz) || 1; xx /= xl; xy /= xl; xz /= xl;
-    var yx = zy * xz - zz * xy, yy = zz * xx - zx * xz, yz = zx * xy - zy * xx;
-    return new Float32Array([xx, yx, zx, 0, xy, yy, zy, 0, xz, yz, zz, 0, -(xx * e[0] + xy * e[1] + xz * e[2]), -(yx * e[0] + yy * e[1] + yz * e[2]), -(zx * e[0] + zy * e[1] + zz * e[2]), 1]);
-  }
-  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
-  function smooth(a, b, v) { var t = clamp((v - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); }
-  function lerp(a, b, t) { return a + (b - a) * t; }
+/* cycling word */
+const WORDS=["relief.","savings.","calm.","clarity."];let wi=0;
+function startCycler(){
+  const cyc=$("#cycler");
+  const swap=()=>{const old=$$(".mask > span",cyc);
+    G.to(old,{yPercent:-115,rotation:-6,duration:.4,stagger:.02,ease:"power3.in",onComplete:()=>{
+      wi=(wi+1)%WORDS.length;cyc.textContent=WORDS[wi];const n=splitChars(cyc);
+      G.fromTo(n,{yPercent:115,rotation:8},{yPercent:0,rotation:0,duration:.8,stagger:.03,ease:"expo.out"});G.delayedCall(2.4,swap)}})};
+  G.delayedCall(2.2,swap);
+}
 
-  // Camera path over scroll progress: [s, radius, elevation, azimuth]
-  var KEYS = [[0, 16, 0.0, 0.0], [0.16, 17, 0.25, 0.2], [0.34, 27, 1.05, 0.8], [0.5, 9, 0.5, 1.7], [0.62, 3.2, 0.18, 2.3], [0.78, 13, 0.32, 2.9], [1, 12, 0.28, 3.4]];
-  function camAt(s) {
-    for (var k = 0; k < KEYS.length - 1; k++) {
-      var a = KEYS[k], b = KEYS[k + 1];
-      if (s <= b[0]) { var t = smooth(a[0], b[0], s); return [lerp(a[1], b[1], t), lerp(a[2], b[2], t), lerp(a[3], b[3], t)]; }
-    }
-    var l = KEYS[KEYS.length - 1]; return [l[1], l[2], l[3]];
-  }
+/* hero: magnetic, tilt, scroll parallax */
+safe("hero-motion",()=>{
+  $$(".magnetic").forEach(b=>{const qx=G.quickTo(b,"x",{duration:.6,ease:"elastic.out(1,.4)"}),qy=G.quickTo(b,"y",{duration:.6,ease:"elastic.out(1,.4)"});
+    b.addEventListener("pointermove",e=>{if(e.pointerType!=="mouse")return;const r=b.getBoundingClientRect();qx((e.clientX-r.left-r.width/2)*.3);qy((e.clientY-r.top-r.height/2)*.4)});
+    b.addEventListener("pointerleave",()=>{qx(0);qy(0)})});
+  const ph=$("#phones");G.set(ph,{transformPerspective:1000});
+  const rx=G.quickTo(ph,"rotationX",{duration:.9,ease:"power3.out"}),ry=G.quickTo(ph,"rotationY",{duration:.9,ease:"power3.out"});
+  const p1x=G.quickTo("#pf1","x",{duration:1.2,ease:"power3.out"}),p2x=G.quickTo("#pf2","x",{duration:1.2,ease:"power3.out"});
+  $("#top").addEventListener("pointermove",e=>{const r=e.currentTarget.getBoundingClientRect();const nx=(e.clientX-r.left)/r.width-.5,ny=(e.clientY-r.top)/r.height-.5;rx(-ny*22);ry(nx*30);p1x(nx*50);p2x(-nx*60)});
+  G.to("#pf1",{y:-12,duration:2,repeat:-1,yoyo:true,ease:"sine.inOut"});G.to("#pf2",{y:12,duration:2.4,repeat:-1,yoyo:true,ease:"sine.inOut"});
+  const st={trigger:"#top",start:"top top",end:"bottom top",scrub:true};
+  G.to("#heroCopy",{y:-140,opacity:0,ease:"none",scrollTrigger:st});
+  G.to("#phL",{xPercent:-30,yPercent:-12,rotation:-14,ease:"none",scrollTrigger:st});
+  G.to("#phS",{xPercent:24,yPercent:14,rotation:10,ease:"none",scrollTrigger:st});
+});
 
-  // ---------- input ----------
-  var pointer = { x: 0, y: 0, active: false, nx: 0, ny: 0 };
-  function setPointer(cx, cy) {
-    var r = canvas.getBoundingClientRect();
-    pointer.nx = ((cx - r.left) / r.width) * 2 - 1; pointer.ny = -(((cy - r.top) / r.height) * 2 - 1); pointer.active = true;
-  }
-  canvas.addEventListener('pointermove', function (e) { setPointer(e.clientX, e.clientY); });
-  canvas.addEventListener('pointerleave', function () { pointer.active = false; });
-  canvas.addEventListener('pointerdown', function (e) {
-    setPointer(e.clientX, e.clientY);
-    for (var i = 0; i < N; i++) { var i3 = i * 3, f = 0.35 + rnd(i, 40) * 0.9; VEL[i3] += (rnd(i, 41) - 0.5) * f; VEL[i3 + 1] += (rnd(i, 42) - 0.5) * f; VEL[i3 + 2] += (rnd(i, 43) - 0.5) * f; }
+/* nav, progress */
+safe("nav",()=>{
+  G.to("#progress",{scaleX:1,ease:"none",scrollTrigger:{start:0,end:"max",scrub:.3}});
+  const nav=$("#nav");ST.create({start:0,end:"max",onUpdate:s=>{if(!$("#detail").hidden)return;nav.classList.toggle("hide",s.direction===1&&s.scroll()>240)}});
+});
+
+/* velocity marquee */
+safe("marquee",()=>{
+  const t1=G.to("#m1",{xPercent:-50,duration:26,ease:"none",repeat:-1});
+  const t2=G.fromTo("#m2",{xPercent:-50},{xPercent:0,duration:30,ease:"none",repeat:-1});
+  const skew=G.quickTo(".mrow","skewX",{duration:.5,ease:"power3.out"});
+  ST.create({start:0,end:"max",onUpdate:s=>{const v=s.getVelocity();const ts=1+Math.min(Math.abs(v)/250,8);
+    G.to([t1,t2],{timeScale:ts,duration:.15,overwrite:true,onComplete:()=>G.to([t1,t2],{timeScale:1,duration:1.2,ease:"power2.out"})});
+    skew(G.utils.clamp(-12,12,-v/180))}});
+});
+
+/* pinned horizontal worlds */
+safe("worlds",()=>{
+  const track=$("#track");const dist=()=>Math.max(0,track.scrollWidth-document.documentElement.clientWidth);
+  const hz=G.to(track,{x:()=>-dist(),ease:"none",scrollTrigger:{trigger:"#worlds",start:"top top",end:()=>"+="+dist(),pin:true,scrub:.8,invalidateOnRefresh:true,anticipatePin:1,
+    onUpdate:s=>G.set("#wbar",{scaleX:s.progress})}});
+  $$(".world",track).forEach(card=>{
+    G.fromTo($(".art",card),{xPercent:22,rotation:8},{xPercent:-22,rotation:-8,ease:"none",scrollTrigger:{trigger:card,containerAnimation:hz,start:"left right",end:"right left",scrub:true}});
+    G.from($(".wname",card),{yPercent:60,opacity:0,ease:"power2.out",scrollTrigger:{trigger:card,containerAnimation:hz,start:"left 85%",end:"left 45%",scrub:true}});
   });
+  G.timeline({repeat:-1,repeatDelay:1.2}).to(".world.snip .half-l",{x:-6,y:3,rotation:-6,transformOrigin:"30% 50%",duration:.5,ease:"back.out(2)"})
+    .to(".world.snip .half-r",{x:6,y:-3,rotation:6,transformOrigin:"70% 50%",duration:.5,ease:"back.out(2)"},"<").to(".world.snip .half-l,.world.snip .half-r",{x:0,y:0,rotation:0,duration:.6,ease:"power3.inOut",delay:.8});
+  $$(".world.lapse .st").forEach(p=>{const L=p.getTotalLength();G.set(p,{strokeDasharray:L})});
+  G.timeline({repeat:-1,repeatDelay:1.4}).fromTo(".world.lapse .st",{strokeDashoffset:(i,t)=>t.getTotalLength()},{strokeDashoffset:0,duration:.9,stagger:.18,ease:"power3.inOut"}).to({},{duration:1.2});
+  G.to(".qm",{rotation:12,scale:1.1,duration:1.6,repeat:-1,yoyo:true,ease:"sine.inOut"});
+});
 
-  // ---------- layout ----------
-  var overlays = [].slice.call(document.querySelectorAll('.ov'));
-  function showAllOverlays() { overlays = overlays || []; [].forEach.call(document.querySelectorAll('.ov'), function (o) { o.style.opacity = 1; o.classList.add('on'); }); }
-  function resize() {
-    var r = stage.getBoundingClientRect();
-    DPR = Math.min(window.devicePixelRatio || 1, small ? 1.5 : 2);
-    W = Math.max(1, r.width); H = Math.max(1, r.height);
-    canvas.width = Math.round(W * DPR); canvas.height = Math.round(H * DPR);
-    markCanvas.width = canvas.width; markCanvas.height = canvas.height; markDrawn = -1;
-    gl.viewport(0, 0, canvas.width, canvas.height);
-    gl.uniformMatrix4fv(loc.proj, false, perspective(FOV, W / H, 0.05, 200));
-    gl.uniform1f(loc.scale, (H * DPR) / (2 * Math.tan(FOV / 2)));
-    buildText();
-  }
+/* Lapse time-lapse (pinned, scroll = time) */
+safe("lapse",()=>{
+  $$(".ls").forEach(p=>{const L=p.getTotalLength();G.set(p,{strokeDasharray:L,strokeDashoffset:L})});
+  const tl=G.timeline({scrollTrigger:{trigger:"#lapse",start:"top top",end:"+=240%",pin:true,scrub:.6,anticipatePin:1}});
+  tl.to(".ls",{strokeDashoffset:0,stagger:.04,duration:.15,ease:"power2.out"},0)
+    .to(lapseState,{t:214,duration:1,ease:"none",onUpdate:renderLapse},0)
+    .to("#lapse",{"--sbg":"#fff1dc","--sfg":"#0b0b0c","--smuted":"#5b544b",duration:.18,ease:"power1.inOut"},.42);
+  renderLapse();
+});
 
-  function scrollProgress() {
-    if (reduce) return 0;
-    var r = universe.getBoundingClientRect(), span = r.height - window.innerHeight;
-    return span > 0 ? clamp(-r.top / span, 0, 1) : 0;
-  }
+/* manifesto + cards */
+safe("manifesto",()=>{
+  const m=$("#manifesto");m.setAttribute("aria-label",m.textContent.replace(/\s+/g," ").trim());
+  const walk=n=>[...n.childNodes].forEach(c=>{if(c.nodeType===3){const f=document.createDocumentFragment();c.textContent.split(/(\s+)/).forEach(t=>{if(!t||/^\s+$/.test(t))return;const s=document.createElement("span");s.textContent=t;s.setAttribute("aria-hidden","true");f.appendChild(s)});c.replaceWith(f)}else if(c.nodeType===1){c.setAttribute("aria-hidden","true")}});
+  walk(m);
+  G.fromTo($$("span",m),{opacity:.16,y:10},{opacity:1,y:0,stagger:.08,ease:"none",scrollTrigger:{trigger:m,start:"top 82%",end:"bottom 45%",scrub:true}});
+  G.from(".pcard",{y:80,opacity:0,rotation:3,duration:1,stagger:.1,ease:"expo.out",scrollTrigger:{trigger:"#pgrid",start:"top 85%"}});
+});
 
-  // ---------- frame ----------
-  var phaseEl = document.getElementById('phase'), coordsEl = document.getElementById('coords'), countEl = document.getElementById('count2');
-  var warpGlow = document.getElementById('warpglow'), warpZ = 0, start = performance.now(), smoothS = 0, camPar = [0, 0], lastPhase = '';
-  countEl.textContent = 'Stars ' + N.toLocaleString();
-  function frame(now) {
-    var t = (now - start) / 1000;
-    var intro = reduce ? 10 : t;
-    var sTarget = scrollProgress();
-    smoothS += (sTarget - smoothS) * 0.09;
-    var s = smoothS;
+/* contact letters + footer word */
+safe("contact",()=>{
+  G.from(bigLetters,{yPercent:120,rotation:()=>G.utils.random(-25,25),opacity:0,duration:1.5,stagger:.05,ease:"elastic.out(1,.5)",scrollTrigger:{trigger:"#big",start:"top 85%"}});
+  bigLetters.forEach((s,i)=>{s.addEventListener("pointerenter",()=>G.to(s,{y:-24,rotation:i%2?10:-10,duration:.6,ease:"elastic.out(1,.3)"}));s.addEventListener("pointerleave",()=>G.to(s,{y:0,rotation:0,duration:.9,ease:"elastic.out(1,.3)"}))});
+  G.from(footLetters,{yPercent:100,opacity:0,duration:1.1,stagger:.05,ease:"expo.out",scrollTrigger:{trigger:"#footword",start:"top 95%"}});
+});
+safe("appmails",()=>{G.from(".appmail",{y:24,opacity:0,duration:.8,stagger:.1,ease:"back.out(1.6)",scrollTrigger:{trigger:".appmails",start:"top 92%"}})});
+safe("footer",()=>{
+  G.from(".fin",{y:50,opacity:0,duration:1,stagger:.08,ease:"expo.out",scrollTrigger:{trigger:".fgrid",start:"top 88%"}});
+  G.from(".fcol li",{x:-16,opacity:0,duration:.6,stagger:.04,ease:"power3.out",scrollTrigger:{trigger:".fgrid",start:"top 85%"}});
+  G.to("#toRing",{rotation:360,duration:14,repeat:-1,ease:"none",transformOrigin:"50% 50%"});
+  const tt=$("#totop"),qx=G.quickTo(tt,"x",{duration:.6,ease:"elastic.out(1,.4)"}),qy=G.quickTo(tt,"y",{duration:.6,ease:"elastic.out(1,.4)"});
+  tt.addEventListener("pointermove",e=>{if(e.pointerType!=="mouse")return;const r=tt.getBoundingClientRect();qx((e.clientX-r.left-r.width/2)*.35);qy((e.clientY-r.top-r.height/2)*.35)});
+  tt.addEventListener("pointerleave",()=>{qx(0);qy(0)});
+  tt.addEventListener("click",e=>{e.preventDefault();G.to("#toRing",{rotation:"+=360",duration:.9,ease:"expo.inOut"});scrollTo({top:0,behavior:"smooth"})});
+});
 
-    var bang = reduce ? 1 : 1 - Math.pow(1 - clamp(intro / 1.8, 0, 1), 3);
-    var dissolve = smooth(0.02, 0.17, s);
-    var planet = smooth(0.6, 0.8, s);
-    var spin = t * 0.05 + s * 2.2, cs = Math.cos(spin), sn = Math.sin(spin);
-    var pspin = t * 0.25, pc = Math.cos(pspin), ps = Math.sin(pspin);
-
-    // pointer in world space on the text plane (only meaningful near the start)
-    var aspect = W / H, halfH = Math.tan(FOV / 2) * 16, halfW = halfH * aspect;
-    var px = pointer.nx * halfW, py = pointer.ny * halfH, repel = pointer.active ? (1 - dissolve) * (1 - planet) : 0;
-    var rad = small ? 1.35 : 2.0;
-
-    // camera (computed first so the portal can face it)
-    var cam = camAt(s);
-    var logoUp = 1 - dissolve;
-    camPar[0] += ((pointer.active ? pointer.nx : 0) * 0.12 * (1 - logoUp) - camPar[0]) * 0.05;
-    camPar[1] += ((pointer.active ? pointer.ny : 0) * 0.08 * (1 - logoUp) - camPar[1]) * 0.05;
-    var narrow = Math.max(1, 0.95 / aspect);
-    var radius = cam[0] * lerp(1, narrow, planet) * (reduce ? 1 : lerp(1.6, 1, smooth(0, 2.2, intro))), el = cam[1] + camPar[1], az = cam[2] + camPar[0] + (planet > 0 ? t * 0.03 * planet : 0);
-    var eye = [radius * Math.cos(el) * Math.sin(az), radius * Math.sin(el), radius * Math.cos(el) * Math.cos(az)];
-    var lift = planet * (aspect < 0.9 ? 2.6 : 1.4);
-    var fl = Math.hypot(eye[0], eye[1] + lift, eye[2]) || 1, fx = -eye[0] / fl, fy = -(eye[1] + lift) / fl, fz = -eye[2] / fl;
-    var rxx = -fz, rzz = fx, rl = Math.hypot(rxx, rzz) || 1; rxx /= rl; rzz /= rl; // right = f x up
-    var uxx = -rzz * fy, uyy = rzz * fx - rxx * fz, uzz = rxx * fy; // up = right x f
-    var portal = smooth(0.4, 0.5, s) * (1 - smooth(0.62, 0.72, s));
-    var dtw = Math.min(0.05, (now - (frame.last || now)) / 1000); frame.last = now;
-    var warpSpeed = 4 + portal * 12 + Math.min(30, Math.abs(sTarget - smoothS) * 900);
-    warpZ += dtw * warpSpeed;
-    var warpLen = 0.15 + warpSpeed * 0.035;
-
-    var motion = 0;
-    for (var i = 0; i < N; i++) {
-      var i3 = i * 3;
-      var gx = G[i3] * bang, gy = G[i3 + 1] * bang, gz = G[i3 + 2] * bang;
-      var rx = gx * cs - gz * sn, rz = gx * sn + gz * cs;
-      var mt = reduce ? 1 : smooth(0, 1, (intro - 1.7 - DELAY[i]) / 1.5);
-      var ux0 = T[i3] / (MARK.halfW || 1), w0 = 0.015 + (ux0 + 1) * 0.045 + rnd(i, 64) * 0.03;
-      var dl = reduce ? dissolve : smooth(w0, w0 + 0.08, s), ta = mt * (1 - dl);
-      var x = lerp(rx, T[i3], ta), y = lerp(gy, T[i3 + 1], ta), z = lerp(rz, T[i3 + 2], ta);
-      var arc = dl * (1 - dl) * 4 * mt;
-      if (arc > 0) { x += arc * (1.5 + rnd(i, 65) * 2.5); y += arc * (rnd(i, 66) * 3 - 0.6); z -= arc * rnd(i, 67) * 5; }
-      var po = 0, wdepth = 1, wfade = 1;
-      if (portal > 0) {
-        var WL = 34, wd = (RZ[i] * WL - warpZ) % WL; if (wd < 0) wd += WL;
-        var tk = i % 6; wdepth = 0.6 + wd + tk * warpLen;
-        wfade = smooth(WL, WL * 0.55, wdepth) * smooth(0.6, 2.5, wdepth) * (1 - tk / 6.5);
-        var pang = RA[i] + t * 0.08, qx = Math.cos(pang) * RR[i], qy = Math.sin(pang) * RR[i];
-        po = clamp(portal * 1.3 - DELAY[i] * 0.4, 0, 1);
-        x = lerp(x, eye[0] + rxx * qx + uxx * qy + fx * wdepth, po);
-        y = lerp(y, eye[1] + uyy * qy + fy * wdepth, po);
-        z = lerp(z, eye[2] + rzz * qx + uzz * qy + fz * wdepth, po);
-      }
-      // living logo: letters breathe in depth, a light wave sweeps across, stardust rises off the tops
-      var sweep = 0, dust = 0;
-      if (ta > 0.01 && !reduce) {
-        var ux = T[i3] / MARK.halfW;
-        z += Math.sin(t * 1.4 + ux * 4 + T[i3 + 1] * 0.9) * 0.22 * ta;
-        var sp = ((t * 0.32) % 1.9) * 2.4 - 1.6, dsw = ux - sp;
-        sweep = Math.exp(-dsw * dsw * 30) * ta;
-        z += sweep * 0.5;
-        if (rnd(i, 60) < 0.07) {
-          var ph = (t * (0.12 + rnd(i, 61) * 0.16) + rnd(i, 62)) % 1;
-          dust = ta * Math.sin(ph * Math.PI);
-          y += ph * ph * 2.6 * ta; x += Math.sin(ph * 6 + i) * 0.25 * ph * ta; z += ph * 1.2 * ta;
-        }
-      }
-      if (planet > 0) {
-        var plx = PL[i3] * pc - PL[i3 + 2] * ps, plz = PL[i3] * ps + PL[i3 + 2] * pc;
-        var pa = clamp(planet * 1.25 - DELAY[i] * 0.35, 0, 1);
-        x = lerp(x, plx, pa); y = lerp(y, PL[i3 + 1], pa); z = lerp(z, plz, pa);
-      }
-      // touch: push stars away, springs pull them back
-      if (repel > 0) {
-        var dx = x + OFF[i3] - px, dy = y + OFF[i3 + 1] - py, d2 = dx * dx + dy * dy;
-        if (d2 < rad * rad) { var d = Math.sqrt(d2) || 0.001, f = (1 - d / rad) * 0.09 * repel; VEL[i3] += dx / d * f; VEL[i3 + 1] += dy / d * f; VEL[i3 + 2] += (rnd(i, 50) - 0.5) * f; }
-      }
-      VEL[i3] = VEL[i3] * 0.86 - OFF[i3] * 0.045; VEL[i3 + 1] = VEL[i3 + 1] * 0.86 - OFF[i3 + 1] * 0.045; VEL[i3 + 2] = VEL[i3 + 2] * 0.86 - OFF[i3 + 2] * 0.045;
-      OFF[i3] += VEL[i3]; OFF[i3 + 1] += VEL[i3 + 1]; OFF[i3 + 2] += VEL[i3 + 2];
-      motion += Math.abs(OFF[i3]) + Math.abs(OFF[i3 + 1]);
-      P[i3] = x + OFF[i3]; P[i3 + 1] = y + OFF[i3 + 1]; P[i3 + 2] = z + OFF[i3 + 2];
-      // colour: galaxy -> warm paper for the word -> lime planet
-      var tw = ta * 0.85, sparkle = 0.85 + 0.15 * Math.sin(t * 3 + i);
-      var tr = 1.0, tg = 0.1, tb = 0.08;
-      if (TC[i]) { tr = 0.95; tg = 0.95; tb = 1.0; }
-      var cr = lerp(GC[i3], tr, tw), cg = lerp(GC[i3 + 1], tg, tw), cb = lerp(GC[i3 + 2], tb, tw);
-      if (planet > 0) { cr = lerp(cr, PC[i3], planet); cg = lerp(cg, PC[i3 + 1], planet); cb = lerp(cb, PC[i3 + 2], planet); }
-      var twk = rnd(i, 63) < 0.04 ? Math.pow(0.5 + 0.5 * Math.sin(t * 2.3 + i * 1.7), 8) * ta : 0;
-      var glow = (0.55 + 0.75 * ta + 0.25 * planet) * sparkle * (1 - 0.6 * dust) + twk * 1.6;
-      // sweep tints the passing wave an electric blue-violet
-      cr += sweep * 0.6; cg += sweep * (TC[i] ? 0.3 : 0.75); cb += sweep * (TC[i] ? 0.3 : 0.6);
-      if (dust > 0) { cg = lerp(cg, 0.32, dust * 0.7); cb = lerp(cb, 0.12, dust * 0.7); }
-      if (po > 0) {
-        var red = RI[i] > 0, wb = lerp(1, wfade * 5.5, po);
-        cr = lerp(cr, red ? 1.0 : 0.82, po) * wb; cg = lerp(cg, red ? 0.18 : 0.88, po) * wb; cb = lerp(cb, red ? 0.12 : 1.0, po) * wb;
-      }
-      Cc[i3] = cr * glow; Cc[i3 + 1] = cg * glow; Cc[i3 + 2] = cb * glow;
-      var redBoost = TC[i] ? 1 : 1 + 0.45 * ta;
-      Cc[i3] *= redBoost; Cc[i3 + 1] *= redBoost; Cc[i3 + 2] *= redBoost;
-      SZ[i] = S[i] * (1 - 0.32 * ta) * (1 + sweep * 0.9 + twk * 1.5);
-      // in the warp, keep every star a small sharp point (size grows only slightly as it rushes past)
-      if (po > 0) SZ[i] = lerp(SZ[i], wdepth * 0.0032 * (1 + 3 / wdepth), po);
-    }
-    gl.bindBuffer(gl.ARRAY_BUFFER, bPos); gl.bufferSubData(gl.ARRAY_BUFFER, 0, P);
-    gl.bindBuffer(gl.ARRAY_BUFFER, bCol); gl.bufferSubData(gl.ARRAY_BUFFER, 0, Cc);
-    gl.bindBuffer(gl.ARRAY_BUFFER, bSize); gl.bufferSubData(gl.ARRAY_BUFFER, 0, SZ);
-    if (window.DrakiAudio) window.DrakiAudio.setScroll(s);
-
-    // camera matrix (eye computed above); in the planet view, aim below the planet so it sits above the Snip card.
-    gl.uniformMatrix4fv(loc.view, false, lookAt(eye, [0, -lift, 0], [0, 1, 0]));
-
-    gl.clearColor(10 / 255, 13 / 255, 20 / 255, 1); gl.clear(gl.COLOR_BUFFER_BIT);
-    gl.drawArrays(gl.POINTS, 0, N);
-    warpGlow.style.opacity = (portal * (0.75 + 0.25 * Math.sin(t * 3))).toFixed(3);
-
-    var settled = reduce ? 1 : smooth(3.1, 4.3, intro), disturbed = clamp(motion / N * 6, 0, 1);
-    var target = settled * (1 - smooth(0.0, 0.06, s)) * (1 - disturbed);
-    markAlpha = 0; // the logo stays made of stars
-
-    // HUD + story
-    var phase = s < 0.1 ? '01 / Formation' : s < 0.4 ? '02 / Galaxy' : s < 0.66 ? '03 / Warp' : '04 / App 01 · Snip';
-    if (phase !== lastPhase) { phaseEl.textContent = phase; lastPhase = phase; }
-    coordsEl.textContent = 'X ' + (eye[0] >= 0 ? '+' : '') + eye[0].toFixed(2) + ' · Y ' + (eye[1] >= 0 ? '+' : '') + eye[1].toFixed(2) + ' · Z ' + (eye[2] >= 0 ? '+' : '') + eye[2].toFixed(1);
-    if (!reduce) for (var o = 0; o < overlays.length; o++) {
-      var ov = overlays[o], a = +ov.dataset.from, b = +ov.dataset.to;
-      var op = Math.min(smooth(a, a + 0.05, s), 1 - smooth(b - 0.05, b, s));
-      if (a < 0) op = (1 - smooth(b - 0.04, b, s)) * smooth(2.4, 3.4, intro);
-      ov.style.opacity = op.toFixed(3);
-      ov.style.transform = 'translateY(' + ((1 - op) * 18).toFixed(1) + 'px)';
-      ov.classList.toggle('on', op > 0.5);
-    }
-  }
-
-  var running = true;
-  if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { running = e[0].isIntersecting; }, { threshold: 0 }).observe(universe);
-  function loop(now) { if (running) frame(now); requestAnimationFrame(loop); }
-  window.addEventListener('resize', function () { small = Math.min(window.innerWidth, window.innerHeight) < 700; resize(); });
-  window.universeSeek = function (sec, s) { start = performance.now() - sec * 1000; smoothS = s; };
-
-  var go = function () { resize(); requestAnimationFrame(loop); };
-  if (document.fonts && document.fonts.load) Promise.race([Promise.all([document.fonts.load("700 100px 'DrakiMark'"), document.fonts.load("italic 400 100px 'DrakiSerif'")]), new Promise(function (r) { setTimeout(r, 2500); })]).then(go, go);
-  else go();
+addEventListener("load",()=>ST.refresh());
 })();
 </script>
 
