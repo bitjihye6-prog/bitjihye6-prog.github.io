@@ -13,7 +13,7 @@
 <title>Drakiverse Studio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=Pacifico&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
 <style>
 /* Layout: loader → kinetic hero with two app phones → velocity marquee → pinned horizontal app worlds that open full-screen → live Snip demo (Flip) → pinned Lapse "time-lapse" where scroll is time → scroll-lit manifesto → elastic contact → fit-width DRAKIVERSE footer. Deliberately dark (Snip + Lapse colours on black and cream). */
 :root{
@@ -244,6 +244,16 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
 .foot{padding-block:40px calc(24px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);overflow:hidden}
 .foot .wordbox{width:100%}
 .foot .fitword span{display:inline-block}
+.sig{display:flex;justify-content:flex-end;margin-top:clamp(-210px,-14vw,-34px);padding-right:1%;pointer-events:none}
+.sig .ink{position:relative;display:inline-block;font-family:"Pacifico","Brush Script MT",cursive;font-weight:400;font-size:clamp(48px,11vw,170px);line-height:1.15;padding:0 .12em .1em;transform:rotate(-6deg);
+  background:linear-gradient(100deg,var(--purple) 0%,var(--pink) 30%,var(--orange) 55%,var(--pink) 78%,var(--purple) 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  clip-path:inset(-20% 100% -20% 0);transition:clip-path 1.8s cubic-bezier(.65,0,.35,1)}
+.sig.on .ink{clip-path:inset(-20% -5% -20% 0);animation:sigflow 6s linear 1.8s infinite}
+.sig svg{position:absolute;left:8%;right:4%;bottom:-.02em;width:88%;height:.32em;overflow:visible}
+.sig path{fill:none;stroke:url(#siggrad);stroke-width:5;stroke-linecap:round;stroke-dasharray:420;stroke-dashoffset:420;transition:stroke-dashoffset 1s cubic-bezier(.65,0,.35,1) 1.6s}
+.sig.on path{stroke-dashoffset:0}
+@keyframes sigflow{to{background-position:-220% 0}}
+@media (prefers-reduced-motion:reduce){.sig .ink{clip-path:none;transition:none;animation:none}.sig path{stroke-dashoffset:0;transition:none}}
 .stripes{display:flex;height:8px;margin-top:22px;border-radius:8px;overflow:hidden}
 .stripes i{flex:1}
 
@@ -554,7 +564,9 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
       </a>
     </div>
     <div class="wordbox" style="margin-top:clamp(32px,5vw,56px)"><p class="fitword" id="footword" aria-label="Drakiverse">DRAKIVERSE</p></div>
+    <div class="sig" id="sig" aria-label=".studio"><span class="ink" aria-hidden="true">.studio<svg viewBox="0 0 300 40" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="siggrad" x1="0" x2="1"><stop offset="0" stop-color="#9d8cff"/><stop offset=".5" stop-color="#ff8fc7"/><stop offset="1" stop-color="#ffa03a"/></linearGradient></defs><path d="M4 30 C 70 8, 150 38, 220 18 S 290 10, 296 14"/></svg></span></div>
     <div class="stripes" aria-hidden="true"><i style="background:var(--snip)"></i><i style="background:var(--purple)"></i><i style="background:var(--pink)"></i><i style="background:var(--orange)"></i></div>
+    <script>(()=>{const el=document.getElementById("sig");if(!el)return;if(!("IntersectionObserver" in window)){el.classList.add("on");return}const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){el.classList.add("on");io.disconnect()}})},{threshold:.4});io.observe(el)})();</script>
     <div class="fbottom label"><span>© 2026 Drakiverse Studio · Made in Canada</span><span><a href="#privacy">Privacy</a> · <a href="#terms">Terms</a> · <a href="#help">Help</a></span></div>
   </div>
 </footer>
