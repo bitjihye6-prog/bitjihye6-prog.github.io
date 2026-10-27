@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Drakiverse Studio is an independent app studio from Canada making small apps that each fix one everyday annoyance. Meet Snip and Lapse. Android first, iOS on the way.">
+<meta name="description" content="Drakiverse Studio is an independent app studio from Canada making small apps that each fix one everyday annoyance. Meet Snip and Lastly. Android first, iOS on the way.">
 <meta name="theme-color" content="#0b0b0c">
 <meta property="og:title" content="Drakiverse Studio">
-<meta property="og:description" content="Small apps. Big relief. Meet Snip and Lapse.">
+<meta property="og:description" content="Small apps. Big relief. Meet Snip and Lastly.">
 <meta property="og:url" content="https://drakiverse.studio/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%230b0b0c'/%3E%3Crect x='22' y='22' width='14' height='56' rx='7' fill='%23c8ff2e'/%3E%3Crect x='42' y='22' width='14' height='56' rx='7' fill='%239d8cff'/%3E%3Crect x='62' y='22' width='14' height='56' rx='7' fill='%23ff8fc7'/%3E%3C/svg%3E">
 <style>body{margin:0}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=Pacifico&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
 <style>
-/* Layout: loader → kinetic hero with two app phones → velocity marquee → pinned horizontal app worlds that open full-screen → live Snip demo (Flip) → pinned Lapse "time-lapse" where scroll is time → scroll-lit manifesto → elastic contact → fit-width DRAKIVERSE footer. Deliberately dark (Snip + Lapse colours on black and cream). */
+/* Layout: loader → kinetic hero with two app phones → velocity marquee → pinned horizontal app worlds that open full-screen → live Snip demo (Flip) → pinned Lastly "time-lapse" where scroll is time → scroll-lit manifesto → elastic contact → fit-width DRAKIVERSE footer. Deliberately dark (Snip + Lastly colours on black and cream). */
 :root{
   --bg:#0b0b0c; --surface:#151517; --surface-2:#202023; --fg:#fff1dc; --muted:#b5ac9e; --line:rgba(255,241,220,.13);
   --snip:#c8ff2e; --snip-ink:#0b0b0b;
@@ -80,7 +80,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
 .stage{position:relative;min-height:560px;display:grid;place-items:center;perspective:1200px}
 .phones{position:relative;width:min(300px,62vw);aspect-ratio:9/19;transform-style:preserve-3d}
 .phone{position:absolute;inset:0;border-radius:42px;padding:10px;background:#1c1c1f;box-shadow:0 0 0 1px #2c2c30,0 50px 100px -40px rgba(0,0,0,.8)}
-.phone.lapse{transform:translate(-34%,-6%) rotate(-9deg) scale(.9)}
+.phone.lastly{transform:translate(-34%,-6%) rotate(-9deg) scale(.9)}
 .phone.snip{transform:translate(18%,6%) rotate(5deg)}
 .scr{height:100%;border-radius:33px;overflow:hidden;padding:20px 14px;display:flex;flex-direction:column;gap:8px}
 .scr.s{background:var(--snip-ink);color:#f3f3ee}
@@ -97,8 +97,8 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
 .scr.s .row b{font-family:var(--f-mono);font-weight:500;color:var(--snip)}
 .scr.l .row{background:rgba(11,11,12,.06);font-weight:600}
 .dpill{font-family:var(--f-mono);font-size:10.5px;font-weight:500;padding:3px 8px;border-radius:999px;color:var(--ink)}
-.lapse-logo{display:flex;align-items:center;gap:6px}
-.lapse-logo svg{width:22px;height:22px}
+.lastly-logo{display:flex;align-items:center;gap:6px}
+.lastly-logo svg{width:22px;height:22px}
 .note{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;opacity:.55;text-align:center;margin-top:auto}
 .pillf{position:absolute;display:flex;align-items:center;gap:9px;padding:10px 14px;border-radius:14px;background:rgba(21,21,23,.92);border:1px solid var(--line);font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 20px 40px -20px rgba(0,0,0,.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .pillf i{width:8px;height:8px;border-radius:50%;flex:none}
@@ -121,7 +121,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
 .track{display:flex;gap:clamp(16px,2vw,28px);width:max-content}
 .world{position:relative;width:min(84vw,540px);height:min(62svh,560px);min-height:410px;border-radius:30px;padding:clamp(20px,2.4vw,30px);display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
 .world.snip{background:var(--snip);color:var(--snip-ink);border-color:transparent}
-.world.lapse{background:var(--cream);color:var(--ink);border-color:transparent}
+.world.lastly{background:var(--cream);color:var(--ink);border-color:transparent}
 .wtop{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .idx{font-family:var(--f-mono);font-size:13px;letter-spacing:.1em}
 .chip{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:999px;border:1.5px solid currentColor;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
@@ -132,7 +132,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
 .wname{font-family:var(--f-display);font-weight:700;font-size:clamp(52px,6.4vw,92px);line-height:.88;letter-spacing:-.045em;margin:0}
 .wline{margin:10px 0 0;font-size:16px;max-width:38ch;opacity:.85}
 .wopen{margin-top:18px;align-self:flex-start;display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 20px;border-radius:999px;font-weight:700;background:var(--ink);color:var(--fg)}
-.world:not(.snip):not(.lapse) .wopen{background:var(--fg);color:var(--ink)}
+.world:not(.snip):not(.lastly) .wopen{background:var(--fg);color:var(--ink)}
 .wopen svg{width:18px;height:18px}
 .wbar{height:3px;background:var(--line);border-radius:3px;overflow:hidden}
 .wbar i{display:block;height:100%;background:var(--spectrum);transform-origin:0 50%;transform:scaleX(0)}
@@ -141,7 +141,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
 /* detail */
 .detail{position:fixed;inset:0;z-index:80;overflow-y:auto;background:var(--surface);color:var(--fg);overscroll-behavior:contain}
 .detail.snip{background:var(--snip);color:var(--snip-ink)}
-.detail.lapse{background:var(--cream);color:var(--ink)}
+.detail.lastly{background:var(--cream);color:var(--ink)}
 .dinner{max-width:1100px;margin:0 auto;padding-block:calc(26px + env(safe-area-inset-top,0px)) calc(48px + env(safe-area-inset-bottom,0px));display:grid;gap:22px}
 .dbar{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .close{width:52px;height:52px;border-radius:50%;border:1.5px solid currentColor;display:grid;place-items:center}
@@ -157,7 +157,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
 .dctas{display:flex;gap:12px;flex-wrap:wrap}
 .dbtn{display:inline-flex;align-items:center;min-height:52px;padding:0 22px;border-radius:999px;font-weight:700;border:1.5px solid currentColor;text-decoration:none}
 .dbtn.solid{background:var(--ink);color:var(--fg);border-color:var(--ink)}
-.detail:not(.snip):not(.lapse) .dbtn.solid{background:var(--fg);color:var(--ink);border-color:var(--fg)}
+.detail:not(.snip):not(.lastly) .dbtn.solid{background:var(--fg);color:var(--ink);border-color:var(--fg)}
 
 /* demo */
 .section{padding-block:clamp(80px,12vw,150px)}
@@ -188,16 +188,16 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:70;background:var(--fg);color:var(--ink);border-radius:999px;padding:8px 8px 8px 20px;display:flex;align-items:center;gap:14px;font-weight:600;box-shadow:0 20px 50px -20px rgba(0,0,0,.6);max-width:calc(100vw - 32px);transform:translate(-50%,160%);white-space:nowrap}
 .toast button{min-height:40px;padding:0 16px;border-radius:999px;background:var(--snip);color:var(--snip-ink);font-weight:700;flex:none}
 
-/* lapse time-lapse */
-.lapse-sec{--sbg:#0b0b0c;--sfg:#fff1dc;--smuted:#b5ac9e;background:var(--sbg);color:var(--sfg);position:relative;overflow:hidden}
-.lapse-in{min-height:100svh;display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,70px);align-items:center;padding-block:90px 50px}
-.lapse-copy{min-width:0}
-.lapse-copy .label{color:var(--smuted)}
-.lapse-copy .h2{display:flex;align-items:center;gap:14px}
-.lapse-copy .h2 svg{width:.9em;height:.9em;flex:none}
-.lapse-copy p.lead{color:var(--smuted);font-size:18px;max-width:42ch;margin:16px 0 0}
-.lapse-copy .facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
-.lapse-copy .facts span{font-family:var(--f-mono);font-size:12px;padding:7px 11px;border-radius:999px;border:1px solid currentColor}
+/* lastly time-lapse */
+.lastly-sec{--sbg:#0b0b0c;--sfg:#fff1dc;--smuted:#b5ac9e;background:var(--sbg);color:var(--sfg);position:relative;overflow:hidden}
+.lastly-in{min-height:100svh;display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,70px);align-items:center;padding-block:90px 50px}
+.lastly-copy{min-width:0}
+.lastly-copy .label{color:var(--smuted)}
+.lastly-copy .h2{display:flex;align-items:center;gap:14px}
+.lastly-copy .h2 svg{width:.9em;height:.9em;flex:none}
+.lastly-copy p.lead{color:var(--smuted);font-size:18px;max-width:42ch;margin:16px 0 0}
+.lastly-copy .facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.lastly-copy .facts span{font-family:var(--f-mono);font-size:12px;padding:7px 11px;border-radius:999px;border:1px solid currentColor}
 .clock{position:relative;display:grid;place-items:center;min-width:0}
 .ringwrap{position:relative;width:min(380px,78vw);aspect-ratio:1}
 .ringwrap svg{width:100%;height:100%;transform:rotate(-90deg)}
@@ -316,15 +316,15 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
 .faq details p{margin:0 0 18px}
 
 @media (max-width:900px){
-  .hero-grid,.demo-grid,.lapse-in{grid-template-columns:1fr}
+  .hero-grid,.demo-grid,.lastly-in{grid-template-columns:1fr}
   .stage{min-height:480px}
   .demo-copy{position:static}
   .pgrid{grid-template-columns:1fr 1fr}
-  .lapse-in{padding-block:80px 30px;gap:18px}
-  .lapse-copy p.lead{font-size:16px;margin-top:10px}
+  .lastly-in{padding-block:80px 30px;gap:18px}
+  .lastly-copy p.lead{font-size:16px;margin-top:10px}
   .ringwrap{width:min(250px,62vw)}
   .items{margin-top:14px}
-  .lapse-copy .facts{margin-top:12px}
+  .lastly-copy .facts{margin-top:12px}
   .fgrid{grid-template-columns:1fr 1fr 1fr}
   .fbrand{grid-column:1/-1}
   .totop{grid-column:1/-1;justify-self:end;margin-top:-40px}
@@ -357,7 +357,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
     <a class="brand" href="#top" aria-label="Drakiverse Studio home"><span class="dot" aria-hidden="true"></span><span class="bw">DRAKIVERSE</span></a>
     <nav class="navlinks" id="navlinks" aria-label="Sections">
       <span class="navpill" id="navpill" aria-hidden="true"></span>
-      <a href="#worlds">Apps</a><a href="#demo">Snip</a><a href="#lapse">Lapse</a><a href="#contact">Contact</a>
+      <a href="#worlds">Apps</a><a href="#demo">Snip</a><a href="#lastly">Lastly</a><a href="#contact">Contact</a>
     </nav>
   </div>
 </header>
@@ -379,9 +379,9 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
       </div>
       <div class="stage" id="stage">
         <div class="phones" id="phones">
-          <div class="phone lapse" id="phL">
-            <div class="scr l" role="img" aria-label="Example Lapse screen with three countdowns">
-              <div class="apph"><span class="lapse-logo"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M28 22V78H78" fill="none" stroke="#9d8cff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="M39 22V67H78" fill="none" stroke="#ff8fc7" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="M50 22V56H78" fill="none" stroke="#ffa03a" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg><b>lapse</b></span><small>Coming up</small></div>
+          <div class="phone lastly" id="phL">
+            <div class="scr l" role="img" aria-label="Example Lastly screen with three countdowns">
+              <div class="apph"><span class="lastly-logo"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M28 22V78H78" fill="none" stroke="#9d8cff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="M39 22V67H78" fill="none" stroke="#ff8fc7" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="M50 22V56H78" fill="none" stroke="#ffa03a" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg><b>lastly</b></span><small>Coming up</small></div>
               <div class="row"><span>Milk</span><span class="dpill" style="background:var(--orange)">2 days</span></div>
               <div class="row"><span>Hydro bill</span><span class="dpill" style="background:var(--pink)">6 days</span></div>
               <div class="row"><span>Car insurance</span><span class="dpill" style="background:var(--pink)">41 days</span></div>
@@ -402,7 +402,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
           </div>
         </div>
         <div class="pillf pf1" id="pf1"><i></i>Snip · Cloud storage renews in 2 days</div>
-        <div class="pillf pf2" id="pf2"><i></i>Lapse · Passport: 140 days left</div>
+        <div class="pillf pf2" id="pf2"><i></i>Lastly · Passport: 140 days left</div>
       </div>
     </div>
   </section>
@@ -431,17 +431,17 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
           <p class="wline">Find every subscription you pay for, get a heads-up before renewals, and cut what you forgot.</p>
           <button class="wopen" data-open="snip"><span>Open Snip</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </article>
-        <article class="world lapse">
+        <article class="world lastly">
           <div class="wtop"><span class="idx">App 02</span><span class="chip"><i></i>Coming soon to Google Play</span></div>
-          <div class="art"><svg viewBox="0 0 100 100" role="img" aria-label="Lapse logo, three retro stripes forming an L">
+          <div class="art"><svg viewBox="0 0 100 100" role="img" aria-label="Lastly logo, three retro stripes forming an L">
             <rect width="100" height="100" rx="24" fill="#fff1dc" stroke="#0b0b0c" stroke-opacity=".08"/>
             <path class="st" d="M28 22V78H78" fill="none" stroke="#9d8cff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
             <path class="st" d="M39 22V67H78" fill="none" stroke="#ff8fc7" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
             <path class="st" d="M50 22V56H78" fill="none" stroke="#ffa03a" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
           </svg></div>
-          <h3 class="wname">Lapse</h3>
+          <h3 class="wname">Lastly</h3>
           <p class="wline">Everything that expires or comes due, from passports to bills, counting down in one place.</p>
-          <button class="wopen" data-open="lapse"><span>Open Lapse</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          <button class="wopen" data-open="lastly"><span>Open Lastly</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </article>
         <article class="world">
           <div class="wtop"><span class="idx">App 03</span><span class="chip"><i></i>In the lab</span></div>
@@ -477,17 +477,17 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
     </div>
   </section>
 
-  <section class="lapse-sec gut" id="lapse">
-    <div class="wrap lapse-in">
-      <div class="lapse-copy">
-        <p class="label">Meet Lapse · Coming soon to Google Play</p>
+  <section class="lastly-sec gut" id="lastly">
+    <div class="wrap lastly-in">
+      <div class="lastly-copy">
+        <p class="label">Meet Lastly · Coming soon to Google Play</p>
         <h2 class="h2"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="ls" d="M28 22V78H78" fill="none" stroke="#9d8cff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path class="ls" d="M39 22V67H78" fill="none" stroke="#ff8fc7" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path class="ls" d="M50 22V56H78" fill="none" stroke="#ffa03a" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></svg>Scroll is time.</h2>
-        <p class="lead">Lapse counts down everything that expires or comes due: passports, warranties, insurance, food, medication and upcoming bills. Keep scrolling and watch a few months pass.</p>
+        <p class="lead">Lastly counts down everything that expires or comes due: passports, warranties, insurance, food, medication and upcoming bills. Keep scrolling and watch a few months pass.</p>
         <div class="facts"><span>Free for 5 items</span><span>Pro unlock $3.99</span><span>Android first, iOS next</span></div>
-        <div class="snipctas"><a class="btn" style="background:var(--purple);color:#0b0b0c;border-color:transparent" href="https://drakiverse.studio/lapse/">Screenshots &amp; details ↗</a></div>
+        <div class="snipctas"><a class="btn" style="background:var(--purple);color:#0b0b0c;border-color:transparent" href="https://drakiverse.studio/lastly/">Screenshots &amp; details ↗</a></div>
       </div>
       <div class="clock">
-        <div class="lnote" id="lnote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>Lapse · Passport: 140 days left</div>
+        <div class="lnote" id="lnote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>Lastly · Passport: 140 days left</div>
         <div class="ringwrap">
           <svg viewBox="0 0 200 200" aria-hidden="true">
             <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9d8cff"/><stop offset=".5" stop-color="#ff8fc7"/><stop offset="1" stop-color="#ffa03a"/></linearGradient></defs>
@@ -496,7 +496,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
           </svg>
           <div class="ringmid"><div><div class="days" id="days">214</div><small>days until your passport expires</small></div></div>
         </div>
-        <div class="items" id="items" aria-label="Example Lapse items">
+        <div class="items" id="items" aria-label="Example Lastly items">
           <div class="item" data-d="2"><span>Milk</span><span class="left" style="background:var(--orange)">2 days</span></div>
           <div class="item" data-d="6"><span>Hydro bill</span><span class="left" style="background:var(--pink)">6 days</span></div>
           <div class="item" data-d="41"><span>Car insurance</span><span class="left" style="background:var(--pink)">41 days</span></div>
@@ -527,7 +527,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
       <div class="mailrow"><span class="mail" id="mail">hello@drakiverse.studio</span><button class="copy" id="copy" type="button">Copy</button></div>
       <div class="appmails">
         <div class="appmail" style="--lc:var(--snip)"><span class="am-k"><i></i>Snip support</span><span class="am-v">snip@drakiverse.studio</span><button class="am-c" type="button" data-copy-text="snip@drakiverse.studio" aria-label="Copy Snip support email">Copy</button></div>
-        <div class="appmail" style="--lc:var(--purple)"><span class="am-k"><i></i>Lapse support</span><span class="am-v">lapse@drakiverse.studio</span><button class="am-c" type="button" data-copy-text="lapse@drakiverse.studio" aria-label="Copy Lapse support email">Copy</button></div>
+        <div class="appmail" style="--lc:var(--purple)"><span class="am-k"><i></i>Lastly support</span><span class="am-v">lastly@drakiverse.studio</span><button class="am-c" type="button" data-copy-text="lastly@drakiverse.studio" aria-label="Copy Lastly support email">Copy</button></div>
       </div>
       <p class="label" id="copyLive" aria-live="polite" style="margin-top:12px;min-height:1.4em"></p>
     </div>
@@ -546,7 +546,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
         <h3>Apps</h3>
         <ul>
           <li><a class="flink" href="https://drakiverse.studio/snipapp/" style="--lc:var(--snip)"><span class="sw" aria-hidden="true"></span>Snip<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
-          <li><a class="flink" href="#lapse" style="--lc:var(--purple)"><span class="sw" aria-hidden="true"></span>Lapse<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+          <li><a class="flink" href="#lastly" style="--lc:var(--purple)"><span class="sw" aria-hidden="true"></span>Lastly<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
           <li><a class="flink" href="#contact" style="--lc:var(--orange)"><span class="sw" aria-hidden="true"></span>App 03 <span class="fbadge">In the lab</span></a></li>
         </ul>
       </nav>
@@ -604,7 +604,7 @@ function fitWord(el){el.style.fontSize="100px";const w=el.getBoundingClientRect(
 
 /* ---------- static content builders (always run) ---------- */
 safe("marquee-build",()=>{
-  const A=["Snip","Lapse","Free to start","Pay once","Android first","iOS next"], B=["One app","One job","No clutter","Small fixes","Big relief","Made in Canada"];
+  const A=["Snip","Lastly","Free to start","Pay once","Android first","iOS next"], B=["One app","One job","No clutter","Small fixes","Big relief","Made in Canada"];
   const dots=["a","b","c","d"];
   const make=items=>items.map((t,i)=>`<span class="${i%2?"o":""}">${t}<em class="${dots[i%4]}"></em></span>`).join("");
   $("#m1").innerHTML=make(A).repeat(2);$("#m2").innerHTML=make(B).repeat(2);
@@ -671,7 +671,7 @@ safe("detail",()=>{
   const LOGO_L='<svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="24" fill="#fff1dc" stroke="#0b0b0c" stroke-opacity=".12"/><path d="M28 22V78H78" fill="none" stroke="#9d8cff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="M39 22V67H78" fill="none" stroke="#ff8fc7" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="M50 22V56H78" fill="none" stroke="#ffa03a" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   const D={
     snip:{tone:"snip",num:"App 01 · Coming to Google Play",name:"Snip",logo:LOGO_S,kick:"A subscription tracker.",body:"Snip puts every recurring charge in one list, warns you before something renews, and shows what you really spend each month and each year.",feats:["Every subscription in one list","A heads-up before anything renews","Monthly and yearly totals","Free. Snip Pro is a one-time purchase."],cta:["#demo","Try the live demo"],ext:[["https://play.google.com/store/apps/details?id=app.snip.tracker","View on Google Play"],["https://drakiverse.studio/snipapp/","Screenshots & details"]]},
-    lapse:{tone:"lapse",num:"App 02 · Coming soon to Google Play",name:"Lapse",logo:LOGO_L,kick:"An all-in-one expiry tracker.",body:"If it expires or comes due, it goes in Lapse. Passports, warranties, insurance, food, medication and upcoming bills, all counting down, with reminders before the date, not after.",feats:["Documents, warranties and insurance","Food and medication","Upcoming bills","Free for 5 items. Pro unlock for $3.99."],cta:["#lapse","Watch time pass"],ext:[["https://drakiverse.studio/lapse/","Screenshots & details"]]},
+    lastly:{tone:"lastly",num:"App 02 · Coming soon to Google Play",name:"Lastly",logo:LOGO_L,kick:"An all-in-one expiry tracker.",body:"If it expires or comes due, it goes in Lastly. Passports, warranties, insurance, food, medication and upcoming bills, all counting down, with reminders before the date, not after.",feats:["Documents, warranties and insurance","Food and medication","Upcoming bills","Free for 5 items. Pro unlock for $3.99."],cta:["#lastly","Watch time pass"],ext:[["https://drakiverse.studio/lastly/","Screenshots & details"]]},
     next:{tone:"",num:"App 03 · In the lab",name:"Next",logo:"",kick:"The next small fix.",body:"We keep a running list of little things that waste people's time. If something bugs you every week and an app could make it go away, tell us.",feats:["One problem per app","Android first, iOS next","Free to start, fair to upgrade","Your idea could be App 03"],cta:["#contact","Suggest an idea"]}
   };
   const det=$("#detail");let state=null;
@@ -697,20 +697,20 @@ safe("detail",()=>{
 
 /* ---------- legal & help sheet (hash routes: #privacy #terms #help) ---------- */
 safe("sheet",()=>{
-  const EMAIL="hello@drakiverse.studio", SNIP="snip@drakiverse.studio", LAPSE="lapse@drakiverse.studio", UPD="Last updated October 26, 2026";
+  const EMAIL="hello@drakiverse.studio", SNIP="snip@drakiverse.studio", LASTLY="lastly@drakiverse.studio", UPD="Last updated October 26, 2026";
   const box=(addr,label)=>`<div class="mailbox">${label?`<b class="k">${label}</b>`:""}<span>${addr}</span><button class="copy" type="button" data-copy="${addr}">Copy</button></div>`;
   const mailbox=box(EMAIL);
-  const allMail=`<div class="mails">${box(EMAIL,"General")}${box(SNIP,"Snip")}${box(LAPSE,"Lapse")}</div>`;
+  const allMail=`<div class="mails">${box(EMAIL,"General")}${box(SNIP,"Snip")}${box(LASTLY,"Lastly")}</div>`;
   const sec=(c,t,body)=>`<h3 class="si"><i style="background:var(${c})"></i>${t}</h3>${body}`;
   const PAGES={
     privacy:{title:"Privacy Policy",html:`<p class="intro si">Drakiverse Studio makes small apps that respect your privacy. This policy explains what happens to your information when you use our apps and this website.</p>
-      ${sec("--fg","Who we are",`<p class="si">Drakiverse Studio is an independent app developer based in Canada. You can reach us any time at ${EMAIL}, or at ${SNIP} and ${LAPSE} for app-specific questions.</p>`)}
+      ${sec("--fg","Who we are",`<p class="si">Drakiverse Studio is an independent app developer based in Canada. You can reach us any time at ${EMAIL}, or at ${SNIP} and ${LASTLY} for app-specific questions.</p>`)}
       ${sec("--snip","Snip",`<ul class="si"><li><strong>Your data stays on your phone.</strong> The subscriptions you add are stored on your device. We don't run servers, so we never receive them.</li><li><strong>No account needed.</strong> Snip doesn't ask you to sign up or log in.</li><li><strong>We don't sell or share personal information.</strong> We don't collect it in the first place.</li><li><strong>Purchases go through Google Play.</strong> If you buy Snip Pro, Google handles the payment. We never see your card details.</li></ul><p class="si">Snip also has its own app privacy policy at <a href="https://drakiverse.studio/snipapp/privacy.html" target="_blank" rel="noopener">drakiverse.studio/snipapp/privacy.html</a>.</p>`)}
-      ${sec("--purple","Lapse",`<ul class="si"><li><strong>Your data stays on your phone.</strong> Items, bills, people, notes and photos are stored on your device. We don't run servers, so we never receive them.</li><li><strong>No account, no bank login.</strong></li><li><strong>Purchases go through Google Play.</strong> We never see your card details.</li></ul><p class="si">Lapse also has its own app privacy policy at <a href="https://drakiverse.studio/lapse/privacy" target="_blank" rel="noopener">drakiverse.studio/lapse/privacy</a>.</p>`)}
+      ${sec("--purple","Lastly",`<ul class="si"><li><strong>Your data stays on your phone.</strong> Items, bills, people, notes and photos are stored on your device. We don't run servers, so we never receive them.</li><li><strong>No account, no bank login.</strong></li><li><strong>Purchases go through Google Play.</strong> We never see your card details.</li></ul><p class="si">Lastly also has its own app privacy policy at <a href="https://drakiverse.studio/lastly/privacy" target="_blank" rel="noopener">drakiverse.studio/lastly/privacy</a>.</p>`)}
       ${sec("--pink","This website",`<p class="si">This site has no sign-up and no contact forms. It loads fonts from Google Fonts and code from a public content network (cdnjs), which means those services receive standard technical information such as your IP address when the page loads.</p>`)}
       ${sec("--orange","Children",`<p class="si">Our apps are general-audience tools and aren't designed for children under 13. We don't knowingly collect information from anyone.</p>`)}
       ${sec("--fg","Changes and contact",`<p class="si">If this policy changes, we'll update this page and the date above. Questions? Write to us.</p><div class="si">${mailbox}</div>`)}`},
-    terms:{title:"Terms of Service",html:`<p class="intro si">These terms apply when you use apps made by Drakiverse Studio, including Snip and Lapse. By using our apps, you agree to them.</p>
+    terms:{title:"Terms of Service",html:`<p class="intro si">These terms apply when you use apps made by Drakiverse Studio, including Snip and Lastly. By using our apps, you agree to them.</p>
       ${sec("--snip","Using our apps",`<p class="si">You can use the free version of each app for personal use. Please don't copy, resell or reverse-engineer the apps.</p>`)}
       ${sec("--purple","One-time purchases",`<p class="si">Upgrades like Snip Pro are a single, one-time purchase made through Google Play (and later the App Store). They're tied to your store account, so you can restore them on a new phone. Refunds follow the store's refund policy.</p>`)}
       ${sec("--pink","Reminders are a helping hand",`<p class="si">Our apps help you keep track of renewals, bills and expiry dates, but notifications can be delayed or missed, for example if your phone is off or notifications are disabled. Please don't rely on our apps as your only reminder for important dates like passport renewals or bill payments.</p>`)}
@@ -721,7 +721,7 @@ safe("sheet",()=>{
         <details><summary>Is Snip free?</summary><p>Yes. Snip is free to use. Snip Pro is an optional one-time purchase, not a subscription.</p></details>
         <details><summary>Where is my data stored?</summary><p>On your phone. We don't run servers and you don't need an account, so your subscriptions and items never leave your device.</p></details>
         <details><summary>I bought Pro. How do I get it on a new phone?</summary><p>Sign in to Google Play with the same Google account you used to buy it, reinstall the app, and your purchase will be restored.</p></details>
-        <details><summary>When is Lapse coming out?</summary><p>Lapse is built and in testing now, and is coming soon to Google Play. Email us if you'd like to hear the day it launches.</p></details>
+        <details><summary>When is Lastly coming out?</summary><p>Lastly is built and in testing now, and is coming soon to Google Play. Email us if you'd like to hear the day it launches.</p></details>
         <details><summary>Are your apps on iPhone?</summary><p>Not yet. We're launching on Android first, and iOS is on the way.</p></details>
         <details><summary>Can I suggest an app idea?</summary><p>Please do. If an everyday annoyance bugs you every week, tell us. It might become App 03.</p></details>
       </div>
@@ -748,11 +748,11 @@ safe("sheet",()=>{
   addEventListener("keydown",e=>{if(!current)return;if(e.key==="Escape")close();if(e.key==="Tab"){const f=$$("a,button,summary",sh);const a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}});
 });
 
-/* ---------- Lapse time-lapse update fn (used by scroll or shown static) ---------- */
-const lapseState={t:0};
-function renderLapse(){
+/* ---------- Lastly time-lapse update fn (used by scroll or shown static) ---------- */
+const lastlyState={t:0};
+function renderLastly(){
   const days=$("#days"),arc=$("#arc"),items=$$("#items .item");
-  const el=Math.round(lapseState.t);const pass=Math.max(0,214-el);
+  const el=Math.round(lastlyState.t);const pass=Math.max(0,214-el);
   days.textContent=pass;arc.style.strokeDashoffset=(540.35*(1-pass/214)).toFixed(1);
   items.forEach(it=>{const left=+it.dataset.d-el;const tag=it.querySelector(".left");const done=left<=0;
     if(done!==it.classList.contains("done")){it.classList.toggle("done",done);if(G&&motion)G.fromTo(tag,{scale:1.35},{scale:1,duration:.6,ease:"elastic.out(1,.4)"})}
@@ -761,7 +761,7 @@ function renderLapse(){
 }
 
 /* ---------- MOTION LAYER (GSAP) ---------- */
-if(!motion){safe("static-lapse",()=>{lapseState.t=0;renderLapse()});return}
+if(!motion){safe("static-lastly",()=>{lastlyState.t=0;renderLastly()});return}
 
 const heroChars=[];
 safe("hero-prep",()=>{
@@ -856,19 +856,19 @@ safe("worlds",()=>{
   });
   G.timeline({repeat:-1,repeatDelay:1.2}).to(".world.snip .half-l",{x:-6,y:3,rotation:-6,transformOrigin:"30% 50%",duration:.5,ease:"back.out(2)"})
     .to(".world.snip .half-r",{x:6,y:-3,rotation:6,transformOrigin:"70% 50%",duration:.5,ease:"back.out(2)"},"<").to(".world.snip .half-l,.world.snip .half-r",{x:0,y:0,rotation:0,duration:.6,ease:"power3.inOut",delay:.8});
-  $$(".world.lapse .st").forEach(p=>{const L=p.getTotalLength();G.set(p,{strokeDasharray:L})});
-  G.timeline({repeat:-1,repeatDelay:1.4}).fromTo(".world.lapse .st",{strokeDashoffset:(i,t)=>t.getTotalLength()},{strokeDashoffset:0,duration:.9,stagger:.18,ease:"power3.inOut"}).to({},{duration:1.2});
+  $$(".world.lastly .st").forEach(p=>{const L=p.getTotalLength();G.set(p,{strokeDasharray:L})});
+  G.timeline({repeat:-1,repeatDelay:1.4}).fromTo(".world.lastly .st",{strokeDashoffset:(i,t)=>t.getTotalLength()},{strokeDashoffset:0,duration:.9,stagger:.18,ease:"power3.inOut"}).to({},{duration:1.2});
   G.to(".qm",{rotation:12,scale:1.1,duration:1.6,repeat:-1,yoyo:true,ease:"sine.inOut"});
 });
 
-/* Lapse time-lapse (pinned, scroll = time) */
-safe("lapse",()=>{
+/* Lastly time-lapse (pinned, scroll = time) */
+safe("lastly",()=>{
   $$(".ls").forEach(p=>{const L=p.getTotalLength();G.set(p,{strokeDasharray:L,strokeDashoffset:L})});
-  const tl=G.timeline({scrollTrigger:{trigger:"#lapse",start:"top top",end:"+=240%",pin:true,scrub:.6,anticipatePin:1}});
+  const tl=G.timeline({scrollTrigger:{trigger:"#lastly",start:"top top",end:"+=240%",pin:true,scrub:.6,anticipatePin:1}});
   tl.to(".ls",{strokeDashoffset:0,stagger:.04,duration:.15,ease:"power2.out"},0)
-    .to(lapseState,{t:214,duration:1,ease:"none",onUpdate:renderLapse},0)
-    .to("#lapse",{"--sbg":"#fff1dc","--sfg":"#0b0b0c","--smuted":"#5b544b",duration:.18,ease:"power1.inOut"},.42);
-  renderLapse();
+    .to(lastlyState,{t:214,duration:1,ease:"none",onUpdate:renderLastly},0)
+    .to("#lastly",{"--sbg":"#fff1dc","--sfg":"#0b0b0c","--smuted":"#5b544b",duration:.18,ease:"power1.inOut"},.42);
+  renderLastly();
 });
 
 /* manifesto + cards */
