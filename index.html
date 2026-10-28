@@ -188,7 +188,11 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
 /* demo */
 .section{padding-block:clamp(80px,12vw,150px)}
 .demo-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,5vw,72px);align-items:start}
-.demo-copy{min-width:0;position:sticky;top:110px}
+.demo-copy{min-width:0;align-self:center}
+.demo-show{min-width:0;align-self:center}.demo-show .snipshow{margin-bottom:0}
+.demo-tot{min-width:0;position:sticky;top:110px;margin-top:clamp(20px,4vw,60px)}.demo-list{min-width:0;margin-top:clamp(20px,4vw,60px)}
+.try-label{color:var(--snip)}.try-lead{color:var(--muted);font-size:17px;max-width:42ch;margin:8px 0 0}
+.snip-h{display:flex;align-items:center;gap:14px;font-size:clamp(40px,5.2vw,80px)}.snip-h span{white-space:nowrap}.snip-logo{width:.9em;height:.9em;flex:none;overflow:visible}
 .demo-copy .h2 em{font-style:normal;color:var(--snip)}
 .demo-copy > p.lead{color:var(--muted);font-size:18px;max-width:42ch}
 .totals{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:26px}
@@ -444,7 +448,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
   .cb-item{padding:8px 10px}
   .cb-item i{width:28px;height:28px}
   .stage{min-height:480px}
-  .demo-copy{position:static}
+  .demo-copy,.demo-tot{position:static}.demo-tot,.demo-list{margin-top:0}
   .pgrid{grid-template-columns:1fr 1fr}
   .lastly-in{padding-block:80px 30px;gap:18px}
   .lastly-copy p.lead{font-size:16px;margin-top:10px}
@@ -607,19 +611,13 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
   <section class="section gut" id="demo">
     <div class="wrap demo-grid">
       <div class="demo-copy">
-        <p class="label">Try Snip</p>
-        <h2 class="h2">Cut what<br>you <em>forgot.</em></h2>
-        <p class="lead">Tap the scissors on anything you don't use. Watch your monthly total drop and your yearly savings climb.</p>
-        <div class="totals">
-          <div class="total"><small>You pay / month</small><strong id="tMonth">$170.45</strong></div>
-          <div class="total hot"><small>Saved / year</small><strong id="tSaved">$0.00</strong></div>
-        </div>
-        <p class="sr" id="demoLive" aria-live="polite"></p>
-        <p class="label" style="margin-top:14px">Example subscriptions, not real data</p>
+        <p class="label">Meet Snip · Subscription tracker</p>
+        <h2 class="h2 snip-h"><svg class="snip-logo" viewBox="0 0 100 100" aria-hidden="true"><defs><clipPath id="sl1"><polygon points="0,0 56,0 38,100 0,100"/></clipPath><clipPath id="sr1"><polygon points="64,0 100,0 100,100 46,100"/></clipPath></defs><rect width="100" height="100" rx="24" fill="#161618"/><g clip-path="url(#sl1)" class="sh-l"><rect x="14" y="26" width="72" height="48" rx="9" fill="#c8ff2e"/><rect x="14" y="36" width="72" height="8" fill="#161618"/></g><g clip-path="url(#sr1)"><g class="sh-r" transform="translate(3,-2)"><rect x="14" y="26" width="72" height="48" rx="9" fill="#c8ff2e"/><rect x="14" y="36" width="72" height="8" fill="#161618"/></g></g></svg><span>Cut what<br>you <em>forgot.</em></span></h2>
+        <p class="lead">Snip puts every subscription in one list, warns you before anything renews, and shows what you really spend each month and each year.</p>
         <div class="facts snipfacts"><span>Free for 3 subscriptions</span><span>Pro unlock $4.99</span><span>No bank login</span></div>
         <div class="snipctas"><a class="btn primary snipplay" href="https://play.google.com/store/apps/details?id=app.snip.tracker" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3.5v17l9-8.5z" fill="currentColor" opacity=".9"/><path d="M13 12l3.2-3.1L6 3.2z" fill="currentColor" opacity=".6"/><path d="M13 12l3.2 3.1L6 20.8z" fill="currentColor" opacity=".6"/><path d="M16.2 8.9 20 11a1.1 1.1 0 0 1 0 2l-3.8 2.1L13 12z" fill="currentColor"/></svg>View on Google Play</a><a class="btn" href="https://drakiverse.studio/snipapp/" target="_blank" rel="noopener">Screenshots &amp; details ↗</a></div>
       </div>
-      <div style="min-width:0">
+      <div class="demo-show">
         <div class="snipshow" id="snipShow" aria-hidden="true">
           <div class="rcpt" id="rcpt"><div class="rc-top">
             <div class="rc-head"><b>Snip</b><small>Your monthly receipt</small></div>
@@ -634,6 +632,18 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
           </div>
           <div class="rc-saved" id="rcSaved"><small>Saved / year</small><b id="rcSave">$1,379.88</b></div>
         </div>
+      </div>
+      <div class="demo-tot">
+        <p class="label try-label">Try it · tap the scissors</p>
+        <p class="try-lead">Cut anything you don't use. Watch your monthly total drop and your yearly savings climb.</p>
+        <div class="totals">
+          <div class="total"><small>You pay / month</small><strong id="tMonth">$170.45</strong></div>
+          <div class="total hot"><small>Saved / year</small><strong id="tSaved">$0.00</strong></div>
+        </div>
+        <p class="sr" id="demoLive" aria-live="polite"></p>
+        <p class="label" style="margin-top:14px">Example subscriptions, not real data</p>
+      </div>
+      <div class="demo-list">
         <ul class="subs" id="subs"></ul>
         <div class="empty" id="empty" hidden></div>
         <button class="restore" id="restore" type="button" hidden>Restore all</button>

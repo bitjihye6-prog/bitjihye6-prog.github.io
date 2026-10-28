@@ -341,6 +341,7 @@ safe("snip-receipt",()=>{
     .to("#rcBa",{rotation:16,svgOrigin:"12 12",duration:.1,yoyo:true,repeat:13,ease:"power1.inOut"},1.6)
     .to("#rcBb",{rotation:-16,svgOrigin:"12 12",duration:.1,yoyo:true,repeat:13,ease:"power1.inOut"},1.6)
     .to(tail,{y:150,rotation:9,opacity:0,duration:.9,ease:"power2.in"},3.15)
+    .to(".snip-logo .sh-r",{x:7,y:-5,rotation:8,svgOrigin:"60 50",duration:.25,ease:"power2.out",yoyo:true,repeat:1,repeatDelay:.5},3.1)
     .to(saved,{scale:1,opacity:1,duration:.7,ease:"back.out(2.2)"},3.5)
     .to(v,{n:1379.88,duration:1.2,ease:"power2.out",onUpdate:fmt},3.5)
     .to(sc,{x:0,duration:.6,ease:"power2.inOut"},6.4)
