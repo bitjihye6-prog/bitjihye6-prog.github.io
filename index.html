@@ -215,6 +215,7 @@ footer .brand .bw2{margin-bottom:8px}
 .qr-card canvas{width:100%;height:100%;display:block}
 .qr-logo{position:absolute;left:50%;top:50%;width:19%;aspect-ratio:1;transform:translate(-50%,-50%) scale(0);border-radius:22%;background:#fff8ea;padding:2.4%;box-shadow:0 6px 18px -6px rgba(0,0,0,.35);pointer-events:none}
 .qr-logo svg{width:100%;height:100%;display:block}
+.qr-again{background:none;border:1px solid var(--line);color:var(--fg);border-radius:999px;padding:9px 16px;font:600 13px var(--f-body);cursor:pointer}.qr-again:hover{background:var(--surface)}
 .qr-cap{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0}
 .qr-cap b{color:var(--fg);font-weight:600}
 @media (max-width:900px){.get-grid{grid-template-columns:1fr}.get-stage{order:2}}
@@ -732,8 +733,8 @@ footer .brand .bw2{margin-bottom:8px}
     <div class="wrap get-grid">
       <div class="get-copy">
         <p class="label">Get the apps</p>
-        <h2 class="h2">Point. Scan.<br><em>Install.</em></h2>
-        <p class="lead">Open your phone's camera and point it at the code. It takes you straight to the app on Google Play.</p>
+        <h2 class="h2">Grow it.<br><em>Scan it.</em></h2>
+        <p class="lead">Every app gets its own little tree. Look at it from above and its leaves are a QR code: point your phone's camera at it and it opens the app on Google Play.</p>
         <div class="get-tabs" role="tablist" aria-label="Choose an app">
           <button type="button" role="tab" class="get-tab" data-app="snip" aria-selected="true"><i style="background:var(--snip)"></i>Snip</button>
           <button type="button" role="tab" class="get-tab" data-app="lastly" aria-selected="false"><i style="background:var(--purple)"></i>Lastly</button>
@@ -747,6 +748,7 @@ footer .brand .bw2{margin-bottom:8px}
           <span class="qr-logo" id="qrLogo" aria-hidden="true"></span>
         </a>
         <p class="qr-cap" id="qrCap">Scan for <b>Snip</b></p>
+        <button type="button" class="qr-again" id="qrAgain" hidden>Grow the tree again ↺</button>
       </div>
     </div>
   </section>
