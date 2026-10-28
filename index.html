@@ -211,15 +211,13 @@ footer .brand .bw2{margin-bottom:8px}
 .get-tab:hover{transform:translateY(-2px)}
 .get-note{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;color:var(--muted);margin:18px 0 0}
 .get-stage{display:flex;flex-direction:column;align-items:center;gap:14px;min-width:0}
-.qr-card{position:relative;display:block;width:min(420px,86vw);aspect-ratio:1;border-radius:28px;outline-offset:6px;background:#f6f1e7;overflow:hidden;box-shadow:0 40px 80px -40px rgba(0,0,0,.7)}
+.qr-card{position:relative;display:block;width:min(560px,92vw);aspect-ratio:1;outline-offset:6px;-webkit-tap-highlight-color:transparent}
 .qr-card canvas{width:100%;height:100%;display:block}
-.qr-card>canvas{transition:opacity .6s ease}
-.qr-tree{position:absolute;inset:0;opacity:0;transition:opacity .6s ease;pointer-events:none}
-.qr-tree canvas{width:100%;height:100%}
-.qr-card.tree>canvas{opacity:0}.qr-card.tree .qr-tree{opacity:1}.qr-card.tree .qr-logo{opacity:0}
-.qr-card.tree.fade>canvas{opacity:1}.qr-card.tree.fade .qr-tree{opacity:0}
-.qr-card.snap>canvas,.qr-card.snap .qr-tree{transition:none}
-.qr-logo{position:absolute;left:50%;top:50%;width:19%;aspect-ratio:1;transform:translate(-50%,-50%);transition:opacity .5s ease;border-radius:22%;background:#fff8ea;padding:2.4%;box-shadow:0 6px 18px -6px rgba(0,0,0,.35);pointer-events:none}
+.qr-flat{position:absolute;inset:0;opacity:0;transition:opacity .8s ease}
+.qr-tree{position:absolute;inset:0;transition:opacity .8s ease;pointer-events:none}
+.qr-card.code .qr-flat{opacity:1}.qr-card.code .qr-tree{opacity:0}
+.qr-logo{position:absolute;left:50%;top:50%;width:12.5%;aspect-ratio:1;transform:translate(-50%,-50%) scale(.4);opacity:0;transition:opacity .4s ease .3s,transform .7s cubic-bezier(.34,1.56,.64,1) .3s;border-radius:22%;background:#fff8ea;padding:1.4%;pointer-events:none}
+.qr-card.code .qr-logo{opacity:1;transform:translate(-50%,-50%) scale(1)}
 .qr-logo svg{width:100%;height:100%;display:block}
 .qr-again{background:none;border:1px solid var(--line);color:var(--fg);border-radius:999px;padding:9px 16px;font:600 13px var(--f-body);cursor:pointer}.qr-again:hover{background:var(--surface)}
 .qr-cap{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0}
@@ -739,8 +737,8 @@ footer .brand .bw2{margin-bottom:8px}
     <div class="wrap get-grid">
       <div class="get-copy">
         <p class="label">Get the apps</p>
-        <h2 class="h2">Grow it.<br><em>Scan it.</em></h2>
-        <p class="lead">Every app gets its own little tree. Look at it from above and its leaves are a QR code: point your phone's camera at it and it opens the app on Google Play.</p>
+        <h2 class="h2">Watch it.<br><em>Scan it.</em></h2>
+        <p class="lead">Each app builds its own code: Snip rains liquid drops, Lastly blows in a gust of petals, and Folderoo grows a tree. When it settles, point your phone's camera at it to open the app on Google Play.</p>
         <div class="get-tabs" role="tablist" aria-label="Choose an app">
           <button type="button" role="tab" class="get-tab" data-app="snip" aria-selected="true"><i style="background:var(--snip)"></i>Snip</button>
           <button type="button" role="tab" class="get-tab" data-app="lastly" aria-selected="false"><i style="background:var(--purple)"></i>Lastly</button>
@@ -750,12 +748,12 @@ footer .brand .bw2{margin-bottom:8px}
       </div>
       <div class="get-stage">
         <a class="qr-card" id="qrLink" href="/get/snip/">
-          <canvas id="qrCanvas" width="400" height="400" role="img" aria-label="QR code that opens Snip on Google Play"></canvas>
+          <canvas class="qr-flat" id="qrCanvas" width="400" height="400" role="img" aria-label="QR code that opens Snip on Google Play"></canvas>
           <div class="qr-tree" id="qrTree" aria-hidden="true"></div>
           <span class="qr-logo" id="qrLogo" aria-hidden="true"></span>
         </a>
         <p class="qr-cap" id="qrCap">Scan for <b>Snip</b></p>
-        <button type="button" class="qr-again" id="qrToggle">See the tree 🌳</button>
+        <button type="button" class="qr-again" id="qrToggle">Replay ↺</button>
       </div>
     </div>
   </section>
