@@ -58,8 +58,9 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
 .nav.hide{transform:translateY(-130%)}
 .nav .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-display);font-weight:700;font-size:17px;letter-spacing:.06em;white-space:nowrap}
-.brand .bw{position:relative;display:inline-block;padding-bottom:12px;margin-bottom:-12px}
-.bstudio{position:absolute;right:-4px;top:58%;font-family:"Pacifico","Brush Script MT",cursive;font-weight:400;font-size:15px;letter-spacing:0;line-height:1.2;padding:0 .15em;transform:rotate(-6deg);background:linear-gradient(100deg,var(--purple) 0%,var(--pink) 30%,var(--orange) 55%,var(--pink) 78%,var(--purple) 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sigflow 6s linear infinite}
+.brand .bw,.brand .bw2{position:relative;display:inline-block;padding-bottom:12px;margin-bottom:-12px}
+footer .brand .bw2{margin-bottom:8px}
+.bstudio{position:absolute;right:-4px;top:58%;font-family:"Pacifico","Brush Script MT",cursive;font-weight:400;font-size:15px;letter-spacing:0;line-height:1.2;padding:0 .15em;transform:rotate(-6deg);font-size:.88em;background:linear-gradient(100deg,var(--purple) 0%,var(--pink) 30%,var(--orange) 55%,var(--pink) 78%,var(--purple) 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sigflow 6s linear infinite}
 .bstudio svg{position:absolute;left:10%;bottom:-3px;width:86%;height:6px;overflow:visible}.bstudio path{fill:none;stroke:url(#siggrad);stroke-width:4;stroke-linecap:round;stroke-dasharray:420;stroke-dashoffset:420;animation:bline 1s cubic-bezier(.65,0,.35,1) .6s forwards}@keyframes bline{to{stroke-dashoffset:0}}
 @media (prefers-reduced-motion:reduce){.bstudio{animation:none}.bstudio path{animation:none;stroke-dashoffset:0}}
 .brand .dot{width:12px;height:12px;border-radius:4px;background:var(--spectrum);flex:none}
@@ -740,7 +741,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
   <div class="wrap">
     <div class="fgrid">
       <div class="fcol fbrand fin">
-        <a class="brand" href="#top" aria-label="Drakiverse Studio, back to top"><span class="dot" aria-hidden="true"></span><span>DRAKIVERSE</span></a>
+        <a class="brand" href="#top" aria-label="Drakiverse Studio, back to top"><span class="dot" aria-hidden="true"></span><span class="bw2">DRAKIVERSE<span class="bstudio" aria-hidden="true">.studio<svg viewBox="0 0 300 40" preserveAspectRatio="none"><path d="M4 30 C 70 8, 150 38, 220 18 S 290 10, 296 14"/></svg></span></span></a>
         <p class="ftag">Small apps.<br><em>Big relief.</em></p>
         <p class="fsmall">An independent app studio from Canada. Android first, iOS on the way.</p>
       </div>
