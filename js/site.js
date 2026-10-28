@@ -220,6 +220,91 @@ function staticRoo(){$("#rooStage").classList.add("static");rooState.t=1;$$("#ct
   const st=$("#cbStatus");st.textContent="Approved";st.classList.add("ok");$("#cbPdf").classList.add("on")}
 
 /* ---------- MOTION LAYER (GSAP) ---------- */
+
+/* ---------- Get the apps: QR codes that build themselves out of blocks ---------- */
+safe("qr",()=>{
+  const cv=$("#qrCanvas"),link=$("#qrLink"),logo=$("#qrLogo"),cap=$("#qrCap"),tabs=$$(".get-tab");
+  if(!cv||!cv.getContext)return;
+  const Q={"snip":{"n":33,"r":["1fc4e7b7f","104131641","174e6a25d","174d1175d","1751bbd5d","104b09441","1fd55557f","1f50500","674d5ad0","1e340d2cf","df2ca203","79c64172","fda7b5b2","141b39d00","2589481c","1a8495e0d","1946f1bfd","227b0677","5cad70d6","140685082","1f7ca180d","1b88db6c5","c2b2f6f","fab57299","1056c71f0","11f5314","1fdf2a754","104d9ab1f","1744a83f6","175ac662b","1756297cc","1048a8101","1fcd70a3c"]},"lastly":{"n":37,"r":["1fc8ae707f","104cf07141","174a6e085d","1742236a5d","175164be5d","104e694441","1fd555557f","1663af00","67d7f2ed0","1d1b176a70","47130a980","161a22dd1e","772a16fdf","79e553f57","d494e9496","d238473f3","78a3680e","3374066c1","ad240ef97","8aaa2f27a","16d84d4592","519e23022","16c5a93490","1203560f8f","155dbb804d","b2eb4211d","9d9995f06","15925e1191","453eafbfc","10aabd1d","1fdd61895b","10455d631b","174323c5f8","175856cd5c","175d93427a","104b06fa0c","1fc655fc17"]},"folderoo":{"n":37,"r":["1fcb7a1d7f","1055b0d541","175b0ffe5d","175a19685d","175de3655d","105aa8fd41","1fd555557f","65bab00","4f4a238be","712fbe869","35002b2cd","d3ee0443a","5451b8269","29e3a7bc5","184a0c024d","1b3ba4e1ba","1fc63bb363","1a0d552fe5","1f5a1cc221","c3d6596e9","1aed3e2349","7a0841269","1bc99d7f3d","133534f6e8","2e9a22de8","8bc05452b","1cc24829e5","59b3a83c8","1a7acd71f1","102eb519","1fdab6e55d","105d127719","17406453f3","174a72d715","17532f5117","104cd1b328","1fcc1391a1"]}};
+  const NAMES={snip:"Snip",lastly:"Lastly",folderoo:"Folderoo"};
+  // 3D colours while building, then dark, high-contrast colours once flat so every phone can scan it.
+  const PAL={
+    snip:{plate:"#fff8ea",edge:"#d9cfb9",top:()=>"#c8ff2e",side:"#5f7a0e",flat:()=>"#111113"},
+    lastly:{plate:"#fff8ea",edge:"#d9cfb9",top:(x,y)=>["#9d8cff","#ff8fc7","#ffa03a"][((x+y)>>2)%3],side:"#4b3d8f",flat:(x,y)=>["#4a3bb0","#a82a68","#b4530c"][((x+y)>>2)%3]},
+    folderoo:{plate:"#fff8ea",edge:"#d9cfb9",top:(x,y)=>((x*7+y*3)%5?"#14857f":"#E8A21F"),side:"#0a4441",flat:()=>"#0d4f4b"}
+  };
+  const ctx=cv.getContext("2d");
+  let app="snip",mods=[],N=0,start=0,raf=0,shown=false,quiet=false;
+  const art=a=>{const s=$(".world."+a+" .art svg");return s?s.outerHTML:""};
+  function load(a){
+    app=a;const q=Q[a];N=q.n;mods=[];
+    const c0=(N-7)/2;
+    q.r.forEach((h,y)=>{const bits=BigInt("0x"+h).toString(2).padStart(N,"0");for(let x=0;x<N;x++){
+      if(bits[x]!=="1")continue;
+      if(x>=c0&&x<c0+7&&y>=c0&&y<c0+7)continue; // room for the app icon (error correction covers it)
+      mods.push({x,y,d:(x+y)/(2*N)*1.1+Math.random()*.35});
+    }});
+    link.href="/get/"+a+"/";
+    cv.setAttribute("aria-label","QR code that opens "+NAMES[a]+" on Google Play");
+    cap.innerHTML="Scan for <b>"+NAMES[a]+"</b>";
+    logo.innerHTML=art(a);
+    tabs.forEach(t=>t.setAttribute("aria-selected",t.dataset.app===a?"true":"false"));
+  }
+  const ease=t=>t<0?0:t>1?1:1-Math.pow(1-t,3);
+  const bounce=t=>{if(t>=1)return 1;const n=7.5625,d=2.75;if(t<1/d)return n*t*t;if(t<2/d)return n*(t-=1.5/d)*t+.75;if(t<2.5/d)return n*(t-=2.25/d)*t+.9375;return n*(t-=2.625/d)*t+.984375};
+  function draw(now){
+    const dpr=Math.min(devicePixelRatio||1,2),W=cv.clientWidth||400;
+    if(cv.width!==Math.round(W*dpr)){cv.width=cv.height=Math.round(W*dpr)}
+    const S=cv.width,P=PAL[app],T=(now-start)/1000;
+    const build=1.9,flatAt=build+.35,flatDur=.9;
+    const f=motion?ease((T-flatAt)/flatDur):1; // 0 = 3D view, 1 = flat
+    const M=N+8; // modules incl. quiet zone
+    const cell=S/M*(1-.18*(1-f));
+    // projection: iso when f=0, straight-on when f=1
+    const ang=(1-f)*Math.PI/4, cs=Math.cos(ang), sn=Math.sin(ang), sq=1-.46*(1-f);
+    const cx=S/2, cy=S/2+(1-f)*S*.06;
+    const pt=(gx,gy,z)=>{const u=(gx-M/2)*cell,v=(gy-M/2)*cell;return [cx+(u*cs-v*sn),cy+(u*sn+v*cs)*sq-z*cell*(1-f)]};
+    ctx.clearRect(0,0,S,S);
+    // plate
+    const th=.9*(1-f),r=[pt(0,0,0),pt(M,0,0),pt(M,M,0),pt(0,M,0)];
+    if(th>.01){ctx.fillStyle=P.edge;ctx.beginPath();[r[1],r[2],r[3]].forEach((p,i)=>ctx[i?"lineTo":"moveTo"](p[0],p[1]));[r[3],r[2],r[1]].forEach(p=>ctx.lineTo(p[0],p[1]+th*cell));ctx.fill()}
+    ctx.fillStyle=P.plate;ctx.beginPath();
+    if(f>=1){const rr=S*.07;ctx.roundRect?ctx.roundRect(0,0,S,S,rr):ctx.rect(0,0,S,S)}else r.forEach((p,i)=>ctx[i?"lineTo":"moveTo"](p[0],p[1]));
+    ctx.fill();
+    // blocks, back to front
+    const h=.9*(1-f);
+    for(const m of mods){
+      const k=motion?bounce((T-m.d)/.75):1; if(k<=0)continue;
+      const gx=m.x+4,gy=m.y+4,z=(1-k)*16;
+      const col=f>.5?P.flat(m.x,m.y):P.top(m.x,m.y);
+      if(f>=1){ctx.fillStyle=col;ctx.fillRect(Math.floor(gx*cell),Math.floor(gy*cell),Math.ceil(cell)+1,Math.ceil(cell)+1);continue}
+      const a=pt(gx,gy,z+h),b=pt(gx+1,gy,z+h),c=pt(gx+1,gy+1,z+h),d=pt(gx,gy+1,z+h);
+      if(h>.02){const b0=pt(gx+1,gy,z),c0=pt(gx+1,gy+1,z),d0=pt(gx,gy+1,z);
+        ctx.fillStyle=P.side;ctx.beginPath();ctx.moveTo(b[0],b[1]);ctx.lineTo(c[0],c[1]);ctx.lineTo(d[0],d[1]);ctx.lineTo(d0[0],d0[1]);ctx.lineTo(c0[0],c0[1]);ctx.lineTo(b0[0],b0[1]);ctx.fill()}
+      ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.lineTo(c[0],c[1]);ctx.lineTo(d[0],d[1]);ctx.closePath();ctx.fill();
+    }
+    if(motion&&T<flatAt+flatDur){raf=requestAnimationFrame(draw)}else{raf=0;if(!quiet)popLogo()}
+  }
+  function popLogo(){
+    if(motion&&G)G.fromTo(logo,{scale:0,rotation:-12,y:-30},{scale:1,rotation:0,y:0,duration:.7,ease:"back.out(2.4)",overwrite:true});
+    else logo.style.transform="translate(-50%,-50%) scale(1)";
+  }
+  function play(a){
+    cancelAnimationFrame(raf);load(a);
+    if(G)G.set(logo,{scale:0});else logo.style.transform="translate(-50%,-50%) scale(0)";
+    start=performance.now();raf=requestAnimationFrame(draw);
+  }
+  // logo is centred with xPercent so GSAP and CSS agree
+  if(G)G.set(logo,{xPercent:-50,yPercent:-50,left:"50%",top:"50%",x:0,y:0,transform:"none"});
+  tabs.forEach(t=>t.addEventListener("click",()=>{if(t.dataset.app!==app||!shown){shown=true;play(t.dataset.app)}}));
+  load("snip");
+  if(motion&&"IntersectionObserver" in window){
+    const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)&&!shown){shown=true;io.disconnect();play(app)}},{threshold:.35});io.observe(cv);
+    quiet=true;draw(performance.now()-1e6);quiet=false;G&&G.set(logo,{scale:1}); // something scannable even before it animates
+  }else{shown=true;quiet=true;draw(0);quiet=false;logo.style.transform="translate(-50%,-50%) scale(1)"}
+  addEventListener("resize",()=>{if(!raf){quiet=true;start=0;draw(performance.now()+1e6);quiet=false}});
+});
+
 if(!motion){safe("static-lastly",()=>{lastlyState.t=0;renderLastly()});safe("static-roo",staticRoo);return}
 
 const heroChars=[];
