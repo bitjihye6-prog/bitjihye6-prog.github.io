@@ -1,0 +1,1 @@
+(()=>{const el=document.getElementById("sig");if(!el)return;if(!("IntersectionObserver" in window)){el.classList.add("on");return}const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){el.classList.add("on");io.disconnect()}})},{threshold:.4});io.observe(el)})();
