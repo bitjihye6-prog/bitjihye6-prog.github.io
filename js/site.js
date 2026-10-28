@@ -119,14 +119,14 @@ safe("detail",()=>{
 
 /* ---------- legal & help sheet (hash routes: #privacy #terms #help) ---------- */
 safe("sheet",()=>{
-  const EMAIL="hello@drakiverse.studio", SNIP="snip@drakiverse.studio", LASTLY="lastly@drakiverse.studio", UPD="Last updated October 26, 2026";
+  const EMAIL="hello@drakiverse.studio", SNIP="snip@drakiverse.studio", LASTLY="lastly@drakiverse.studio", FOLDEROO="folderoo@drakiverse.studio", UPD="Last updated October 26, 2026";
   const box=(addr,label)=>`<div class="mailbox">${label?`<b class="k">${label}</b>`:""}<span>${addr}</span><button class="copy" type="button" data-copy="${addr}">Copy</button></div>`;
   const mailbox=box(EMAIL);
-  const allMail=`<div class="mails">${box(EMAIL,"General")}${box(SNIP,"Snip")}${box(LASTLY,"Lastly")}</div>`;
+  const allMail=`<div class="mails">${box(EMAIL,"General")}${box(SNIP,"Snip")}${box(LASTLY,"Lastly")}${box(FOLDEROO,"Folderoo")}</div>`;
   const sec=(c,t,body)=>`<h3 class="si"><i style="background:var(${c})"></i>${t}</h3>${body}`;
   const PAGES={
     privacy:{title:"Privacy Policy",html:`<p class="intro si">Drakiverse Studio makes small apps that respect your privacy. This policy explains what happens to your information when you use our apps and this website.</p>
-      ${sec("--fg","Who we are",`<p class="si">Drakiverse Studio is an independent app developer based in Canada. You can reach us any time at ${EMAIL}, or at ${SNIP} and ${LASTLY} for app-specific questions.</p>`)}
+      ${sec("--fg","Who we are",`<p class="si">Drakiverse Studio is an independent app developer based in Canada. You can reach us any time at ${EMAIL}, or at ${SNIP}, ${LASTLY} and ${FOLDEROO} for app-specific questions.</p>`)}
       ${sec("--snip","Snip",`<ul class="si"><li><strong>Your data stays on your phone.</strong> The subscriptions you add are stored on your device. We don't run servers, so we never receive them.</li><li><strong>No account needed.</strong> Snip doesn't ask you to sign up or log in.</li><li><strong>We don't sell or share personal information.</strong> We don't collect it in the first place.</li><li><strong>Purchases go through Google Play.</strong> If you buy Snip Pro, Google handles the payment. We never see your card details.</li></ul><p class="si">Snip also has its own app privacy policy at <a href="https://drakiverse.studio/snipapp/privacy.html" target="_blank" rel="noopener">drakiverse.studio/snipapp/privacy.html</a>.</p>`)}
       ${sec("--purple","Lastly",`<ul class="si"><li><strong>Your data stays on your phone.</strong> Items, bills, people, notes and photos are stored on your device. We don't run servers, so we never receive them.</li><li><strong>No account, no bank login.</strong></li><li><strong>Purchases go through Google Play.</strong> We never see your card details.</li></ul><p class="si">Lastly also has its own app privacy policy at <a href="https://drakiverse.studio/lastly/privacy" target="_blank" rel="noopener">drakiverse.studio/lastly/privacy</a>.</p>`)}
       ${sec("--gold","Folderoo",`<ul class="si"><li><strong>Your data stays on your phone.</strong> Claims, notes, diary check-ins, documents and photos are stored on your device. We don't run servers, so we never receive them.</li><li><strong>No account needed.</strong></li><li><strong>Backups are yours.</strong> Encrypted backup files are protected by a password only you know, and you choose where to keep them.</li><li><strong>Purchases go through Google Play.</strong> We never see your card details.</li></ul><p class="si">Folderoo also has its own app privacy policy at <a href="https://drakiverse.studio/folderoo/privacy" target="_blank" rel="noopener">drakiverse.studio/folderoo/privacy</a>.</p>`)}
@@ -143,11 +143,11 @@ safe("sheet",()=>{
       <div class="faq si">
         <details><summary>Does Folderoo give advice about my claim?</summary><p>No. Folderoo is a personal organizer: you record your own dates, calls and documents, and it reminds you. It doesn't give legal, medical or insurance advice and isn't connected to any insurer.</p></details>
         <details><summary>Is Snip free?</summary><p>Yes. Snip is free to use. Snip Pro is an optional one-time purchase, not a subscription.</p></details>
-        <details><summary>Where is my data stored?</summary><p>On your phone. We don't run servers and you don't need an account, so your subscriptions and items never leave your device.</p></details>
+        <details><summary>Where is my data stored?</summary><p>On your phone. We don't run servers and you don't need an account, so your subscriptions, items and claims never leave your device.</p></details>
         <details><summary>I bought Pro. How do I get it on a new phone?</summary><p>Sign in to Google Play with the same Google account you used to buy it, reinstall the app, and your purchase will be restored.</p></details>
-        <details><summary>When is Lastly coming out?</summary><p>Lastly is built and in testing now, and is coming soon to Google Play. Email us if you'd like to hear the day it launches.</p></details>
+        <details><summary>When are Lastly and Folderoo coming out?</summary><p>Both are built and in testing now, and are coming soon to Google Play. Email us if you'd like to hear the day it launches.</p></details>
         <details><summary>Are your apps on iPhone?</summary><p>Not yet. We're launching on Android first, and iOS is on the way.</p></details>
-        <details><summary>Can I suggest an app idea?</summary><p>Please do. If an everyday annoyance bugs you every week, tell us. It might become App 03.</p></details>
+        <details><summary>Can I suggest an app idea?</summary><p>Please do. If an everyday annoyance bugs you every week, tell us. It might become App 04.</p></details>
       </div>
       ${sec("--snip","Contact us",`<p class="si">For help with an app, email its support address. For anything else, say hello. Including your phone model and the app version helps us fix things faster.</p><div class="si">${allMail}</div>`)}`}
   };
@@ -278,13 +278,52 @@ safe("hero-motion",()=>{
   const ph=$("#phones");G.set(ph,{transformPerspective:1000});
   const rx=G.quickTo(ph,"rotationX",{duration:.9,ease:"power3.out"}),ry=G.quickTo(ph,"rotationY",{duration:.9,ease:"power3.out"});
   const p1x=G.quickTo("#pf1","x",{duration:1.2,ease:"power3.out"}),p2x=G.quickTo("#pf2","x",{duration:1.2,ease:"power3.out"});
-  $("#top").addEventListener("pointermove",e=>{const r=e.currentTarget.getBoundingClientRect();const nx=(e.clientX-r.left)/r.width-.5,ny=(e.clientY-r.top)/r.height-.5;rx(-ny*22);ry(nx*30);p1x(nx*50);p2x(-nx*60)});
+  $("#top").addEventListener("pointermove",e=>{if(e.pointerType!=="mouse")return;const r=e.currentTarget.getBoundingClientRect();const nx=(e.clientX-r.left)/r.width-.5,ny=(e.clientY-r.top)/r.height-.5;rx(-ny*22);ry(nx*30);p1x(nx*50);p2x(-nx*60)});
   G.to("#pf1",{y:-12,duration:2,repeat:-1,yoyo:true,ease:"sine.inOut"});G.to("#pf3",{y:-10,duration:2.2,repeat:-1,yoyo:true,ease:"sine.inOut"});G.to("#pf2",{y:12,duration:2.4,repeat:-1,yoyo:true,ease:"sine.inOut"});
   const st={trigger:"#top",start:"top top",end:"bottom top",scrub:true};
   G.to("#heroCopy",{y:-140,opacity:0,ease:"none",scrollTrigger:st});
-  G.to("#phL",{xPercent:-30,yPercent:-12,rotation:-14,ease:"none",scrollTrigger:st});
-  G.to("#phS",{xPercent:24,yPercent:14,rotation:10,ease:"none",scrollTrigger:st});
+  const k=innerWidth<700?.35:1;
+  G.to("#phL",{xPercent:-30*k,yPercent:-12,rotation:-14,ease:"none",scrollTrigger:st});
+  G.to("#phS",{xPercent:24*k,yPercent:14,rotation:10,ease:"none",scrollTrigger:st});
   G.to("#phF",{yPercent:-22,rotation:-6,ease:"none",scrollTrigger:st});
+});
+
+
+/* hero: the three phones act out a little story on loop (milk countdown, Snip cut, Folderoo letter) */
+safe("hero-live",()=>{
+  const $t=id=>document.getElementById(id);
+  const milkD=$t("lMilkD"),pf2t=$("#pf2 span"),tot=$t("sTotN"),gym=$t("sGym"),cut=$("#sGym .cutline"),fNew=$t("fNew"),fDays=$t("fDays"),roo=$t("fRoo");
+  if(!milkD||!tot||!gym||!fNew||!fDays)return;
+  fNew.style.display="flex";
+  G.set(fNew,{height:0,paddingTop:0,paddingBottom:0,marginTop:-8,opacity:0,overflow:"hidden",borderWidth:0});
+  const money={v:77.47},setTot=()=>tot.textContent="$"+money.v.toFixed(2);
+  const pop=el=>G.timeline().to(el,{scale:1.1,duration:.18,ease:"power2.out"}).to(el,{scale:1,duration:.6,ease:"elastic.out(1,.45)"});
+  const nudge=sel=>G.fromTo(sel,{scale:.97},{scale:1,duration:.8,ease:"elastic.out(1,.4)"});
+  const say=(el,app,txt)=>{if(el)el.innerHTML=`<small>${app}</small>${txt}`};
+  const tl=G.timeline({repeat:-1,repeatDelay:.6,paused:true});
+  // 1. Lastly: milk ticks down
+  tl.add(()=>{nudge("#phL .scr");pop(milkD);milkD.textContent="1 day";say(pf2t,"Lastly","Milk expires tomorrow");pop("#pf2")},.2)
+    .to("#lMilk",{backgroundColor:"rgba(255,140,66,.28)",duration:.35,yoyo:true,repeat:1},.2)
+  // 2. Snip: gym gets cut, total drops
+    .to(gym,{outlineColor:"rgba(205,255,64,.9)",outlineWidth:2,outlineStyle:"solid",duration:.25},1.8)
+    .to(cut,{scaleX:1,duration:.4,ease:"power3.inOut"},2.1)
+    .to(gym,{x:26,opacity:.35,duration:.5,ease:"power2.in"},2.45)
+    .to(money,{v:32.47,duration:.9,ease:"power2.out",onUpdate:setTot},2.45)
+    .add(()=>{nudge("#phS .scr");pop("#sTot");pop("#pf1")},2.5)
+  // 3. Folderoo: kangaroo hops, a letter is saved, deadline counts down
+    .to(roo,{y:-7,duration:.22,ease:"power2.out",yoyo:true,repeat:3},3.7)
+    .to(fNew,{height:"auto",paddingTop:10,paddingBottom:10,marginTop:0,opacity:1,borderWidth:1,duration:.6,ease:"back.out(1.6)"},3.9)
+    .add(()=>{nudge("#phF .scr");fDays.textContent="4";pop("#fCard");say($("#pf3 span"),"Folderoo","Letter saved · form due in 4 days");pop("#pf3")},4.3)
+  // reset quietly
+    .add(()=>{},6.6)
+    .to(fNew,{height:0,paddingTop:0,paddingBottom:0,marginTop:-8,opacity:0,borderWidth:0,duration:.5,ease:"power2.inOut"},6.6)
+    .to(gym,{x:0,opacity:1,outlineWidth:0,duration:.5},6.6)
+    .to(cut,{scaleX:0,duration:.3},6.6)
+    .to(money,{v:77.47,duration:.6,onUpdate:setTot},6.6)
+    .add(()=>{milkD.textContent="2 days";fDays.textContent="5";say(pf2t,"Lastly","Milk expires in 2 days");say($("#pf3 span"),"Folderoo","Claim form due in 5 days")},6.9);
+  // gentle idle float, each phone on its own beat
+  [["#phL",-8,3.2],["#phS",7,2.8],["#phF",-9,3.6]].forEach(([el,y,d],i)=>G.to(el,{y,duration:d,yoyo:true,repeat:-1,ease:"sine.inOut",delay:4.6+i*.4}));
+  G.delayedCall(4.8,()=>{tl.play();ST.create({trigger:"#top",start:"top bottom",end:"bottom top",onToggle:self=>self.isActive?tl.resume():tl.pause()})});
 });
 
 /* nav, progress */
