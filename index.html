@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Drakiverse Studio is an independent app studio from Canada making small apps that each fix one everyday annoyance. Meet Snip and Lastly. Android first, iOS on the way.">
+<meta name="description" content="Drakiverse Studio is an independent app studio from Canada making small apps that each fix one everyday annoyance. Meet Snip, Lastly and Folderoo. Android first, iOS on the way.">
 <meta name="theme-color" content="#0b0b0c">
 <meta property="og:title" content="Drakiverse Studio">
-<meta property="og:description" content="Small apps. Big relief. Meet Snip and Lastly.">
+<meta property="og:description" content="Small apps. Big relief. Meet Snip, Lastly and Folderoo.">
 <meta property="og:url" content="https://drakiverse.studio/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%230b0b0c'/%3E%3Crect x='22' y='22' width='14' height='56' rx='7' fill='%23c8ff2e'/%3E%3Crect x='42' y='22' width='14' height='56' rx='7' fill='%239d8cff'/%3E%3Crect x='62' y='22' width='14' height='56' rx='7' fill='%23ff8fc7'/%3E%3C/svg%3E">
 <style>body{margin:0}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
@@ -19,6 +19,7 @@
 :root{
   --bg:#0b0b0c; --surface:#151517; --surface-2:#202023; --fg:#fff1dc; --muted:#b5ac9e; --line:rgba(255,241,220,.13);
   --snip:#c8ff2e; --snip-ink:#0b0b0b;
+  --folderoo:#0F5E5A; --gold:#F6C453;
   --purple:#9d8cff; --pink:#ff8fc7; --orange:#ffa03a; --cream:#fff1dc; --ink:#0b0b0c;
   --spectrum:linear-gradient(90deg,var(--snip),var(--purple),var(--pink),var(--orange));
   --f-display:"Syne","Arial Black",system-ui,sans-serif;
@@ -122,6 +123,11 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
 .world{position:relative;width:min(84vw,540px);height:min(62svh,560px);min-height:410px;border-radius:30px;padding:clamp(20px,2.4vw,30px);display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
 .world.snip{background:var(--snip);color:var(--snip-ink);border-color:transparent}
 .world.lastly{background:var(--cream);color:var(--ink);border-color:transparent}
+.world.folderoo{background:var(--folderoo);color:#fff;border-color:transparent}
+.world.folderoo .wname em{font-style:normal;color:var(--gold)}
+.roo-art{animation:roohop 2.6s cubic-bezier(.3,.1,.3,1) infinite;transform-origin:50% 100%}
+@keyframes roohop{0%,100%{transform:translateY(0) scale(1.04,.94)}12%{transform:translateY(0)}40%{transform:translateY(-14%) rotate(-4deg)}68%{transform:translateY(0)}76%{transform:translateY(0) scale(1.05,.93)}84%{transform:translateY(0)}}
+@media (prefers-reduced-motion:reduce){.roo-art{animation:none}}
 .wtop{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .idx{font-family:var(--f-mono);font-size:13px;letter-spacing:.1em}
 .chip{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:999px;border:1.5px solid currentColor;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
@@ -132,7 +138,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
 .wname{font-family:var(--f-display);font-weight:700;font-size:clamp(52px,6.4vw,92px);line-height:.88;letter-spacing:-.045em;margin:0}
 .wline{margin:10px 0 0;font-size:16px;max-width:38ch;opacity:.85}
 .wopen{margin-top:18px;align-self:flex-start;display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 20px;border-radius:999px;font-weight:700;background:var(--ink);color:var(--fg)}
-.world:not(.snip):not(.lastly) .wopen{background:var(--fg);color:var(--ink)}
+.world:not(.snip):not(.lastly):not(.folderoo) .wopen{background:var(--fg);color:var(--ink)}
 .wopen svg{width:18px;height:18px}
 .wbar{height:3px;background:var(--line);border-radius:3px;overflow:hidden}
 .wbar i{display:block;height:100%;background:var(--spectrum);transform-origin:0 50%;transform:scaleX(0)}
@@ -142,6 +148,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
 .detail{position:fixed;inset:0;z-index:80;overflow-y:auto;background:var(--surface);color:var(--fg);overscroll-behavior:contain}
 .detail.snip{background:var(--snip);color:var(--snip-ink)}
 .detail.lastly{background:var(--cream);color:var(--ink)}
+.detail.folderoo{background:var(--folderoo);color:#fff}
 .dinner{max-width:1100px;margin:0 auto;padding-block:calc(26px + env(safe-area-inset-top,0px)) calc(48px + env(safe-area-inset-bottom,0px));display:grid;gap:22px}
 .dbar{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .close{width:52px;height:52px;border-radius:50%;border:1.5px solid currentColor;display:grid;place-items:center}
@@ -157,7 +164,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
 .dctas{display:flex;gap:12px;flex-wrap:wrap}
 .dbtn{display:inline-flex;align-items:center;min-height:52px;padding:0 22px;border-radius:999px;font-weight:700;border:1.5px solid currentColor;text-decoration:none}
 .dbtn.solid{background:var(--ink);color:var(--fg);border-color:var(--ink)}
-.detail:not(.snip):not(.lastly) .dbtn.solid{background:var(--fg);color:var(--ink);border-color:var(--fg)}
+.detail:not(.snip):not(.lastly):not(.folderoo) .dbtn.solid{background:var(--fg);color:var(--ink);border-color:var(--fg)}
 
 /* demo */
 .section{padding-block:clamp(80px,12vw,150px)}
@@ -371,7 +378,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
           <span class="line" aria-hidden="true" data-split>Small apps.</span>
           <span class="line" aria-hidden="true"><span data-split>Big </span><span class="cycler" id="cycler"><span class="mask"><span>r</span></span><span class="mask"><span>e</span></span><span class="mask"><span>l</span></span><span class="mask"><span>i</span></span><span class="mask"><span>e</span></span><span class="mask"><span>f</span></span><span class="mask"><span>.</span></span></span></span>
         </h1>
-        <p class="hero-sub h-rise">We build <b>small apps that each fix one everyday annoyance</b>, like forgotten subscriptions and things that quietly expire. <b>Android first, iOS on the way.</b></p>
+        <p class="hero-sub h-rise">We build <b>small apps that each fix one everyday annoyance</b>, like forgotten subscriptions, things that quietly expire and insurance claims that drag on. <b>Android first, iOS on the way.</b></p>
         <div class="ctas h-rise">
           <a class="btn primary magnetic" href="#worlds">Meet the apps <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <a class="btn magnetic" href="#demo">Try Snip live</a>
@@ -443,8 +450,15 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
           <p class="wline">Everything that expires or comes due, from passports to bills, counting down in one place.</p>
           <button class="wopen" data-open="lastly"><span>Open Lastly</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </article>
+        <article class="world folderoo">
+          <div class="wtop"><span class="idx">App 03</span><span class="chip"><i></i>Coming soon to Google Play</span></div>
+          <div class="art"><svg viewBox="0 0 120 120" role="img" aria-label="Folderoo logo, a hopping kangaroo with a folder in its pouch"><rect width="120" height="120" rx="27" fill="#0A4441"/><ellipse cx="58" cy="107" rx="24" ry="3.2" fill="#07302E"/><g class="roo-art"><g transform="translate(2 -8) rotate(-14 60 70)"><path d="M42 90 Q24 98 12 86 Q26 91 44 82 Z" fill="#E8A21F"/><ellipse cx="54" cy="99" rx="17" ry="5" fill="#E8A21F" transform="rotate(18 54 99)"/><ellipse cx="58" cy="72" rx="23" ry="26" fill="#E8A21F"/><ellipse cx="69" cy="48" rx="8" ry="13" fill="#E8A21F" transform="rotate(28 69 48)"/><ellipse cx="66" cy="23" rx="4.2" ry="9.5" fill="#E8A21F" transform="rotate(-34 66 23)"/><ellipse cx="66" cy="24" rx="1.9" ry="5.8" fill="#F3A6A0" transform="rotate(-34 66 24)"/><ellipse cx="73" cy="21" rx="4.2" ry="9.5" fill="#E8A21F" transform="rotate(-20 73 21)"/><ellipse cx="73" cy="22" rx="1.9" ry="5.8" fill="#F3A6A0" transform="rotate(-20 73 22)"/><ellipse cx="75" cy="36" rx="12" ry="10" fill="#E8A21F"/><ellipse cx="85" cy="40" rx="8" ry="6" fill="#E8A21F"/><circle cx="78" cy="33" r="2.3" fill="#17323A"/><circle cx="92" cy="39" r="2" fill="#17323A"/><ellipse cx="81" cy="60" rx="3.5" ry="8" fill="#E8A21F" transform="rotate(-70 81 60)"/><path d="M39 62 h12 a2 2 0 0 1 1.6 0.8 l2.8 3.6 h20.6 a3 3 0 0 1 3 3 v21 a5 5 0 0 1 -5 5 H44 a5 5 0 0 1 -5 -5 Z" fill="#0A4441"/><rect x="47" y="55" width="23" height="27" rx="2.8" fill="#FFFFFF" transform="rotate(-6 58 68)"/><rect x="51" y="60" width="13" height="2.6" rx="1.3" fill="#B9CBC8" transform="rotate(-6 58 68)"/><rect x="51" y="65.5" width="9" height="2.6" rx="1.3" fill="#B9CBC8" transform="rotate(-6 58 68)"/><path d="M39 76 Q59.5 86 79 76 V91 a5 5 0 0 1 -5 5 H44 a5 5 0 0 1 -5 -5 Z" fill="#5FC4B8"/></g></g></svg></div>
+          <h3 class="wname">Folder<em>oo</em></h3>
+          <p class="wline">Every date, call and document for your insurance claim in one place, with reminders before anything is due.</p>
+          <button class="wopen" data-open="folderoo"><span>Open Folderoo</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </article>
         <article class="world">
-          <div class="wtop"><span class="idx">App 03</span><span class="chip"><i></i>In the lab</span></div>
+          <div class="wtop"><span class="idx">App 04</span><span class="chip"><i></i>In the lab</span></div>
           <div class="art"><span class="qm" aria-hidden="true">?</span></div>
           <h3 class="wname">Next</h3>
           <p class="wline">Something new is being sketched. Got an everyday annoyance an app could fix?</p>
@@ -528,6 +542,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
       <div class="appmails">
         <div class="appmail" style="--lc:var(--snip)"><span class="am-k"><i></i>Snip support</span><span class="am-v">snip@drakiverse.studio</span><button class="am-c" type="button" data-copy-text="snip@drakiverse.studio" aria-label="Copy Snip support email">Copy</button></div>
         <div class="appmail" style="--lc:var(--purple)"><span class="am-k"><i></i>Lastly support</span><span class="am-v">lastly@drakiverse.studio</span><button class="am-c" type="button" data-copy-text="lastly@drakiverse.studio" aria-label="Copy Lastly support email">Copy</button></div>
+        <div class="appmail" style="--lc:var(--gold)"><span class="am-k"><i></i>Folderoo support</span><span class="am-v">folderoo@drakiverse.studio</span><button class="am-c" type="button" data-copy-text="folderoo@drakiverse.studio" aria-label="Copy Folderoo support email">Copy</button></div>
       </div>
       <p class="label" id="copyLive" aria-live="polite" style="margin-top:12px;min-height:1.4em"></p>
     </div>
@@ -547,7 +562,8 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
         <ul>
           <li><a class="flink" href="https://drakiverse.studio/snipapp/" style="--lc:var(--snip)"><span class="sw" aria-hidden="true"></span>Snip<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
           <li><a class="flink" href="#lastly" style="--lc:var(--purple)"><span class="sw" aria-hidden="true"></span>Lastly<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
-          <li><a class="flink" href="#contact" style="--lc:var(--orange)"><span class="sw" aria-hidden="true"></span>App 03 <span class="fbadge">In the lab</span></a></li>
+          <li><a class="flink" href="https://drakiverse.studio/folderoo/" style="--lc:var(--gold)"><span class="sw" aria-hidden="true"></span>Folderoo<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+          <li><a class="flink" href="#contact" style="--lc:var(--orange)"><span class="sw" aria-hidden="true"></span>App 04 <span class="fbadge">In the lab</span></a></li>
         </ul>
       </nav>
       <nav class="fcol fin" aria-label="Legal">
@@ -604,7 +620,7 @@ function fitWord(el){el.style.fontSize="100px";const w=el.getBoundingClientRect(
 
 /* ---------- static content builders (always run) ---------- */
 safe("marquee-build",()=>{
-  const A=["Snip","Lastly","Free to start","Pay once","Android first","iOS next"], B=["One app","One job","No clutter","Small fixes","Big relief","Made in Canada"];
+  const A=["Snip","Lastly","Folderoo","Free to start","Pay once","Android first","iOS next"], B=["One app","One job","No clutter","Small fixes","Big relief","Made in Canada"];
   const dots=["a","b","c","d"];
   const make=items=>items.map((t,i)=>`<span class="${i%2?"o":""}">${t}<em class="${dots[i%4]}"></em></span>`).join("");
   $("#m1").innerHTML=make(A).repeat(2);$("#m2").innerHTML=make(B).repeat(2);
@@ -668,11 +684,13 @@ safe("demo",()=>{
 /* ---------- detail panel (card → full screen) ---------- */
 safe("detail",()=>{
   const LOGO_S='<svg viewBox="0 0 100 100" aria-hidden="true"><defs><clipPath id="cl2"><polygon points="0,0 56,0 38,100 0,100"/></clipPath><clipPath id="cr2"><polygon points="64,0 100,0 100,100 46,100"/></clipPath></defs><rect width="100" height="100" rx="24" fill="#0b0b0b"/><g clip-path="url(#cl2)"><rect x="14" y="26" width="72" height="48" rx="9" fill="#c8ff2e"/><rect x="14" y="36" width="72" height="8" fill="#0b0b0b"/></g><g clip-path="url(#cr2)" transform="translate(3,-2)"><rect x="14" y="26" width="72" height="48" rx="9" fill="#c8ff2e"/><rect x="14" y="36" width="72" height="8" fill="#0b0b0b"/></g></svg>';
+  const LOGO_F='<svg viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="27" fill="#0A4441"/><ellipse cx="58" cy="107" rx="24" ry="3.2" fill="#07302E"/><g transform="translate(2 -8) rotate(-14 60 70)"><path d="M42 90 Q24 98 12 86 Q26 91 44 82 Z" fill="#E8A21F"/><ellipse cx="54" cy="99" rx="17" ry="5" fill="#E8A21F" transform="rotate(18 54 99)"/><ellipse cx="58" cy="72" rx="23" ry="26" fill="#E8A21F"/><ellipse cx="69" cy="48" rx="8" ry="13" fill="#E8A21F" transform="rotate(28 69 48)"/><ellipse cx="66" cy="23" rx="4.2" ry="9.5" fill="#E8A21F" transform="rotate(-34 66 23)"/><ellipse cx="66" cy="24" rx="1.9" ry="5.8" fill="#F3A6A0" transform="rotate(-34 66 24)"/><ellipse cx="73" cy="21" rx="4.2" ry="9.5" fill="#E8A21F" transform="rotate(-20 73 21)"/><ellipse cx="73" cy="22" rx="1.9" ry="5.8" fill="#F3A6A0" transform="rotate(-20 73 22)"/><ellipse cx="75" cy="36" rx="12" ry="10" fill="#E8A21F"/><ellipse cx="85" cy="40" rx="8" ry="6" fill="#E8A21F"/><circle cx="78" cy="33" r="2.3" fill="#17323A"/><circle cx="92" cy="39" r="2" fill="#17323A"/><ellipse cx="81" cy="60" rx="3.5" ry="8" fill="#E8A21F" transform="rotate(-70 81 60)"/><path d="M39 62 h12 a2 2 0 0 1 1.6 0.8 l2.8 3.6 h20.6 a3 3 0 0 1 3 3 v21 a5 5 0 0 1 -5 5 H44 a5 5 0 0 1 -5 -5 Z" fill="#0A4441"/><rect x="47" y="55" width="23" height="27" rx="2.8" fill="#FFFFFF" transform="rotate(-6 58 68)"/><rect x="51" y="60" width="13" height="2.6" rx="1.3" fill="#B9CBC8" transform="rotate(-6 58 68)"/><rect x="51" y="65.5" width="9" height="2.6" rx="1.3" fill="#B9CBC8" transform="rotate(-6 58 68)"/><path d="M39 76 Q59.5 86 79 76 V91 a5 5 0 0 1 -5 5 H44 a5 5 0 0 1 -5 -5 Z" fill="#5FC4B8"/></g></svg>';
   const LOGO_L='<svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="24" fill="#fff1dc" stroke="#0b0b0c" stroke-opacity=".12"/><path d="M28 22V78H78" fill="none" stroke="#9d8cff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="M39 22V67H78" fill="none" stroke="#ff8fc7" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="M50 22V56H78" fill="none" stroke="#ffa03a" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   const D={
     snip:{tone:"snip",num:"App 01 · Coming to Google Play",name:"Snip",logo:LOGO_S,kick:"A subscription tracker.",body:"Snip puts every recurring charge in one list, warns you before something renews, and shows what you really spend each month and each year.",feats:["Every subscription in one list","A heads-up before anything renews","Monthly and yearly totals","Free. Snip Pro is a one-time purchase."],cta:["#demo","Try the live demo"],ext:[["https://play.google.com/store/apps/details?id=app.snip.tracker","View on Google Play"],["https://drakiverse.studio/snipapp/","Screenshots & details"]]},
     lastly:{tone:"lastly",num:"App 02 · Coming soon to Google Play",name:"Lastly",logo:LOGO_L,kick:"An all-in-one expiry tracker.",body:"If it expires or comes due, it goes in Lastly. Passports, warranties, insurance, food, medication and upcoming bills, all counting down, with reminders before the date, not after.",feats:["Documents, warranties and insurance","Food and medication","Upcoming bills","Free for 5 items. Pro unlock for $3.99."],cta:["#lastly","Watch time pass"],ext:[["https://drakiverse.studio/lastly/","Screenshots & details"]]},
-    next:{tone:"",num:"App 03 · In the lab",name:"Next",logo:"",kick:"The next small fix.",body:"We keep a running list of little things that waste people's time. If something bugs you every week and an app could make it go away, tell us.",feats:["One problem per app","Android first, iOS next","Free to start, fair to upgrade","Your idea could be App 03"],cta:["#contact","Suggest an idea"]}
+    folderoo:{tone:"folderoo",num:"App 03 · Coming soon to Google Play",name:"Folderoo",logo:LOGO_F,kick:"A claim tracker with reminders.",body:"Dealing with an insurance claim? Folderoo keeps every date, call, letter and document in one place, reminds you before forms and appeals are due, and turns it all into a clean PDF when you need it. Disability, auto, home, travel, workers' comp and more. It's an organizer, not advice, and everything stays on your phone.",feats:["Deadlines with reminders until done","Calls, letters and appointments on one timeline","Symptom diary and a one-tap PDF summary","Free for one claim. Pro unlock for $9.99."],cta:["#contact","Ask a question"],ext:[["https://drakiverse.studio/folderoo/","Screenshots & details"]]},
+    next:{tone:"",num:"App 04 · In the lab",name:"Next",logo:"",kick:"The next small fix.",body:"We keep a running list of little things that waste people's time. If something bugs you every week and an app could make it go away, tell us.",feats:["One problem per app","Android first, iOS next","Free to start, fair to upgrade","Your idea could be App 04"],cta:["#contact","Suggest an idea"]}
   };
   const det=$("#detail");let state=null;
   const inset=r=>{const vw=document.documentElement.clientWidth,vh=innerHeight;return `inset(${r.top}px ${vw-r.right}px ${vh-r.bottom}px ${r.left}px round 30px)`};
@@ -707,10 +725,11 @@ safe("sheet",()=>{
       ${sec("--fg","Who we are",`<p class="si">Drakiverse Studio is an independent app developer based in Canada. You can reach us any time at ${EMAIL}, or at ${SNIP} and ${LASTLY} for app-specific questions.</p>`)}
       ${sec("--snip","Snip",`<ul class="si"><li><strong>Your data stays on your phone.</strong> The subscriptions you add are stored on your device. We don't run servers, so we never receive them.</li><li><strong>No account needed.</strong> Snip doesn't ask you to sign up or log in.</li><li><strong>We don't sell or share personal information.</strong> We don't collect it in the first place.</li><li><strong>Purchases go through Google Play.</strong> If you buy Snip Pro, Google handles the payment. We never see your card details.</li></ul><p class="si">Snip also has its own app privacy policy at <a href="https://drakiverse.studio/snipapp/privacy.html" target="_blank" rel="noopener">drakiverse.studio/snipapp/privacy.html</a>.</p>`)}
       ${sec("--purple","Lastly",`<ul class="si"><li><strong>Your data stays on your phone.</strong> Items, bills, people, notes and photos are stored on your device. We don't run servers, so we never receive them.</li><li><strong>No account, no bank login.</strong></li><li><strong>Purchases go through Google Play.</strong> We never see your card details.</li></ul><p class="si">Lastly also has its own app privacy policy at <a href="https://drakiverse.studio/lastly/privacy" target="_blank" rel="noopener">drakiverse.studio/lastly/privacy</a>.</p>`)}
+      ${sec("--gold","Folderoo",`<ul class="si"><li><strong>Your data stays on your phone.</strong> Claims, notes, diary check-ins, documents and photos are stored on your device. We don't run servers, so we never receive them.</li><li><strong>No account needed.</strong></li><li><strong>Backups are yours.</strong> Encrypted backup files are protected by a password only you know, and you choose where to keep them.</li><li><strong>Purchases go through Google Play.</strong> We never see your card details.</li></ul><p class="si">Folderoo also has its own app privacy policy at <a href="https://drakiverse.studio/folderoo/privacy" target="_blank" rel="noopener">drakiverse.studio/folderoo/privacy</a>.</p>`)}
       ${sec("--pink","This website",`<p class="si">This site has no sign-up and no contact forms. It loads fonts from Google Fonts and code from a public content network (cdnjs), which means those services receive standard technical information such as your IP address when the page loads.</p>`)}
       ${sec("--orange","Children",`<p class="si">Our apps are general-audience tools and aren't designed for children under 13. We don't knowingly collect information from anyone.</p>`)}
       ${sec("--fg","Changes and contact",`<p class="si">If this policy changes, we'll update this page and the date above. Questions? Write to us.</p><div class="si">${mailbox}</div>`)}`},
-    terms:{title:"Terms of Service",html:`<p class="intro si">These terms apply when you use apps made by Drakiverse Studio, including Snip and Lastly. By using our apps, you agree to them.</p>
+    terms:{title:"Terms of Service",html:`<p class="intro si">These terms apply when you use apps made by Drakiverse Studio, including Snip, Lastly and Folderoo. By using our apps, you agree to them.</p>
       ${sec("--snip","Using our apps",`<p class="si">You can use the free version of each app for personal use. Please don't copy, resell or reverse-engineer the apps.</p>`)}
       ${sec("--purple","One-time purchases",`<p class="si">Upgrades like Snip Pro are a single, one-time purchase made through Google Play (and later the App Store). They're tied to your store account, so you can restore them on a new phone. Refunds follow the store's refund policy.</p>`)}
       ${sec("--pink","Reminders are a helping hand",`<p class="si">Our apps help you keep track of renewals, bills and expiry dates, but notifications can be delayed or missed, for example if your phone is off or notifications are disabled. Please don't rely on our apps as your only reminder for important dates like passport renewals or bill payments.</p>`)}
@@ -718,6 +737,7 @@ safe("sheet",()=>{
       ${sec("--fg","Changes and governing law",`<p class="si">We may update these terms as our apps evolve, and we'll change the date above when we do. These terms are governed by the laws of the Province of Ontario and the federal laws of Canada that apply there.</p><div class="si">${mailbox}</div>`)}`},
     help:{title:"Help & Support",html:`<p class="intro si">Got a question or found a bug? Start here. If you can't find the answer, email us and we'll get back to you.</p>
       <div class="faq si">
+        <details><summary>Does Folderoo give advice about my claim?</summary><p>No. Folderoo is a personal organizer: you record your own dates, calls and documents, and it reminds you. It doesn't give legal, medical or insurance advice and isn't connected to any insurer.</p></details>
         <details><summary>Is Snip free?</summary><p>Yes. Snip is free to use. Snip Pro is an optional one-time purchase, not a subscription.</p></details>
         <details><summary>Where is my data stored?</summary><p>On your phone. We don't run servers and you don't need an account, so your subscriptions and items never leave your device.</p></details>
         <details><summary>I bought Pro. How do I get it on a new phone?</summary><p>Sign in to Google Play with the same Google account you used to buy it, reinstall the app, and your purchase will be restored.</p></details>
