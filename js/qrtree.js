@@ -1,12 +1,13 @@
-/* Get the apps: each app builds its own scannable QR code in 3D, floating on black.
-   Snip: liquid drops. Lastly: petals in the wind. Folderoo: a leafy tree.
+/* Get the apps: each app grows its own leafy 3D tree on black (no box).
+   Snip lime green, Lastly changes season, Folderoo teal and gold. From overhead, in a pool of sunlight, the leaves are the app's QR code.
    three.js is self-hosted and only loads when this section comes into view. */
 const Q={"snip":{"n":33,"r":["1fc4e7b7f","104131641","174e6a25d","174d1175d","1751bbd5d","104b09441","1fd55557f","1f50500","674d5ad0","1e340d2cf","df2ca203","79c64172","fda7b5b2","141b39d00","2589481c","1a8495e0d","1946f1bfd","227b0677","5cad70d6","140685082","1f7ca180d","1b88db6c5","c2b2f6f","fab57299","1056c71f0","11f5314","1fdf2a754","104d9ab1f","1744a83f6","175ac662b","1756297cc","1048a8101","1fcd70a3c"]},"lastly":{"n":37,"r":["1fc8ae707f","104cf07141","174a6e085d","1742236a5d","175164be5d","104e694441","1fd555557f","1663af00","67d7f2ed0","1d1b176a70","47130a980","161a22dd1e","772a16fdf","79e553f57","d494e9496","d238473f3","78a3680e","3374066c1","ad240ef97","8aaa2f27a","16d84d4592","519e23022","16c5a93490","1203560f8f","155dbb804d","b2eb4211d","9d9995f06","15925e1191","453eafbfc","10aabd1d","1fdd61895b","10455d631b","174323c5f8","175856cd5c","175d93427a","104b06fa0c","1fc655fc17"]},"folderoo":{"n":37,"r":["1fcb7a1d7f","1055b0d541","175b0ffe5d","175a19685d","175de3655d","105aa8fd41","1fd555557f","65bab00","4f4a238be","712fbe869","35002b2cd","d3ee0443a","5451b8269","29e3a7bc5","184a0c024d","1b3ba4e1ba","1fc63bb363","1a0d552fe5","1f5a1cc221","c3d6596e9","1aed3e2349","7a0841269","1bc99d7f3d","133534f6e8","2e9a22de8","8bc05452b","1cc24829e5","59b3a83c8","1a7acd71f1","102eb519","1fdab6e55d","105d127719","17406453f3","174a72d715","17532f5117","104cd1b328","1fcc1391a1"]}};
 const NAMES={snip:"Snip",lastly:"Lastly",folderoo:"Folderoo"};
 const LOGOS={snip:'<svg viewBox="0 0 100 100" aria-hidden="true"><defs><clipPath id="qcl"><polygon points="0,0 56,0 38,100 0,100"/></clipPath><clipPath id="qcr"><polygon points="64,0 100,0 100,100 46,100"/></clipPath></defs><rect width="100" height="100" rx="24" fill="#0b0b0b"/><g clip-path="url(#qcl)"><rect x="14" y="26" width="72" height="48" rx="9" fill="#c8ff2e"/><rect x="14" y="36" width="72" height="8" fill="#0b0b0b"/></g><g clip-path="url(#qcr)" transform="translate(3,-2)"><rect x="14" y="26" width="72" height="48" rx="9" fill="#c8ff2e"/><rect x="14" y="36" width="72" height="8" fill="#0b0b0b"/></g></svg>',lastly:'<svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="24" fill="#fff1dc" stroke="#0b0b0c" stroke-opacity=".12"/><path d="M28 22V78H78" fill="none" stroke="#9d8cff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="M39 22V67H78" fill="none" stroke="#ff8fc7" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="M50 22V56H78" fill="none" stroke="#ffa03a" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>',folderoo:'<svg viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="27" fill="#0A4441"/><ellipse cx="58" cy="107" rx="24" ry="3.2" fill="#07302E"/><g transform="translate(2 -8) rotate(-14 60 70)"><path d="M42 90 Q24 98 12 86 Q26 91 44 82 Z" fill="#E8A21F"/><ellipse cx="54" cy="99" rx="17" ry="5" fill="#E8A21F" transform="rotate(18 54 99)"/><ellipse cx="58" cy="72" rx="23" ry="26" fill="#E8A21F"/><ellipse cx="69" cy="48" rx="8" ry="13" fill="#E8A21F" transform="rotate(28 69 48)"/><ellipse cx="66" cy="23" rx="4.2" ry="9.5" fill="#E8A21F" transform="rotate(-34 66 23)"/><ellipse cx="66" cy="24" rx="1.9" ry="5.8" fill="#F3A6A0" transform="rotate(-34 66 24)"/><ellipse cx="73" cy="21" rx="4.2" ry="9.5" fill="#E8A21F" transform="rotate(-20 73 21)"/><ellipse cx="73" cy="22" rx="1.9" ry="5.8" fill="#F3A6A0" transform="rotate(-20 73 22)"/><ellipse cx="75" cy="36" rx="12" ry="10" fill="#E8A21F"/><ellipse cx="85" cy="40" rx="8" ry="6" fill="#E8A21F"/><circle cx="78" cy="33" r="2.3" fill="#17323A"/><circle cx="92" cy="39" r="2" fill="#17323A"/><ellipse cx="81" cy="60" rx="3.5" ry="8" fill="#E8A21F" transform="rotate(-70 81 60)"/><path d="M39 62 h12 a2 2 0 0 1 1.6 0.8 l2.8 3.6 h20.6 a3 3 0 0 1 3 3 v21 a5 5 0 0 1 -5 5 H44 a5 5 0 0 1 -5 -5 Z" fill="#0A4441"/><rect x="47" y="55" width="23" height="27" rx="2.8" fill="#FFFFFF" transform="rotate(-6 58 68)"/><rect x="51" y="60" width="13" height="2.6" rx="1.3" fill="#B9CBC8" transform="rotate(-6 58 68)"/><rect x="51" y="65.5" width="9" height="2.6" rx="1.3" fill="#B9CBC8" transform="rotate(-6 58 68)"/><path d="M39 76 Q59.5 86 79 76 V91 a5 5 0 0 1 -5 5 H44 a5 5 0 0 1 -5 -5 Z" fill="#5FC4B8"/></g></svg>'};
 const PAL={
-  snip:{bright:["#c8ff2e","#b4f01e","#d9ff6b","#9be01a"],code:["#2f6a08","#3a7400","#467f06"]},
-  lastly:{bright:["#9d8cff","#ff8fc7","#ffa03a","#c9b8ff","#ff6fb0"],code:["#4a3bb0","#a82a68","#b4530c"]},
+  snip:{bright:["#c8ff2e","#a8e61f","#d9ff6b","#8fd14f","#b6f03a","#e4ff8c"],code:["#2f6a08","#3a7400","#467f06"]},
+  lastly:{bright:["#ff8fc7","#ffb0d6","#f472b6","#ffc4e0"],code:["#4a3bb0","#a82a68","#b4530c"],
+    seasons:[["#8fd14f","#a6dd63","#76c040","#b9e67c"],["#ff8fc7","#ffb0d6","#f472b6","#ffc4e0"],["#9d8cff","#b9acff","#c9b8ff","#8a76f5"],["#ffa03a","#ffc46b","#f08a1c","#ffb057"]]},
   folderoo:{bright:["#2fa597","#14857f","#4cc0ae","#3bb3a3","#E8A21F","#f6c453"],code:["#0d4f4b","#0b4541","#7a4d00"]}
 };
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
@@ -27,13 +28,14 @@ let app="snip",three=null,S=null,M=41;
 function drawFlat(){
   const dpr=Math.min(devicePixelRatio||1,2),W=card.clientWidth||400,Z=Math.round(W*dpr);flat.width=flat.height=Z;const x=flat.getContext("2d");
   const {N,M:MM,o}=mods(app);M=MM;const size=Z*.7,ox=(Z-size)/2,cell=size/M,R=rnd(77);
-  const g=x.createRadialGradient(Z/2,Z/2,0,Z/2,Z/2,Z*.5);g.addColorStop(0,"rgba(255,248,236,1)");g.addColorStop(.86,"rgba(255,248,236,1)");g.addColorStop(1,"rgba(255,248,236,0)");x.fillStyle=g;x.fillRect(0,0,Z,Z);
+  // a warm pool of sunlight (light enough behind the code for every phone to scan)
+  const g=x.createRadialGradient(Z/2,Z*.48,0,Z/2,Z/2,Z*.54);g.addColorStop(0,"rgba(255,249,234,1)");g.addColorStop(.6,"rgba(255,243,220,1)");g.addColorStop(.8,"rgba(255,226,170,.92)");g.addColorStop(.9,"rgba(255,196,110,.45)");g.addColorStop(1,"rgba(255,170,80,0)");x.fillStyle=g;x.fillRect(0,0,Z,Z);
   for(const m of o){if(m.f)continue;const cx=ox+(m.x+4.5)*cell,cy=ox+(m.y+4.5)*cell;x.fillStyle=codeCol(app,m,N);x.beginPath();
     if(app==="lastly")x.ellipse(cx,cy,cell*.5,cell*.44,(R()-.5)*.9,0,Math.PI*2);else x.arc(cx,cy,cell*.46,0,Math.PI*2);x.fill()}
   const fc=finderCol(app);
   for(const[fx,fy]of[[0,0],[N-7,0],[0,N-7]]){const X=ox+(fx+4)*cell,Y=ox+(fy+4)*cell;
     x.fillStyle=fc;x.beginPath();x.roundRect(X,Y,7*cell,7*cell,cell*.5);x.fill();
-    x.fillStyle="#fff8ec";x.beginPath();x.roundRect(X+cell,Y+cell,5*cell,5*cell,cell*.35);x.fill();
+    x.fillStyle="#fff4de";x.beginPath();x.roundRect(X+cell,Y+cell,5*cell,5*cell,cell*.35);x.fill();
     x.fillStyle=app==="lastly"?PAL.lastly.code[1]:fc;x.beginPath();x.roundRect(X+2*cell,Y+2*cell,3*cell,3*cell,cell*.25);x.fill()}
 }
 function setApp(a){
@@ -72,14 +74,7 @@ function build(){
   S.items=o.map(m=>({m,X:m.x+4-M/2+.5,Z:m.y+4-M/2+.5,c:new T.Color(P.bright[(R()*P.bright.length)|0]),cc:new T.Color(codeCol(app,m,N)),r1:R(),r2:R(),r3:R(),r4:R()}));
   S.items.forEach(it=>it.dist=Math.hypot(it.X,it.Z));
   const n=S.items.length,G=S.G,U=S.U;
-  if(app==="snip"){
-    const mesh=new T.InstancedMesh(new T.SphereGeometry(.46,18,14),new T.MeshPhysicalMaterial({roughness:.06,clearcoat:1,clearcoatRoughness:.05,envMapIntensity:1.4}),n);mesh.castShadow=true;G.add(mesh);U.mesh=mesh;
-    U.ring=new T.InstancedMesh(new T.RingGeometry(.8,1,40).rotateX(-Math.PI/2),new T.MeshBasicMaterial({color:P.bright[0],transparent:true,opacity:.35,depthWrite:false}),n);G.add(U.ring);
-    S.view={lift:2,dist:76}}
-  if(app==="lastly"){
-    const mesh=new T.InstancedMesh(S.petal,new T.MeshPhysicalMaterial({roughness:.45,sheen:1,sheenRoughness:.5,side:T.DoubleSide}),n);mesh.castShadow=true;G.add(mesh);U.mesh=mesh;
-    S.view={lift:2,dist:76}}
-  if(app==="folderoo"){
+  {
     // the tree: trunk, branches, thousands of leaves; grass where the code's corners are; no platform
     const H0=N*.6,VR=N*.5,CR=crownR(N),dummy=new T.Object3D(),col=new T.Color();
     const bark=new T.MeshStandardMaterial({color:0x6b4429,roughness:.9});
@@ -90,39 +85,36 @@ function build(){
     const leafGeo=new T.CircleGeometry(.55,5);leafGeo.scale(1,.72,1);
     const crownPts=S.items.filter(it=>inCrown(it.m,N)),grassPts=S.items.filter(it=>!inCrown(it.m,N)),per=7,extra=1500;
     const leaves=new T.InstancedMesh(leafGeo,new T.MeshStandardMaterial({side:T.DoubleSide,roughness:.7}),crownPts.length*per+extra);leaves.castShadow=true;
-    let i=0;const put=(x,z,y)=>{dummy.position.set(x,y,z);dummy.rotation.set(R()*6,R()*6,R()*6);dummy.scale.setScalar(.8+R()*.6);dummy.updateMatrix();leaves.setMatrixAt(i,dummy.matrix);col.set(P.bright[(R()*P.bright.length)|0]).multiplyScalar(.8+R()*.3);leaves.setColorAt(i++,col)};
+    let i=0;U.tint=[];const put=(x,z,y)=>{dummy.position.set(x,y,z);dummy.rotation.set(R()*6,R()*6,R()*6);dummy.scale.setScalar(.8+R()*.6);dummy.updateMatrix();leaves.setMatrixAt(i,dummy.matrix);const pk=R(),sh=.8+R()*.3;U.tint.push([pk,sh]);col.set(P.bright[(pk*P.bright.length)|0]).multiplyScalar(sh);leaves.setColorAt(i++,col)};
     for(const it of crownPts){const rr=it.dist/CR,h=Math.sqrt(Math.max(0,1-rr*rr));for(let k=0;k<per;k++)put(it.X+(R()-.5)*.7,it.Z+(R()-.5)*.7,k?H0+VR*h*(R()*1.9-1):H0+VR*h*.95)}
     for(let k=0;k<extra;k++){const a=R()*Math.PI*2,rr=Math.sqrt(R())*CR*.92,hh=Math.sqrt(Math.max(0,1-(rr/CR)**2))*(.85+.25*Math.sin(a*3+1));put(Math.cos(a)*rr,Math.sin(a)*rr,H0+VR*hh*(R()*1.6-1)*.95)}
     G.add(leaves);U.leaves=leaves;U.H0=H0;
     const blades=new T.InstancedMesh(leafGeo,new T.MeshStandardMaterial({side:T.DoubleSide,roughness:.75}),grassPts.length*4);blades.castShadow=true;i=0;
-    for(const it of grassPts)for(let k=0;k<4;k++){dummy.position.set(it.X+(R()-.5)*.5,.05+k*.07,it.Z+(R()-.5)*.5);dummy.rotation.set(-Math.PI/2+(R()-.5)*.5,(R()-.5)*.4,R()*6);dummy.scale.setScalar(.75+R()*.4);dummy.updateMatrix();blades.setMatrixAt(i,dummy.matrix);col.set(P.bright[(R()*P.bright.length)|0]).multiplyScalar(.85+R()*.2);blades.setColorAt(i++,col)}
+    U.fall=[];for(const it of grassPts)for(let k=0;k<4;k++){U.fall.push(R());dummy.position.set(it.X+(R()-.5)*.5,.05+k*.07,it.Z+(R()-.5)*.5);dummy.rotation.set(-Math.PI/2+(R()-.5)*.5,(R()-.5)*.4,R()*6);dummy.scale.setScalar(.75+R()*.4);dummy.updateMatrix();blades.setMatrixAt(i,dummy.matrix);col.set(P.bright[(R()*P.bright.length)|0]).multiplyScalar(.85+R()*.2);blades.setColorAt(i++,col)}
     G.add(blades);U.blades=blades;
     const drift=new T.InstancedMesh(leafGeo,new T.MeshStandardMaterial({side:T.DoubleSide}),40);U.drift=drift;U.dd=[];for(let k=0;k<40;k++){U.dd.push({a:R()*6.3,r:R()*CR,y:R()*H0*1.5,v:2+R()*2.5,s:R()*6});drift.setColorAt(k,col.set(P.bright[k%P.bright.length]))}G.add(drift);
-    S.view={lift:H0*.75,dist:96}}
+    S.view={lift:H0*.75,dist:96};
+    const sc=document.createElement("canvas");sc.width=sc.height=256;const sx=sc.getContext("2d"),sg=sx.createRadialGradient(128,128,0,128,128,128);sg.addColorStop(0,"rgba(255,246,226,1)");sg.addColorStop(.6,"rgba(255,232,190,.85)");sg.addColorStop(1,"rgba(255,190,110,0)");sx.fillStyle=sg;sx.fillRect(0,0,256,256);
+    U.sun=new T.Mesh(new T.PlaneGeometry(M*1.15,M*1.15),new T.MeshBasicMaterial({map:new T.CanvasTexture(sc),transparent:true,opacity:0,depthWrite:false,blending:T.AdditiveBlending}));U.sun.rotation.x=-Math.PI/2;U.sun.position.y=.02;G.add(U.sun)}
   G.traverse(o=>{if(o.isInstancedMesh)o.frustumCulled=false});
   if(U.mesh){S.items.forEach((it,k)=>U.mesh.setColorAt(k,it.c));U.mesh.instanceColor.needsUpdate=true}
 }
-const SHOW={snip:5.2,lastly:5.4,folderoo:6.2},FLY=1.75;
+const SHOW={snip:6.2,lastly:6.2,folderoo:6.2},FLY=1.9;
 function frame(now){
   if(!S)return;const {T,cam,U}=S,t=typeof window.__qrT==="number"?window.__qrT:Math.max(0,(now-S.t0)/1000),show=SHOW[app],TOP=show+FLY;
   const top=eio((t-show)/(FLY-.15)),free=t*.22+.5,goal=Math.ceil((show*.22+.5)/6.2832+.4)*6.2832,az=t<show?free:free+(goal-free)*top;
   const fitD=M/.7/(2*Math.tan(T.MathUtils.degToRad(17)));
-  const el=T.MathUtils.lerp(app==="folderoo"?.32:.55,Math.PI/2-.0008,top),dist=T.MathUtils.lerp(S.view.dist,fitD,top),ly=T.MathUtils.lerp(S.view.lift,0,top);
+  const el=T.MathUtils.lerp(.32,Math.PI/2-.0008,top),dist=T.MathUtils.lerp(S.view.dist,fitD,top),ly=T.MathUtils.lerp(S.view.lift,0,top);
   cam.position.set(Math.sin(az)*Math.cos(el)*dist,Math.sin(el)*dist+ly,Math.cos(az)*Math.cos(el)*dist);cam.lookAt(0,ly,0);
   const d=new T.Object3D(),col=new T.Color(),fade=eio((t-show+.2)/1.3);
-  if(app==="snip"){S.items.forEach((it,i)=>{const dl=.2+it.r1*2.6+it.dist*.02,fall=.9,land=dl+fall,u=cl((t-dl)/fall),w=Math.max(0,t-land),k=w>0?Math.exp(-5*w)*Math.cos(16*w):0;
-      let sy=1-.5*k,sx=1+.28*k,py=.46*sy;if(t<land){sy=1.25;sx=.85;py=.46+(1-u*u)*42}if(t<dl)py=999;
-      d.position.set(it.X,py,it.Z);d.rotation.set(0,0,0);d.scale.set(sx,sy,sx);d.updateMatrix();U.mesh.setMatrixAt(i,d.matrix);
-      const rs=w>0&&w<.7?.3+w*2.4:0;d.position.set(it.X,.02,it.Z);d.scale.set(rs,1,rs);d.updateMatrix();U.ring.setMatrixAt(i,d.matrix);
-      U.mesh.setColorAt(i,col.copy(it.c).lerp(it.cc,fade))});U.ring.instanceMatrix.needsUpdate=true}
-  if(app==="lastly"){S.items.forEach((it,i)=>{const dl=it.r1*2.8+(it.X+M/2)/M*.8,u=eio((t-dl)/2.2),a=t*1.4+it.r2*6.28,
-      wx=-38+((t*9+it.r3*70)%70),wy=8+it.r4*14+Math.sin(a)*3,wz=(it.r2-.5)*34+Math.cos(a*.7)*4;
-      d.position.set(wx+(it.X-wx)*u,wy*(1-u)+.08+Math.sin(u*Math.PI)*6,wz+(it.Z-wz)*u);d.rotation.set((1-u)*(t*3+it.r1*9),it.r2*6.28,(1-u)*(t*2+it.r3*9));d.scale.setScalar(.85+.3*it.r4);d.updateMatrix();U.mesh.setMatrixAt(i,d.matrix);
-      U.mesh.setColorAt(i,col.copy(it.c).lerp(it.cc,fade))})}
   if(U.mesh){U.mesh.instanceMatrix.needsUpdate=true;U.mesh.instanceColor.needsUpdate=true}
-  if(app==="folderoo"){const g=eio(t/1.4),gl=Math.max(.01,eio((t-.5)/1.1));U.trunk.scale.set(1,Math.max(.01,g),1);U.trunk.position.y=U.H0*g/2;U.twigs.scale.setScalar(Math.max(.01,eio((t-.3)/1)));
+  {const g=eio(t/1.4),gl=Math.max(.01,eio((t-.5)/1.1));U.trunk.scale.set(1,Math.max(.01,g),1);U.trunk.position.y=U.H0*g/2;U.twigs.scale.setScalar(Math.max(.01,eio((t-.3)/1)));
     U.leaves.scale.setScalar(gl);U.leaves.position.y=U.H0*(1-gl);U.blades.scale.setScalar(Math.max(.01,eio((t-.9)/1.2)));
-    U.dd.forEach((q,k)=>{q.y-=q.v*.016;if(q.y<.3)q.y=U.H0*1.4;const a=q.a+t*.3;d.position.set(Math.cos(a)*q.r+Math.sin(t*2+q.s)*.6,q.y,Math.sin(a)*q.r);d.rotation.set(t*2+q.s,t*1.3,q.s);d.scale.setScalar(t>1.5&&t<show?.9:0);d.updateMatrix();U.drift.setMatrixAt(k,d.matrix)});U.drift.instanceMatrix.needsUpdate=true}
+    U.dd.forEach((q,k)=>{q.y-=q.v*.016;if(q.y<.3)q.y=U.H0*1.4;const a=q.a+t*.3;d.position.set(Math.cos(a)*q.r+Math.sin(t*2+q.s)*.6,q.y,Math.sin(a)*q.r);d.rotation.set(t*2+q.s,t*1.3,q.s);d.scale.setScalar(t>1.5&&t<show?.9:0);d.updateMatrix();U.drift.setMatrixAt(k,d.matrix)});U.drift.instanceMatrix.needsUpdate=true;
+    U.sun.material.opacity=eio((t-show)/FLY)*.9;
+    // Lastly: the tree walks through the seasons while it turns
+    if(app==="lastly"){const ss=PAL.lastly.seasons,si=Math.min(ss.length-1,Math.floor(t/1.45));if(si!==U.si){U.si=si;const pal=ss[si];U.tint.forEach(([pk,sh],k)=>U.leaves.setColorAt(k,col.set(pal[(pk*pal.length)|0]).multiplyScalar(sh)));U.leaves.instanceColor.needsUpdate=true;
+      U.fall.forEach((pk,k)=>U.blades.setColorAt(k,col.set(pal[(pk*pal.length)|0])));U.blades.instanceColor.needsUpdate=true;for(let k=0;k<40;k++)U.drift.setColorAt(k,col.set(pal[k%pal.length]));U.drift.instanceColor.needsUpdate=true}}}
   card.classList.toggle("code",t>=TOP-.35);
   S.r.render(S.scene,cam);
   if(t>=TOP+1&&typeof window.__qrT!=="number"){S.raf=0;return} // done: rest on the code
