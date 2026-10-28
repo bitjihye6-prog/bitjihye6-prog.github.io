@@ -326,6 +326,29 @@ safe("hero-live",()=>{
   G.delayedCall(4.8,()=>{tl.play();ST.create({trigger:"#top",start:"top bottom",end:"bottom top",onToggle:self=>self.isActive?tl.resume():tl.pause()})});
 });
 
+
+/* Snip: a monthly receipt gets the forgotten subscriptions snipped off, on loop while in view */
+safe("snip-receipt",()=>{
+  const show=$("#snipShow"),tail=$("#rcTail"),sc=$("#rcSc"),cut=$("#rcpt .rc-cut"),saved=$("#rcSaved"),num=$("#rcSave");
+  if(!show||!tail||!sc||!cut)return;
+  const forgot=$$(".rc-line.forgot",tail),v={n:0},fmt=()=>num.textContent="$"+v.n.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+  const dist=()=>cut.getBoundingClientRect().width;
+  const tl=G.timeline({repeat:-1,repeatDelay:.4,paused:true,onRepeat:()=>{}});
+  tl.set(tail,{y:0,rotation:0,opacity:1}).set(saved,{scale:.4,opacity:0}).set(sc,{x:0}).add(()=>{v.n=0;fmt()})
+    .fromTo("#rcpt",{clipPath:"inset(0% -60px 100% -60px)"},{clipPath:"inset(-40px -60px -400px -60px)",duration:.8,ease:"power2.out"},0)
+    .to(forgot,{backgroundColor:"rgba(255,140,66,.22)",duration:.25,yoyo:true,repeat:3,stagger:.1},.7)
+    .to(sc,{x:()=>dist()-4,duration:1.5,ease:"power1.inOut"},1.6)
+    .to("#rcBa",{rotation:16,svgOrigin:"12 12",duration:.1,yoyo:true,repeat:13,ease:"power1.inOut"},1.6)
+    .to("#rcBb",{rotation:-16,svgOrigin:"12 12",duration:.1,yoyo:true,repeat:13,ease:"power1.inOut"},1.6)
+    .to(tail,{y:150,rotation:9,opacity:0,duration:.9,ease:"power2.in"},3.15)
+    .to(saved,{scale:1,opacity:1,duration:.7,ease:"back.out(2.2)"},3.5)
+    .to(v,{n:1379.88,duration:1.2,ease:"power2.out",onUpdate:fmt},3.5)
+    .to(sc,{x:0,duration:.6,ease:"power2.inOut"},6.4)
+    .to(saved,{scale:.6,opacity:0,duration:.4},6.6)
+    .to(tail,{y:0,rotation:0,opacity:1,duration:.5,ease:"power2.out"},6.7);
+  new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting?tl.play():tl.pause()),{threshold:.25}).observe(show);
+});
+
 /* nav, progress */
 safe("nav",()=>{
   G.to("#progress",{scaleX:1,ease:"none",scrollTrigger:{start:0,end:"max",scrub:.3}});

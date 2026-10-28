@@ -196,6 +196,23 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
 .total.hot{background:var(--snip);color:var(--snip-ink);border-color:transparent}
 .total small{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.8;display:block}
 .total strong{font-family:var(--f-display);font-weight:700;font-size:clamp(28px,3.6vw,46px);font-variant-numeric:tabular-nums;line-height:1.1;display:block}
+.snipfacts,.lastly-copy .facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.snipfacts span{font-family:var(--f-mono);font-size:12px;padding:7px 11px;border-radius:999px;border:1px solid var(--snip);color:var(--snip)}
+.snipshow{position:relative;display:flex;justify-content:center;align-items:flex-start;gap:18px;margin-bottom:22px;padding:26px 0 8px}
+.rcpt{position:relative;width:min(320px,100%);color:#141416;box-shadow:0 30px 60px -30px rgba(0,0,0,.8);font-family:var(--f-mono);font-size:12.5px;transform:rotate(-2deg)}
+.rc-top{background:#fbf8ef;border-radius:14px 14px 0 0;padding:18px 18px 0}
+.rc-head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px dashed #b9b4a6;padding-bottom:10px;margin-bottom:6px}
+.rc-head b{font-family:var(--f-display);font-size:20px;color:#141416}
+.rc-head small{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;opacity:.6}
+.rc-line{display:flex;justify-content:space-between;gap:10px;padding:6px 0}
+.rc-line em{display:block;font-style:normal;font-size:9.5px;color:#c2410c;letter-spacing:.04em}
+.rc-cut{position:relative;height:10px;margin:6px -18px 0;border-bottom:2px dashed #9a958a}
+.rc-sc{position:absolute;z-index:2;left:-14px;bottom:-15px;width:28px;height:28px;color:#141416;background:var(--snip);border-radius:50%;padding:4px;box-shadow:0 6px 14px -4px rgba(0,0,0,.5)}
+.rc-tail{background:#fbf8ef;padding:8px 18px 16px;border-radius:0 0 4px 4px;-webkit-mask:linear-gradient(#000,#000) top/100% calc(100% - 8px) no-repeat,conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/16px 8px repeat-x;mask:linear-gradient(#000,#000) top/100% calc(100% - 8px) no-repeat,conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/16px 8px repeat-x}
+.rc-saved{align-self:flex-end;background:var(--snip);color:var(--snip-ink);border-radius:18px;padding:12px 16px;transform:rotate(3deg);box-shadow:0 20px 40px -20px rgba(0,0,0,.7)}
+.rc-saved small{display:block;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;opacity:.75}
+.rc-saved b{font-family:var(--f-display);font-size:24px;font-variant-numeric:tabular-nums}
+@media (max-width:560px){.snipshow{flex-direction:column;align-items:center;gap:0}.rc-saved{align-self:center;margin-top:-10px;position:relative;z-index:2}}
 .snipctas{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
 .btn.snipplay{background:var(--snip);color:var(--snip-ink)}
 .subs{list-style:none;margin:0;padding:0;display:grid;gap:10px;min-width:0;position:relative}
@@ -346,6 +363,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
 .sig path{fill:none;stroke:url(#siggrad);stroke-width:5;stroke-linecap:round;stroke-dasharray:420;stroke-dashoffset:420;transition:stroke-dashoffset 1s cubic-bezier(.65,0,.35,1) 1.6s}
 .sig.on path{stroke-dashoffset:0}
 .loader .sig{margin-top:clamp(-46px,-3vw,-10px);padding-right:4%;max-width:100%;overflow:hidden}
+.loader .sig{margin-top:clamp(2px,.6vw,10px);padding-bottom:14px}
 .loader .sig .ink{transform:rotate(-4deg)}
 .loader .sig .ink{font-size:clamp(40px,8.5vw,130px);transition-duration:1s}
 .loader .sig path{transition-duration:.6s;transition-delay:.8s}
@@ -412,7 +430,8 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
   .roo-in{padding-block:80px 40px;gap:22px}
   .roo-copy p.lead{font-size:16px;margin-top:10px}
   .roo-in{min-height:100svh;padding-block:76px 18px;gap:16px;align-content:center}
-  .roo-copy p.lead,.roo-copy .facts{display:none}
+  .roo-copy p.lead{display:none}
+  .roo-copy .facts{margin-top:10px}.roo-copy .facts span{font-size:11px;padding:5px 9px}
   .roo-copy .snipctas{margin-top:12px}
   .claimboard{padding:14px;border-radius:24px}
   .ct-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
@@ -597,9 +616,24 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--purple);outline-off
         </div>
         <p class="sr" id="demoLive" aria-live="polite"></p>
         <p class="label" style="margin-top:14px">Example subscriptions, not real data</p>
+        <div class="facts snipfacts"><span>Free for 3 subscriptions</span><span>Pro unlock $4.99</span><span>No bank login</span></div>
         <div class="snipctas"><a class="btn primary snipplay" href="https://play.google.com/store/apps/details?id=app.snip.tracker" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3.5v17l9-8.5z" fill="currentColor" opacity=".9"/><path d="M13 12l3.2-3.1L6 3.2z" fill="currentColor" opacity=".6"/><path d="M13 12l3.2 3.1L6 20.8z" fill="currentColor" opacity=".6"/><path d="M16.2 8.9 20 11a1.1 1.1 0 0 1 0 2l-3.8 2.1L13 12z" fill="currentColor"/></svg>View on Google Play</a><a class="btn" href="https://drakiverse.studio/snipapp/" target="_blank" rel="noopener">Screenshots &amp; details ↗</a></div>
       </div>
       <div style="min-width:0">
+        <div class="snipshow" id="snipShow" aria-hidden="true">
+          <div class="rcpt" id="rcpt"><div class="rc-top">
+            <div class="rc-head"><b>Snip</b><small>Your monthly receipt</small></div>
+            <div class="rc-line"><span>Video streaming</span><span>$16.49</span></div>
+            <div class="rc-line"><span>Music</span><span>$11.99</span></div>
+            <div class="rc-line"><span>Cloud storage</span><span>$3.99</span></div>
+            <div class="rc-cut"><svg class="rc-sc" id="rcSc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g id="rcBa"><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 20 20"/></g><g id="rcBb"><circle cx="6" cy="18" r="3"/><path d="M8.12 15.88 20 4"/></g></svg></div></div>
+            <div class="rc-tail" id="rcTail">
+              <div class="rc-line forgot"><span>Gym membership<em>Unused 3 months</em></span><span>$45.00</span></div>
+              <div class="rc-line forgot"><span>Meal kit<em>Unused 2 months</em></span><span>$69.99</span></div>
+            </div>
+          </div>
+          <div class="rc-saved" id="rcSaved"><small>Saved / year</small><b id="rcSave">$1,379.88</b></div>
+        </div>
         <ul class="subs" id="subs"></ul>
         <div class="empty" id="empty" hidden></div>
         <button class="restore" id="restore" type="button" hidden>Restore all</button>
