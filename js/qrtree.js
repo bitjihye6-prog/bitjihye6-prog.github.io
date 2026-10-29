@@ -7,7 +7,7 @@ const LOGOS={snip:'<svg viewBox="0 0 100 100" aria-hidden="true"><defs><clipPath
 const PAL={
   snip:{bright:["#c8ff2e","#a8e61f","#d9ff6b","#8fd14f","#b6f03a","#e4ff8c"],code:["#2f6a08","#3a7400","#467f06"]},
   lastly:{bright:["#ff8fc7","#ffb0d6","#f472b6","#ffc4e0"],code:["#4a3bb0","#a82a68","#b4530c"],
-    seasons:[["#8fd14f","#a6dd63","#76c040","#b9e67c"],["#ff8fc7","#ffb0d6","#f472b6","#ffc4e0"],["#9d8cff","#b9acff","#c9b8ff","#8a76f5"],["#ffa03a","#ffc46b","#f08a1c","#ffb057"]]},
+    seasons:[["#ff8fc7","#ffb0d6","#f472b6","#ffc4e0"],["#9d8cff","#b9acff","#c9b8ff","#8a76f5"],["#ffa03a","#ffc46b","#f08a1c","#ffb057"]]},
   folderoo:{bright:["#2fa597","#14857f","#4cc0ae","#3bb3a3","#E8A21F","#f6c453"],code:["#0d4f4b","#0b4541","#7a4d00"]}
 };
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
@@ -113,7 +113,7 @@ function frame(now){
     U.dd.forEach((q,k)=>{q.y-=q.v*.016;if(q.y<.3)q.y=U.H0*1.4;const a=q.a+t*.3;d.position.set(Math.cos(a)*q.r+Math.sin(t*2+q.s)*.6,q.y,Math.sin(a)*q.r);d.rotation.set(t*2+q.s,t*1.3,q.s);d.scale.setScalar(t>1.5&&t<show?.9:0);d.updateMatrix();U.drift.setMatrixAt(k,d.matrix)});U.drift.instanceMatrix.needsUpdate=true;
     U.sun.material.opacity=eio((t-show)/FLY)*.9;
     // Lastly: the tree walks through the seasons while it turns
-    if(app==="lastly"){const ss=PAL.lastly.seasons,si=Math.min(ss.length-1,Math.floor(t/1.45));if(si!==U.si){U.si=si;const pal=ss[si];U.tint.forEach(([pk,sh],k)=>U.leaves.setColorAt(k,col.set(pal[(pk*pal.length)|0]).multiplyScalar(sh)));U.leaves.instanceColor.needsUpdate=true;
+    if(app==="lastly"){const ss=PAL.lastly.seasons,si=Math.min(ss.length-1,Math.floor(t/2));if(si!==U.si){U.si=si;const pal=ss[si];U.tint.forEach(([pk,sh],k)=>U.leaves.setColorAt(k,col.set(pal[(pk*pal.length)|0]).multiplyScalar(sh)));U.leaves.instanceColor.needsUpdate=true;
       U.fall.forEach((pk,k)=>U.blades.setColorAt(k,col.set(pal[(pk*pal.length)|0])));U.blades.instanceColor.needsUpdate=true;for(let k=0;k<40;k++)U.drift.setColorAt(k,col.set(pal[k%pal.length]));U.drift.instanceColor.needsUpdate=true}}}
   card.classList.toggle("code",t>=TOP-.35);
   S.r.render(S.scene,cam);
