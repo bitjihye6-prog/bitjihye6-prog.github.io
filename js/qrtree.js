@@ -99,7 +99,8 @@ function build(){
   G.traverse(o=>{if(o.isInstancedMesh)o.frustumCulled=false});
   if(U.mesh){S.items.forEach((it,k)=>U.mesh.setColorAt(k,it.c));U.mesh.instanceColor.needsUpdate=true}
 }
-const SHOW={snip:6.2,lastly:6.2,folderoo:6.2},FLY=1.9;
+const SHOW={snip:6.2,lastly:6.2,folderoo:6.2},FLY=1.9,HOLD=8;
+function restart(){card.classList.remove("code");S.t0=performance.now();if(S.U)S.U.si=undefined}
 function frame(now){
   if(!S)return;const {T,cam,U}=S,t=typeof window.__qrT==="number"?window.__qrT:Math.max(0,(now-S.t0)/1000),show=SHOW[app],TOP=show+FLY;
   const top=eio((t-show)/(FLY-.15)),free=t*.22+.5,goal=Math.ceil((show*.22+.5)/6.2832+.4)*6.2832,az=t<show?free:free+(goal-free)*top;
@@ -116,21 +117,24 @@ function frame(now){
     if(app==="lastly"){const ss=PAL.lastly.seasons,si=Math.min(ss.length-1,Math.floor(t/2));if(si!==U.si){U.si=si;const pal=ss[si];U.tint.forEach(([pk,sh],k)=>U.leaves.setColorAt(k,col.set(pal[(pk*pal.length)|0]).multiplyScalar(sh)));U.leaves.instanceColor.needsUpdate=true;
       U.fall.forEach((pk,k)=>U.blades.setColorAt(k,col.set(pal[(pk*pal.length)|0])));U.blades.instanceColor.needsUpdate=true;for(let k=0;k<40;k++)U.drift.setColorAt(k,col.set(pal[k%pal.length]));U.drift.instanceColor.needsUpdate=true}}}
   card.classList.toggle("code",t>=TOP-.35);
-  S.r.render(S.scene,cam);
-  if(t>=TOP+1&&typeof window.__qrT!=="number"){S.raf=0;return} // done: rest on the code
+  // hold the code long enough to scan, then grow the tree again so it never sits as a plain code
+  if(t>=TOP+HOLD&&typeof window.__qrT!=="number"){restart();S.raf=requestAnimationFrame(frame);return}
+  if(t<TOP+.9||typeof window.__qrT==="number")S.r.render(S.scene,cam);
   S.raf=requestAnimationFrame(frame);
 }
 async function play(){
   card.classList.remove("code");
   if(!(await boot())){card.classList.add("code");return}
-  cancelAnimationFrame(S.raf);build();S.t0=performance.now();S.raf=requestAnimationFrame(frame);
+  cancelAnimationFrame(S.raf);if(S.built!==app){build();S.built=app}else if(S.U)S.U.si=undefined;S.t0=performance.now();S.raf=requestAnimationFrame(frame);
 }
 
 /* ---------- wiring ---------- */
 setApp("snip");
 if(RM||!("IntersectionObserver" in window)){card.classList.add("code");replay.hidden=true}
 else{
-  const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){io.disconnect();play()}},{rootMargin:"0px 0px -20% 0px"});io.observe(card);
+  let visible=false;
+  const io=new IntersectionObserver(es=>{const v=es.some(e=>e.isIntersecting);if(v===visible)return;visible=v;
+    if(v)play();else{card.classList.remove("code");if(S){cancelAnimationFrame(S.raf);S.raf=0}}},{rootMargin:"0px 0px -15% 0px",threshold:.15});io.observe(card);
 }
 tabs.forEach(t=>t.addEventListener("click",()=>{setApp(t.dataset.app);if(!RM)play()}));
 replay.addEventListener("click",()=>{if(!RM)play()});
