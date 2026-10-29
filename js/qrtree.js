@@ -99,8 +99,10 @@ function build(){
   G.traverse(o=>{if(o.isInstancedMesh)o.frustumCulled=false});
   if(U.mesh){S.items.forEach((it,k)=>U.mesh.setColorAt(k,it.c));U.mesh.instanceColor.needsUpdate=true}
 }
-const SHOW={snip:6.2,lastly:6.2,folderoo:6.2},FLY=1.9,HOLD=8;
-function restart(){card.classList.remove("code");S.t0=performance.now();if(S.U)S.U.si=undefined}
+const SHOW={snip:6.2,lastly:6.2,folderoo:6.2},HOLD=8;let FLY=1.9;
+function restart(){FLY=1.9;card.classList.remove("code");S.t0=performance.now();if(S.U)S.U.si=undefined}
+// "Show QR": skip ahead to the fully grown tree and fly overhead in 1.5 seconds
+async function quick(){if(RM||!(await boot())){card.classList.add("code");return}if(S.built!==app){build();S.built=app}FLY=1.5;S.t0=performance.now()-SHOW[app]*1000;if(!S.raf)S.raf=requestAnimationFrame(frame)}
 function frame(now){
   if(!S)return;const {T,cam,U}=S,t=typeof window.__qrT==="number"?window.__qrT:Math.max(0,(now-S.t0)/1000),show=SHOW[app],TOP=show+FLY;
   const top=eio((t-show)/(FLY-.15)),free=t*.22+.5,goal=Math.ceil((show*.22+.5)/6.2832+.4)*6.2832,az=t<show?free:free+(goal-free)*top;
@@ -123,19 +125,20 @@ function frame(now){
   S.raf=requestAnimationFrame(frame);
 }
 async function play(){
-  card.classList.remove("code");
+  FLY=1.9;card.classList.remove("code");
   if(!(await boot())){card.classList.add("code");return}
   cancelAnimationFrame(S.raf);if(S.built!==app){build();S.built=app}else if(S.U)S.U.si=undefined;S.t0=performance.now();S.raf=requestAnimationFrame(frame);
 }
 
 /* ---------- wiring ---------- */
 setApp("snip");
-if(RM||!("IntersectionObserver" in window)){card.classList.add("code");replay.hidden=true}
+if(RM||!("IntersectionObserver" in window)){card.classList.add("code");replay.hidden=true;const qb=$("#qrQuick");if(qb)qb.hidden=true}
 else{
   let visible=false;
   const io=new IntersectionObserver(es=>{const v=es.some(e=>e.isIntersecting);if(v===visible)return;visible=v;
     if(v)play();else{card.classList.remove("code");if(S){cancelAnimationFrame(S.raf);S.raf=0}}},{rootMargin:"0px 0px -15% 0px",threshold:.15});io.observe(card);
 }
 tabs.forEach(t=>t.addEventListener("click",()=>{setApp(t.dataset.app);if(!RM)play()}));
-replay.addEventListener("click",()=>{if(!RM)play()});
+replay.addEventListener("click",()=>{if(!RM){FLY=1.9;play()}});
+const quickBtn=$("#qrQuick");if(quickBtn)quickBtn.addEventListener("click",quick);
 addEventListener("resize",drawFlat);
