@@ -101,8 +101,8 @@ function build(){
 }
 const SHOW={snip:6.2,lastly:6.2,folderoo:6.2},HOLD=8;let FLY=1.9;
 function restart(){FLY=1.9;card.classList.remove("code");S.t0=performance.now();if(S.U)S.U.si=undefined}
-// "Show QR": skip ahead to the fully grown tree and fly overhead in 1.5 seconds
-async function quick(){if(RM||!(await boot())){card.classList.add("code");return}if(S.built!==app){build();S.built=app}FLY=1.5;S.t0=performance.now()-SHOW[app]*1000;if(!S.raf)S.raf=requestAnimationFrame(frame)}
+// "Show QR": skip ahead to the fully grown tree and fly overhead in under a second
+async function quick(){if(RM||!(await boot())){card.classList.add("code");return}if(S.built!==app){build();S.built=app}FLY=.8;S.t0=performance.now()-SHOW[app]*1000;if(!S.raf)S.raf=requestAnimationFrame(frame)}
 function frame(now){
   if(!S)return;const {T,cam,U}=S,t=typeof window.__qrT==="number"?window.__qrT:Math.max(0,(now-S.t0)/1000),show=SHOW[app],TOP=show+FLY;
   const top=eio((t-show)/(FLY-.15)),free=t*.22+.5,goal=Math.ceil((show*.22+.5)/6.2832+.4)*6.2832,az=t<show?free:free+(goal-free)*top;
