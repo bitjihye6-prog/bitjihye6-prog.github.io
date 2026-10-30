@@ -160,7 +160,7 @@ function onHand(h){
   if(!h){HAND.fistAt=0;hStat.textContent="Show your hand";return}
   HAND.azT=.5+(.5-h.x)*5;
   const now=performance.now();
-  if(h.fist){if(!HAND.fistAt)HAND.fistAt=now;if(now-HAND.fistAt>120&&HAND.topT<1){HAND.topT=1;HAND.tw={from:HAND.top,to:1,t0:now,dur:1100}}}
+  if(h.fist){if(!HAND.fistAt)HAND.fistAt=now;if(now-HAND.fistAt>350&&HAND.topT<1){HAND.topT=1;HAND.tw={from:HAND.top,to:1,t0:now,dur:1100}}}
   else{HAND.fistAt=0;if(h.open){const lift=Math.max(0,Math.min(.55,(.75-h.y)/.5*.55));if(HAND.topT>=1)HAND.tw={from:HAND.top,to:lift,t0:now,dur:900};HAND.topT=lift}}
   hStat.textContent=HAND.topT>=1?"QR code. Open your hand to grow the tree back":h.fist?"Hold the fist…":"Move to turn · raise to lift · fist for the QR";
 }
@@ -171,7 +171,7 @@ async function toggleHand(){
   if(!(await boot())){hStat.textContent="3D isn't available on this device.";handBtn.disabled=false;return}
   if(S.built!==app){build();S.built=app}
   HAND={az:.5,azT:.5,top:0,topT:0,fistAt:0};
-  const {startHandCam}=await import("./handcam.js?v=202610292210");
+  const {startHandCam}=await import("./handcam.js?v=202610292215");
   CAM=await startHandCam({video:$("#handVideo"),canvas:$("#handSkel"),color:()=>LIGHT[app][0],onHand,onStatus:t=>hStat.textContent=t});
   handBtn.disabled=false;
   if(!CAM){HAND=null;return}

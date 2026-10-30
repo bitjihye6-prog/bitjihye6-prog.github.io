@@ -9,7 +9,7 @@ export function readHand(lm){
   if(!lm)return null;
   const palm=d(lm[0],lm[9])||1e-6;
   const curl=[8,12,16,20].reduce((s,i)=>s+d(lm[i],lm[0]),0)/4/palm;   // ~1 for a fist, ~1.9 for an open hand
-  return{x:lm[9].x,y:lm[9].y,fist:curl<1.4,open:curl>1.6};
+  return{x:lm[9].x,y:lm[9].y,fist:curl<1.3,open:curl>1.55};
 }
 
 export function drawHand(ctx,lm,W,H,color){
