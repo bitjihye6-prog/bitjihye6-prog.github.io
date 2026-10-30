@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Drakiverse Studio is an independent app studio from Canada making small apps that each fix one everyday annoyance. Meet Snip, Lastly and Folderoo. Android first, iOS on the way.">
@@ -210,7 +210,13 @@ footer .brand .bw2{margin-bottom:8px}
 .get-tab[aria-selected="true"]{background:var(--fg);color:var(--ink)}
 .get-tab:hover{transform:translateY(-2px)}
 .get-note{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;color:var(--muted);margin:18px 0 0}
-.get-stage{display:flex;flex-direction:column;align-items:center;gap:14px;min-width:0}
+.get-stage{position:relative;display:flex;flex-direction:column;align-items:center;gap:14px;min-width:0}
+.qr-card.dark .qr-logo{background:#0b0b0c}
+.qr-hand{border-color:rgba(255,143,199,.45)}
+.hand-status{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;color:var(--fg);margin:0;text-align:center}
+.hand-cam{position:absolute;right:0;top:0;width:clamp(96px,22%,150px);aspect-ratio:3/4;border-radius:18px;overflow:hidden;background:var(--surface);border:1px solid var(--line);box-shadow:0 20px 40px -20px rgba(0,0,0,.7)}
+.hand-cam video,.hand-cam canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+.hand-cam span{position:absolute;left:0;right:0;bottom:0;padding:5px 6px;font-family:var(--f-mono);font-size:9px;letter-spacing:.06em;text-align:center;color:var(--muted);background:rgba(11,11,12,.75)}
 .qr-card{position:relative;display:block;width:min(560px,92vw);aspect-ratio:1;outline-offset:6px;-webkit-tap-highlight-color:transparent}
 .qr-card canvas{width:100%;height:100%;display:block}
 .qr-flat{position:absolute;inset:0;opacity:0;transition:opacity .8s ease}
@@ -739,22 +745,24 @@ footer .brand .bw2{margin-bottom:8px}
       <div class="get-copy">
         <p class="label">Get the apps</p>
         <h2 class="h2">Watch it grow.<br><em>Scan it.</em></h2>
-        <p class="lead">Every app grows its own tree. When the camera rises above it, the leaves become a QR code: point your phone's camera at it to open the app on Google Play.</p>
+        <p class="lead">Every app grows its own tree. When the camera rises above it, the leaves become a QR code: point your phone's camera at it to open the app on Google Play. Or tap <b>Use my hand</b>: move your hand to turn the tree, raise it to lift the camera, and make a fist to see the code.</p>
         <div class="get-tabs" role="tablist" aria-label="Choose an app">
-          <button type="button" role="tab" class="get-tab" data-app="snip" aria-selected="true"><i style="background:var(--snip)"></i>Snip</button>
-          <button type="button" role="tab" class="get-tab" data-app="lastly" aria-selected="false"><i style="background:var(--purple)"></i>Lastly</button>
+          <button type="button" role="tab" class="get-tab" data-app="lastly" aria-selected="true"><i style="background:var(--purple)"></i>Lastly</button>
+          <button type="button" role="tab" class="get-tab" data-app="snip" aria-selected="false"><i style="background:var(--snip)"></i>Snip</button>
           <button type="button" role="tab" class="get-tab" data-app="folderoo" aria-selected="false"><i style="background:var(--gold)"></i>Folderoo</button>
         </div>
         <p class="get-note">Already on your phone? Just tap the code.</p>
       </div>
       <div class="get-stage">
-        <a class="qr-card" id="qrLink" href="/get/snip/">
-          <canvas class="qr-flat" id="qrCanvas" width="400" height="400" role="img" aria-label="QR code that opens Snip on Google Play"></canvas>
+        <a class="qr-card" id="qrLink" href="/get/lastly/">
+          <canvas class="qr-flat" id="qrCanvas" width="400" height="400" role="img" aria-label="QR code that opens Lastly on Google Play"></canvas>
           <div class="qr-tree" id="qrTree" aria-hidden="true"></div>
           <span class="qr-logo" id="qrLogo" aria-hidden="true"></span>
         </a>
-        <p class="qr-cap" id="qrCap">Scan for <b>Snip</b></p>
-        <div class="qr-btns"><button type="button" class="qr-again" id="qrQuick">Show QR ⚡</button><button type="button" class="qr-again" id="qrToggle">Replay ↺</button></div>
+        <p class="qr-cap" id="qrCap">Scan for <b>Lastly</b></p>
+        <div class="qr-btns"><button type="button" class="qr-again" id="qrQuick">Show QR ⚡</button><button type="button" class="qr-again" id="qrToggle">Replay ↺</button><button type="button" class="qr-again qr-hand" id="qrHand" aria-pressed="false">Use my hand ✋</button></div>
+        <p class="hand-status" id="handStatus" role="status" hidden></p>
+        <div class="hand-cam" id="handCam" hidden><video id="handVideo" muted playsinline></video><canvas id="handSkel"></canvas><span>Stays on your device</span></div>
       </div>
     </div>
   </section>
@@ -836,8 +844,8 @@ footer .brand .bw2{margin-bottom:8px}
 <script src="/js/gsap.min.js"></script>
 <script src="/js/ScrollTrigger.min.js"></script>
 <script src="/js/Flip.min.js"></script>
-<script src="/js/site.js?v=202610282104"></script>
-<script type="module" src="/js/qrtree.js?v=202610282104"></script>
+<script src="/js/site.js?v=202610292145"></script>
+<script type="module" src="/js/qrtree.js?v=202610292145"></script>
 
 </body>
 </html>

@@ -10,6 +10,10 @@ const PAL={
     seasons:[["#ff8fc7","#ffb0d6","#f472b6","#ffc4e0"],["#9d8cff","#b9acff","#c9b8ff","#8a76f5"],["#ffa03a","#ffc46b","#f08a1c","#ffb057"]]},
   folderoo:{bright:["#2fa597","#14857f","#4cc0ae","#3bb3a3","#E8A21F","#f6c453"],code:["#0d4f4b","#0b4541","#7a4d00"]}
 };
+// Dark style: light leaves on the dark page, with only a faint glow in the app's colour (no bright background).
+const LIGHT={snip:["#e4ff8c","#d4ff5c","#c8ff2e"],lastly:["#ffc4e0","#d6ccff","#ffcf94"],folderoo:["#86e3d6","#f6c453","#b3f0e6"]};
+const GLOW={snip:"200,255,46",lastly:"255,143,199",folderoo:"76,192,174"};
+let STYLE="dark";
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const card=$("#qrLink"),flat=$("#qrCanvas"),holder=$("#qrTree"),logo=$("#qrLogo"),cap=$("#qrCap"),replay=$("#qrToggle"),tabs=$$(".get-tab");
 const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -22,13 +26,15 @@ function codeCol(a,m,N){const c=PAL[a].code;
   return a==="lastly"?c[((m.x+m.y)>>2)%3]:c[(m.x*5+m.y*3)%3]}
 function finderCol(a){return PAL[a].code[0]}
 
-let app="snip",three=null,S=null,M=41;
+let app="snip",three=null,S=null,M=41,HAND=null,CAM=null;
 
 /* ---------- the scannable code (round dots, crisp corner markers, soft light glow, no box) ---------- */
 function drawFlat(){
   const dpr=Math.min(devicePixelRatio||1,2),W=card.clientWidth||400,Z=Math.round(W*dpr);flat.width=flat.height=Z;const x=flat.getContext("2d");
   const {N,M:MM,o}=mods(app);M=MM;const size=Z*.7,ox=(Z-size)/2,cell=size/M,R=rnd(77);
   // a warm pool of sunlight (light enough behind the code for every phone to scan)
+  card.classList.toggle("dark",STYLE==="dark");
+  if(STYLE==="dark")return drawDark(x,Z,size,ox,cell,N,o,R);
   const g=x.createRadialGradient(Z/2,Z*.48,0,Z/2,Z/2,Z*.54);g.addColorStop(0,"rgba(255,249,234,1)");g.addColorStop(.6,"rgba(255,243,220,1)");g.addColorStop(.8,"rgba(255,226,170,.92)");g.addColorStop(.9,"rgba(255,196,110,.45)");g.addColorStop(1,"rgba(255,170,80,0)");x.fillStyle=g;x.fillRect(0,0,Z,Z);
   for(const m of o){if(m.f)continue;const cx=ox+(m.x+4.5)*cell,cy=ox+(m.y+4.5)*cell;x.fillStyle=codeCol(app,m,N);x.beginPath();
     if(app==="lastly")x.ellipse(cx,cy,cell*.5,cell*.44,(R()-.5)*.9,0,Math.PI*2);else x.arc(cx,cy,cell*.46,0,Math.PI*2);x.fill()}
@@ -37,6 +43,17 @@ function drawFlat(){
     x.fillStyle=fc;x.beginPath();x.roundRect(X,Y,7*cell,7*cell,cell*.5);x.fill();
     x.fillStyle="#fff4de";x.beginPath();x.roundRect(X+cell,Y+cell,5*cell,5*cell,cell*.35);x.fill();
     x.fillStyle=app==="lastly"?PAL.lastly.code[1]:fc;x.beginPath();x.roundRect(X+2*cell,Y+2*cell,3*cell,3*cell,cell*.25);x.fill()}
+}
+// light dots on the dark page (an "inverted" code). The quiet zone stays dark so phones can find the code.
+function drawDark(x,Z,size,ox,cell,N,o,R){
+  x.clearRect(0,0,Z,Z);const L=LIGHT[app];
+  const g=x.createRadialGradient(Z/2,Z/2,0,Z/2,Z/2,Z*.5);g.addColorStop(0,"rgba("+GLOW[app]+",.13)");g.addColorStop(.75,"rgba("+GLOW[app]+",.06)");g.addColorStop(1,"rgba("+GLOW[app]+",0)");x.fillStyle=g;x.fillRect(0,0,Z,Z);
+  for(const m of o){if(m.f)continue;const cx=ox+(m.x+4.5)*cell,cy=ox+(m.y+4.5)*cell;x.fillStyle=L[(m.x*5+m.y*3)%L.length];x.beginPath();
+    if(app==="lastly")x.ellipse(cx,cy,cell*.5,cell*.44,(R()-.5)*.9,0,Math.PI*2);else x.arc(cx,cy,cell*.46,0,Math.PI*2);x.fill()}
+  for(const[fx,fy]of[[0,0],[N-7,0],[0,N-7]]){const X=ox+(fx+4)*cell,Y=ox+(fy+4)*cell;
+    x.fillStyle=L[0];x.beginPath();x.roundRect(X,Y,7*cell,7*cell,cell*.5);x.fill();
+    x.fillStyle="#0b0b0c";x.beginPath();x.roundRect(X+cell,Y+cell,5*cell,5*cell,cell*.35);x.fill();
+    x.fillStyle=L[0];x.beginPath();x.roundRect(X+2*cell,Y+2*cell,3*cell,3*cell,cell*.25);x.fill()}
 }
 function setApp(a){
   app=a;card.href="/get/"+a+"/";
@@ -94,7 +111,7 @@ function build(){
     G.add(blades);U.blades=blades;
     const drift=new T.InstancedMesh(leafGeo,new T.MeshStandardMaterial({side:T.DoubleSide}),40);U.drift=drift;U.dd=[];for(let k=0;k<40;k++){U.dd.push({a:R()*6.3,r:R()*CR,y:R()*H0*1.5,v:2+R()*2.5,s:R()*6});drift.setColorAt(k,col.set(P.bright[k%P.bright.length]))}G.add(drift);
     S.view={lift:H0*.75,dist:96};
-    const sc=document.createElement("canvas");sc.width=sc.height=256;const sx=sc.getContext("2d"),sg=sx.createRadialGradient(128,128,0,128,128,128);sg.addColorStop(0,"rgba(255,246,226,1)");sg.addColorStop(.6,"rgba(255,232,190,.85)");sg.addColorStop(1,"rgba(255,190,110,0)");sx.fillStyle=sg;sx.fillRect(0,0,256,256);
+    const sc=document.createElement("canvas");sc.width=sc.height=256;const sx=sc.getContext("2d"),sg=sx.createRadialGradient(128,128,0,128,128,128);if(STYLE==="dark"){sg.addColorStop(0,"rgba("+GLOW[app]+",.35)");sg.addColorStop(.7,"rgba("+GLOW[app]+",.12)");sg.addColorStop(1,"rgba("+GLOW[app]+",0)")}else{sg.addColorStop(0,"rgba(255,246,226,1)");sg.addColorStop(.6,"rgba(255,232,190,.85)");sg.addColorStop(1,"rgba(255,190,110,0)")}sx.fillStyle=sg;sx.fillRect(0,0,256,256);
     U.sun=new T.Mesh(new T.PlaneGeometry(M*1.15,M*1.15),new T.MeshBasicMaterial({map:new T.CanvasTexture(sc),transparent:true,opacity:0,depthWrite:false,blending:T.AdditiveBlending}));U.sun.rotation.x=-Math.PI/2;U.sun.position.y=.02;G.add(U.sun)}
   G.traverse(o=>{if(o.isInstancedMesh)o.frustumCulled=false});
   if(U.mesh){S.items.forEach((it,k)=>U.mesh.setColorAt(k,it.c));U.mesh.instanceColor.needsUpdate=true}
@@ -105,7 +122,9 @@ function restart(){FLY=1.9;card.classList.remove("code");S.t0=performance.now();
 async function quick(){if(RM||!(await boot())){card.classList.add("code");return}if(S.built!==app){build();S.built=app}FLY=.8;S.t0=performance.now()-SHOW[app]*1000;if(!S.raf)S.raf=requestAnimationFrame(frame)}
 function frame(now){
   if(!S)return;const {T,cam,U}=S,t=typeof window.__qrT==="number"?window.__qrT:Math.max(0,(now-S.t0)/1000),show=SHOW[app],TOP=show+FLY;
-  const top=eio((t-show)/(FLY-.15)),free=t*.22+.5,goal=Math.ceil((show*.22+.5)/6.2832+.4)*6.2832,az=t<show?free:free+(goal-free)*top;
+  if(HAND){HAND.az+=(HAND.azT-HAND.az)*.08;HAND.top+=(HAND.topT-HAND.top)*.06}
+  const top=HAND?eio(HAND.top):eio((t-show)/(FLY-.15)),free=t*.22+.5,goal=HAND?Math.round(HAND.az/6.2832)*6.2832:Math.ceil((show*.22+.5)/6.2832+.4)*6.2832,
+    az=HAND?HAND.az+(goal-HAND.az)*top:(t<show?free:free+(goal-free)*top);
   const fitD=M/.7/(2*Math.tan(T.MathUtils.degToRad(17)));
   const el=T.MathUtils.lerp(.32,Math.PI/2-.0008,top),dist=T.MathUtils.lerp(S.view.dist,fitD,top),ly=T.MathUtils.lerp(S.view.lift,0,top);
   cam.position.set(Math.sin(az)*Math.cos(el)*dist,Math.sin(el)*dist+ly,Math.cos(az)*Math.cos(el)*dist);cam.lookAt(0,ly,0);
@@ -114,14 +133,14 @@ function frame(now){
   {const g=eio(t/1.4),gl=Math.max(.01,eio((t-.5)/1.1));U.trunk.scale.set(1,Math.max(.01,g),1);U.trunk.position.y=U.H0*g/2;U.twigs.scale.setScalar(Math.max(.01,eio((t-.3)/1)));
     U.leaves.scale.setScalar(gl);U.leaves.position.y=U.H0*(1-gl);U.blades.scale.setScalar(Math.max(.01,eio((t-.9)/1.2)));
     U.dd.forEach((q,k)=>{q.y-=q.v*.016;if(q.y<.3)q.y=U.H0*1.4;const a=q.a+t*.3;d.position.set(Math.cos(a)*q.r+Math.sin(t*2+q.s)*.6,q.y,Math.sin(a)*q.r);d.rotation.set(t*2+q.s,t*1.3,q.s);d.scale.setScalar(t>1.5&&t<show?.9:0);d.updateMatrix();U.drift.setMatrixAt(k,d.matrix)});U.drift.instanceMatrix.needsUpdate=true;
-    U.sun.material.opacity=eio((t-show)/FLY)*.9;
+    U.sun.material.opacity=(HAND?top:eio((t-show)/FLY))*.9;
     // Lastly: the tree walks through the seasons while it turns
     if(app==="lastly"){const ss=PAL.lastly.seasons,si=Math.min(ss.length-1,Math.floor(t/2));if(si!==U.si){U.si=si;const pal=ss[si];U.tint.forEach(([pk,sh],k)=>U.leaves.setColorAt(k,col.set(pal[(pk*pal.length)|0]).multiplyScalar(sh)));U.leaves.instanceColor.needsUpdate=true;
       U.fall.forEach((pk,k)=>U.blades.setColorAt(k,col.set(pal[(pk*pal.length)|0])));U.blades.instanceColor.needsUpdate=true;for(let k=0;k<40;k++)U.drift.setColorAt(k,col.set(pal[k%pal.length]));U.drift.instanceColor.needsUpdate=true}}}
-  card.classList.toggle("code",t>=TOP-.35);
+  card.classList.toggle("code",HAND?HAND.top>.97:t>=TOP-.35);
   // hold the code long enough to scan, then grow the tree again so it never sits as a plain code
-  if(t>=TOP+HOLD&&typeof window.__qrT!=="number"){restart();S.raf=requestAnimationFrame(frame);return}
-  if(t<TOP+.9||typeof window.__qrT==="number")S.r.render(S.scene,cam);
+  if(!HAND&&t>=TOP+HOLD&&typeof window.__qrT!=="number"){restart();S.raf=requestAnimationFrame(frame);return}
+  if(HAND||t<TOP+.9||typeof window.__qrT==="number")S.r.render(S.scene,cam);
   S.raf=requestAnimationFrame(frame);
 }
 async function play(){
@@ -131,12 +150,41 @@ async function play(){
 }
 
 /* ---------- wiring ---------- */
-setApp("snip");
-if(RM||!("IntersectionObserver" in window)){card.classList.add("code");replay.hidden=true;const qb=$("#qrQuick");if(qb)qb.hidden=true}
+setApp("lastly");
+/* ---------- hand control: move to turn the tree, raise your hand to lift the camera, make a fist for the QR code ---------- */
+const handBtn=$("#qrHand"),camBox=$("#handCam"),hStat=$("#handStatus");
+function onHand(h){
+  if(!HAND)return;
+  if(!h){HAND.fistAt=0;hStat.textContent="Show your hand";return}
+  HAND.azT=.5+(.5-h.x)*5;
+  const now=performance.now();
+  if(h.fist){if(!HAND.fistAt)HAND.fistAt=now;if(now-HAND.fistAt>400)HAND.topT=1}
+  else{HAND.fistAt=0;if(h.open)HAND.topT=Math.max(0,Math.min(.55,(.75-h.y)/.5*.55))}
+  hStat.textContent=HAND.topT>=1?"QR code. Open your hand to grow the tree back":h.fist?"Hold the fist…":"Move to turn · raise to lift · fist for the QR";
+}
+function stopHand(){if(CAM)CAM.stop();CAM=null;HAND=null;camBox.hidden=true;hStat.hidden=true;handBtn.textContent="Use my hand ✋";handBtn.setAttribute("aria-pressed","false")}
+async function toggleHand(){
+  if(CAM||HAND){stopHand();play();return}
+  hStat.hidden=false;handBtn.disabled=true;
+  if(!(await boot())){hStat.textContent="3D isn't available on this device.";handBtn.disabled=false;return}
+  if(S.built!==app){build();S.built=app}
+  HAND={az:.5,azT:.5,top:0,topT:0,fistAt:0};
+  const {startHandCam}=await import("./handcam.js?v=202610292145");
+  CAM=await startHandCam({video:$("#handVideo"),canvas:$("#handSkel"),color:()=>LIGHT[app][0],onHand,onStatus:t=>hStat.textContent=t});
+  handBtn.disabled=false;
+  if(!CAM){HAND=null;return}
+  camBox.hidden=false;handBtn.textContent="Stop camera";handBtn.setAttribute("aria-pressed","true");
+  card.classList.remove("code");cancelAnimationFrame(S.raf);S.t0=performance.now();S.raf=requestAnimationFrame(frame);
+}
+if(handBtn){if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)handBtn.hidden=true;else handBtn.addEventListener("click",toggleHand)}
+if(location.hash==="#qrtest")window.__qr={style(s){STYLE=s;drawFlat();if(S)S.built=null},hand:onHand,
+  fake(){HAND={az:.5,azT:.5,top:0,topT:0,fistAt:0};camBox.hidden=false;hStat.hidden=false;handBtn.textContent="Stop camera";boot().then(()=>{if(S.built!==app){build();S.built=app}card.classList.remove("code");cancelAnimationFrame(S.raf);S.t0=performance.now();S.raf=requestAnimationFrame(frame)})}};
+
+if(RM||!("IntersectionObserver" in window)){card.classList.add("code");replay.hidden=true;const qb=$("#qrQuick");if(qb)qb.hidden=true;if(handBtn)handBtn.hidden=true}
 else{
   let visible=false;
   const io=new IntersectionObserver(es=>{const v=es.some(e=>e.isIntersecting);if(v===visible)return;visible=v;
-    if(v)play();else{card.classList.remove("code");if(S){cancelAnimationFrame(S.raf);S.raf=0}}},{rootMargin:"0px 0px -15% 0px",threshold:.15});io.observe(card);
+    if(v)play();else{if(CAM)stopHand();card.classList.remove("code");if(S){cancelAnimationFrame(S.raf);S.raf=0}}},{rootMargin:"0px 0px -15% 0px",threshold:.15});io.observe(card);
 }
 tabs.forEach(t=>t.addEventListener("click",()=>{setApp(t.dataset.app);if(!RM)play()}));
 replay.addEventListener("click",()=>{if(!RM){FLY=1.9;play()}});
