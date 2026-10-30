@@ -122,7 +122,8 @@ function restart(){FLY=1.9;card.classList.remove("code");S.t0=performance.now();
 async function quick(){if(RM||!(await boot())){card.classList.add("code");return}if(S.built!==app){build();S.built=app}FLY=.8;S.t0=performance.now()-SHOW[app]*1000;if(!S.raf)S.raf=requestAnimationFrame(frame)}
 function frame(now){
   if(!S)return;const {T,cam,U}=S,t=typeof window.__qrT==="number"?window.__qrT:Math.max(0,(now-S.t0)/1000),show=SHOW[app],TOP=show+FLY;
-  if(HAND){HAND.az+=(HAND.azT-HAND.az)*.18;HAND.top+=(HAND.topT-HAND.top)*(HAND.topT>=1?.3:.1)}
+  if(HAND){HAND.az+=(HAND.azT-HAND.az)*.18;
+    if(HAND.tw){const k=cl((performance.now()-HAND.tw.t0)/HAND.tw.dur);HAND.top=HAND.tw.from+(HAND.tw.to-HAND.tw.from)*k;if(k>=1)HAND.tw=null}else HAND.top+=(HAND.topT-HAND.top)*.1}
   const top=HAND?eio(HAND.top):eio((t-show)/(FLY-.15)),free=t*.22+.5,goal=HAND?Math.round(HAND.az/6.2832)*6.2832:Math.ceil((show*.22+.5)/6.2832+.4)*6.2832,
     az=HAND?HAND.az+(goal-HAND.az)*top:(t<show?free:free+(goal-free)*top);
   const fitD=M/.7/(2*Math.tan(T.MathUtils.degToRad(17)));
@@ -138,7 +139,7 @@ function frame(now){
     if(app==="lastly"){const ss=PAL.lastly.seasons,si=Math.min(ss.length-1,Math.floor(t/2));if(si!==U.si){U.si=si;const pal=ss[si];U.tint.forEach(([pk,sh],k)=>U.leaves.setColorAt(k,col.set(pal[(pk*pal.length)|0]).multiplyScalar(sh)));U.leaves.instanceColor.needsUpdate=true;
       U.fall.forEach((pk,k)=>U.blades.setColorAt(k,col.set(pal[(pk*pal.length)|0])));U.blades.instanceColor.needsUpdate=true;for(let k=0;k<40;k++)U.drift.setColorAt(k,col.set(pal[k%pal.length]));U.drift.instanceColor.needsUpdate=true}}}
   S.r.shadowMap.autoUpdate=t<2.6||!!S.needShadow;S.needShadow=false;
-  if(HAND)card.classList.toggle("code",HAND.topT>=1);else card.classList.toggle("code",t>=TOP-.35);
+  if(HAND)card.classList.toggle("code",HAND.topT>=1&&HAND.top>.7);else card.classList.toggle("code",t>=TOP-.35);
   // hold the code long enough to scan, then grow the tree again so it never sits as a plain code
   if(!HAND&&t>=TOP+HOLD&&typeof window.__qrT!=="number"){restart();S.raf=requestAnimationFrame(frame);return}
   if(HAND||t<TOP+.9||typeof window.__qrT==="number")S.r.render(S.scene,cam);
@@ -159,8 +160,8 @@ function onHand(h){
   if(!h){HAND.fistAt=0;hStat.textContent="Show your hand";return}
   HAND.azT=.5+(.5-h.x)*5;
   const now=performance.now();
-  if(h.fist){if(!HAND.fistAt)HAND.fistAt=now;if(now-HAND.fistAt>120&&HAND.topT<1){HAND.topT=1;card.classList.add("snap","code")}}
-  else{HAND.fistAt=0;if(h.open){if(HAND.topT>=1)card.classList.remove("code");HAND.topT=Math.max(0,Math.min(.55,(.75-h.y)/.5*.55))}}
+  if(h.fist){if(!HAND.fistAt)HAND.fistAt=now;if(now-HAND.fistAt>120&&HAND.topT<1){HAND.topT=1;HAND.tw={from:HAND.top,to:1,t0:now,dur:1100}}}
+  else{HAND.fistAt=0;if(h.open){const lift=Math.max(0,Math.min(.55,(.75-h.y)/.5*.55));if(HAND.topT>=1)HAND.tw={from:HAND.top,to:lift,t0:now,dur:900};HAND.topT=lift}}
   hStat.textContent=HAND.topT>=1?"QR code. Open your hand to grow the tree back":h.fist?"Hold the fist…":"Move to turn · raise to lift · fist for the QR";
 }
 function stopHand(){card.classList.remove("snap");if(CAM)CAM.stop();CAM=null;HAND=null;camBox.hidden=true;hStat.hidden=true;handBtn.textContent="Use my hand ✋";handBtn.setAttribute("aria-pressed","false")}
@@ -170,7 +171,7 @@ async function toggleHand(){
   if(!(await boot())){hStat.textContent="3D isn't available on this device.";handBtn.disabled=false;return}
   if(S.built!==app){build();S.built=app}
   HAND={az:.5,azT:.5,top:0,topT:0,fistAt:0};
-  card.classList.add("snap");const {startHandCam}=await import("./handcam.js?v=202610292205");
+  const {startHandCam}=await import("./handcam.js?v=202610292210");
   CAM=await startHandCam({video:$("#handVideo"),canvas:$("#handSkel"),color:()=>LIGHT[app][0],onHand,onStatus:t=>hStat.textContent=t});
   handBtn.disabled=false;
   if(!CAM){HAND=null;return}
@@ -179,7 +180,7 @@ async function toggleHand(){
 }
 if(handBtn){if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)handBtn.hidden=true;else handBtn.addEventListener("click",toggleHand)}
 if(location.hash==="#qrtest")window.__qr={style(s){STYLE=s;drawFlat();if(S)S.built=null},hand:onHand,
-  fake(){HAND={az:.5,azT:.5,top:0,topT:0,fistAt:0};card.classList.add("snap");camBox.hidden=false;hStat.hidden=false;handBtn.textContent="Stop camera";boot().then(()=>{if(S.built!==app){build();S.built=app}card.classList.remove("code");cancelAnimationFrame(S.raf);S.t0=performance.now();S.raf=requestAnimationFrame(frame)})}};
+  fake(){HAND={az:.5,azT:.5,top:0,topT:0,fistAt:0};camBox.hidden=false;hStat.hidden=false;handBtn.textContent="Stop camera";boot().then(()=>{if(S.built!==app){build();S.built=app}card.classList.remove("code");cancelAnimationFrame(S.raf);S.t0=performance.now();S.raf=requestAnimationFrame(frame)})}};
 
 if(RM||!("IntersectionObserver" in window)){card.classList.add("code");replay.hidden=true;const qb=$("#qrQuick");if(qb)qb.hidden=true;if(handBtn)handBtn.hidden=true}
 else{
