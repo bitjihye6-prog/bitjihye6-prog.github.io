@@ -157,7 +157,7 @@ setApp("lastly");
 const handBtn=$("#qrHand"),camBox=$("#handCam"),hStat=$("#handStatus");
 function onHand(h){
   if(!HAND)return;
-  if(!h){HAND.fistAt=0;hStat.textContent="Show your hand";return}
+  if(!h){HAND.fistAt=0;return}
   HAND.azT=.5+(.5-h.x)*5;
   const now=performance.now();
   if(h.fist){if(!HAND.fistAt)HAND.fistAt=now;if(now-HAND.fistAt>300&&HAND.topT<1){HAND.topT=1;HAND.tw={from:HAND.top,to:1,t0:now,dur:1100}}}
@@ -171,11 +171,13 @@ async function toggleHand(){
   if(!(await boot())){hStat.textContent="3D isn't available on this device.";handBtn.disabled=false;return}
   if(S.built!==app){build();S.built=app}
   HAND={az:.5,azT:.5,top:0,topT:0,fistAt:0};
-  const {startHandCam}=await import("./handcam.js?v=202610292220");
-  CAM=await startHandCam({video:$("#handVideo"),canvas:$("#handSkel"),color:()=>LIGHT[app][0],onHand,onStatus:t=>hStat.textContent=t});
+  const {startHandCam}=await import("./handcam.js?v=3");
+  camBox.hidden=false; // keep the video on screen while starting: iPhones only give frames from a visible video
+  const force=(location.hash.match(/engine=([\w-]+)/)||[])[1];
+  CAM=await startHandCam({video:$("#handVideo"),canvas:$("#handSkel"),color:()=>LIGHT[app][0],onHand,onStatus:t=>hStat.textContent=t,force});
   handBtn.disabled=false;
-  if(!CAM){HAND=null;return}
-  camBox.hidden=false;handBtn.textContent="Stop camera";handBtn.setAttribute("aria-pressed","true");
+  if(!CAM){HAND=null;camBox.hidden=true;return}
+  window.__cam=CAM;handBtn.textContent="Stop camera";handBtn.setAttribute("aria-pressed","true");
   card.classList.remove("code");cancelAnimationFrame(S.raf);S.t0=performance.now();S.raf=requestAnimationFrame(frame);
 }
 if(handBtn){if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)handBtn.hidden=true;else handBtn.addEventListener("click",toggleHand)}

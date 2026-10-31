@@ -23,52 +23,89 @@ export function drawHand(ctx,lm,W,H,color){
 function oneEuro(minCut=1.2,beta=8,dCut=1){let x=null,dx=0,tp=0;const a=(c,dt)=>1/(1+1/(2*Math.PI*c*dt));
   return(v,t)=>{if(x===null){x=v;tp=t;return v}const dt=Math.max(1e-3,(t-tp)/1000);tp=t;const d=(v-x)/dt;dx+=a(dCut,dt)*(d-dx);x+=a(minCut+beta*Math.abs(dx),dt)*(v-x);return x}}
 
-export async function startHandCam({video,canvas,color,onHand,onStatus}){
+/* Apps' built-in browsers (Instagram, Facebook, TikTok, Snapchat…) often block the camera or the tracker */
+export const IN_APP=/Instagram|FBAN|FBAV|FB_IAB|FBIOS|Snapchat|TikTok|musical_ly|BytedanceWebview|Line\/|LinkedInApp|Twitter|Pinterest|GSA\//i.test(navigator.userAgent);
+const MOBILE=/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)||(navigator.maxTouchPoints>1&&/Mac/.test(navigator.platform));
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+
+async function openCamera(){
+  const tries=[{facingMode:"user",width:{ideal:640},height:{ideal:480},frameRate:{ideal:30}},{facingMode:"user"},true];
+  let last;for(const v of tries){try{return await navigator.mediaDevices.getUserMedia({video:v,audio:false})}catch(e){last=e;if(e&&(e.name==="NotAllowedError"||e.name==="SecurityError"))break}}
+  throw last;
+}
+
+/* engines, most reliable first. force (testing only): "worker-CPU" | "worker-GPU" | "main-CPU" */
+function engines(force){
+  if(force)return[force];
+  const w=(window.Worker&&window.createImageBitmap)?(MOBILE?["worker-CPU"]:["worker-GPU","worker-CPU"]):[];
+  return[...w,"main-CPU"];
+}
+
+export async function startHandCam({video,canvas,color,onHand,onStatus,force}){
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){onStatus(IN_APP?"This app's browser can't use the camera. Open drakiverse.studio in Chrome or Safari.":"This browser can't use the camera. Use the buttons instead.");return null}
   onStatus("Asking for the camera…");
   let stream;
-  try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"user",width:{ideal:480},height:{ideal:360},frameRate:{ideal:30}},audio:false})}
-  catch(e){onStatus("Camera blocked. Allow it in your browser, or use the buttons.");return null}
-  onStatus("Loading hand tracking…");
-  video.srcObject=stream;video.muted=true;video.playsInline=true;await video.play();
+  try{stream=await openCamera()}
+  catch(e){onStatus(IN_APP?"This app's browser blocked the camera. Tap ⋯ → Open in browser, then try again.":"Camera blocked. Allow it in your browser settings, or use the buttons.");return null}
+  video.setAttribute("playsinline","");video.setAttribute("muted","");video.muted=true;video.playsInline=true;video.srcObject=stream;
+  try{await video.play()}catch(e){}
+  for(let k=0;k<50&&!(video.videoWidth>0);k++)await wait(100); // wait for the first real frame (iPhones are slower)
+  // Low Power Mode on iPhones can pause the preview: a tap on the camera box restarts it
+  const box=video.parentElement;if(box)box.addEventListener("click",()=>{video.play().catch(()=>{})});
+  if(video.paused){onStatus("Tap the small camera box to start");for(let k=0;k<100&&video.paused;k++)await wait(100)}
   canvas.width=video.videoWidth||480;canvas.height=video.videoHeight||360;
-  const ctx=canvas.getContext("2d");let run=true;
+  onStatus("Loading hand tracking… (first time takes a few seconds)");
+  const ctx=canvas.getContext("2d");let run=true,seen=0,frames=0,startT=performance.now();
   const fx=oneEuro(),fy=oneEuro();
-  const emit=lm=>{drawHand(ctx,lm,canvas.width,canvas.height,color());const h=readHand(lm);
+  const emit=lm=>{if(!run)return;frames++;if(lm)seen++;drawHand(ctx,lm,canvas.width,canvas.height,color());const h=readHand(lm);
     if(h){const t=performance.now();h.x=fx(h.x,t);h.y=fy(h.y,t)}onHand(h,lm)};
+  let stopEngine=()=>{},mode=null;
 
-  // 1) preferred: tracking in a background worker, always working on the newest frame only
-  let worker=null,busy=false,stopWorker=()=>{};
-  if(window.Worker&&window.createImageBitmap){
-    try{
-      worker=new Worker("/js/handworker.js?v=202610292205");
-      const ok=await new Promise(res=>{const to=setTimeout(()=>res(false),20000);
-        worker.onmessage=e=>{if(e.data.type==="ready"){clearTimeout(to);res(true)}else if(e.data.type==="error"){clearTimeout(to);res(false)}};
-        worker.onerror=()=>{clearTimeout(to);res(false)};worker.postMessage({type:"init"})});
-      if(!ok){worker.terminate();worker=null}
-    }catch(e){worker=null}
-  }
-  if(worker){
-    worker.onmessage=e=>{if(e.data.type==="result"){busy=false;if(run)emit(e.data.lm)}};
-    const pump=async()=>{if(!run)return;
-      if(!busy&&video.readyState>=2){busy=true;
-        try{const bmp=await createImageBitmap(video);worker.postMessage({type:"frame",frame:bmp,t:performance.now()},[bmp])}catch(e){busy=false}}
+  async function startWorker(delegate){
+    const worker=new Worker("/js/handworker.js?v=3");
+    const got=await new Promise(res=>{const to=setTimeout(()=>res(null),60000);
+      worker.onmessage=e=>{if(e.data.type==="ready"){clearTimeout(to);res(e.data.delegate)}else if(e.data.type==="error"){clearTimeout(to);res(null)}};
+      worker.onerror=()=>{clearTimeout(to);res(null)};worker.postMessage({type:"init",prefer:delegate})});
+    if(!got){worker.terminate();return null}
+    let busy=false,alive=true,fails=0;
+    worker.onmessage=e=>{if(e.data.type==="result"){busy=false;emit(e.data.lm)}};
+    const pump=async()=>{if(!run||!alive)return;
+      if(!busy&&video.readyState>=2&&video.videoWidth){busy=true;
+        try{const bmp=await createImageBitmap(video);worker.postMessage({type:"frame",frame:bmp,t:performance.now()},[bmp]);fails=0}catch(e){busy=false;fails++}}
       requestAnimationFrame(pump)};
-    onStatus("Show your hand");requestAnimationFrame(pump);
-    stopWorker=()=>worker.terminate();
-  }else{
-    // 2) fallback: tracking on the page itself, skipping frames so drawing stays smooth
-    let lmk;
-    try{
-      const V=await import("./mediapipe/vision_bundle.mjs");
-      const files=await V.FilesetResolver.forVisionTasks("/js/mediapipe/wasm");
-      const opts=d=>({baseOptions:{modelAssetPath:"/js/mediapipe/hand_landmarker.task",delegate:d},runningMode:"VIDEO",numHands:1});
-      try{lmk=await V.HandLandmarker.createFromOptions(files,opts("GPU"))}catch(e){lmk=await V.HandLandmarker.createFromOptions(files,opts("CPU"))}
-    }catch(e){stream.getTracks().forEach(t=>t.stop());onStatus("Hand tracking couldn't load on this device.");return null}
-    let last=-1,n=0;onStatus("Show your hand");
-    const loop=()=>{if(!run)return;
-      if(video.currentTime!==last&&(n++&1)===0){last=video.currentTime;const r=lmk.detectForVideo(video,performance.now());emit(r.landmarks&&r.landmarks[0])}
-      requestAnimationFrame(loop)};
-    requestAnimationFrame(loop);stopWorker=()=>lmk.close&&lmk.close();
+    requestAnimationFrame(pump);
+    return{name:"worker-"+got,stop(){alive=false;worker.terminate()},bad:()=>fails>30};
   }
-  return{usingWorker:!!worker,stop(){run=false;stopWorker();stream.getTracks().forEach(t=>t.stop());ctx.clearRect(0,0,canvas.width,canvas.height)}};
+  async function startMain(){
+    const V=await import("./mediapipe/vision_bundle.mjs");
+    const files=await V.FilesetResolver.forVisionTasks("/js/mediapipe/wasm");
+    const lmk=await V.HandLandmarker.createFromOptions(files,{baseOptions:{modelAssetPath:"/js/mediapipe/hand_landmarker.task",delegate:"CPU"},runningMode:"VIDEO",numHands:1,minHandDetectionConfidence:.4,minHandPresenceConfidence:.4,minTrackingConfidence:.4});
+    let last=-1,n=0,alive=true;
+    const loop=()=>{if(!run||!alive)return;
+      if(video.readyState>=2&&video.currentTime!==last&&(n++&1)===0){last=video.currentTime;try{const r=lmk.detectForVideo(video,performance.now());emit(r.landmarks&&r.landmarks[0])}catch(e){}}
+      requestAnimationFrame(loop)};
+    requestAnimationFrame(loop);
+    return{name:"main-CPU",stop(){alive=false;try{lmk.close()}catch(e){}},bad:()=>false};
+  }
+  async function launch(list){
+    for(const e of list){try{const eng=e==="main-CPU"?await startMain():await startWorker(e.split("-")[1]);if(eng){mode=eng;stopEngine=()=>eng.stop();return true}}catch(err){console.warn("hand engine "+e+" failed",err)}}
+    return false;
+  }
+  const list=engines(force);
+  if(!(await launch(list))){stream.getTracks().forEach(t=>t.stop());onStatus("Hand tracking couldn't start on this device. Use the buttons instead.");return null}
+  onStatus("Show your hand: palm to the camera, about an arm's length away");
+  frames=0;seen=0;startT=performance.now(); // measure speed from when tracking actually starts
+
+  // Watchdog: if the chosen engine isn't keeping up or never sees anything, quietly move to the next one.
+  const tried=new Set([mode.name]);
+  const watch=setInterval(async()=>{if(!run){clearInterval(watch);return}
+    const el=(performance.now()-startT)/1000,fps=frames/Math.max(1,el);
+    const stuck=mode.bad()||(el>5&&fps<2)||(el>7&&seen===0&&mode.name==="worker-GPU");
+    if(stuck&&!force){const next=list.concat(["worker-CPU","main-CPU"]).find(n=>!tried.has(n)&&!(n.startsWith("worker")&&!(window.Worker&&window.createImageBitmap)));
+      if(next){tried.add(next);stopEngine();frames=0;seen=0;startT=performance.now();if(!(await launch([next])))return;}}
+    if(el>8&&seen===0)onStatus("Can't see a hand yet: try more light, and hold your whole hand up facing the camera");
+  },1000);
+
+  return{get engine(){return mode&&mode.name},stats:()=>({frames,seen}),
+    stop(){run=false;clearInterval(watch);stopEngine();stream.getTracks().forEach(t=>t.stop());ctx.clearRect(0,0,canvas.width,canvas.height)}};
 }
