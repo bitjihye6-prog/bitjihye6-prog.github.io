@@ -126,6 +126,7 @@ footer .brand .bw2{margin-bottom:8px}
 .scr.f .row{background:#fff;border:1px solid #DDE6E4;font-weight:600}
 .scr.f .row em{font-style:normal;font-family:var(--f-mono);font-size:10.5px;padding:3px 8px;border-radius:999px;background:#FCF0D6;color:#8A5A00}
 
+
 /* marquee */
 .marquee{padding-block:26px;border-block:1px solid var(--line);overflow:hidden;background:var(--surface)}
 .mrow{display:flex;width:max-content;will-change:transform}
@@ -135,6 +136,29 @@ footer .brand .bw2{margin-bottom:8px}
 .mrow em.a{background:var(--snip)}.mrow em.b{background:var(--purple)}.mrow em.c{background:var(--pink)}.mrow em.d{background:var(--orange)}
 
 /* worlds */
+/* 3D app ring (fallback: a grid that wraps, so any number of apps fits) */
+.ring-stage{padding-inline:var(--gut,20px)}
+.ring-stage .track{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:18px;width:auto;max-width:1200px;margin:0 auto}
+.ring-stage .world{width:auto;height:auto;min-height:440px}
+.ring-stage.is3d{position:relative;height:min(64svh,540px);min-height:460px;perspective:1300px;perspective-origin:50% 40%;padding:0;touch-action:pan-y;user-select:none;cursor:grab}
+.ring-stage.is3d.drag{cursor:grabbing}
+.ring-stage.is3d .track{display:block;pointer-events:none;position:absolute;inset:0;max-width:none;transform-style:preserve-3d}
+.ring-stage.is3d .world{position:absolute;left:50%;top:50%;width:min(68vw,360px);height:min(60svh,500px);min-height:0;margin:calc(min(60svh,500px)/-2) 0 0 calc(min(68vw,360px)/-2);will-change:transform,opacity;pointer-events:auto;box-shadow:0 30px 80px -30px rgba(0,0,0,.7)}
+.ring-stage.is3d .world::after{content:"";position:absolute;inset:0;border-radius:inherit;background:#0b0b0c;opacity:var(--dim,0);pointer-events:none}
+.ring-stage .echo{display:none}.ring-stage.is3d .echo{display:flex}
+.ring-stage.is3d .world:not(.on){cursor:pointer}
+.ring-stage.is3d .wname{font-size:clamp(44px,4.6vw,64px)}
+.ring-stage.is3d .wline{font-size:15px}
+.ring-stage.is3d .art svg{height:min(160px,40vw,calc(100% - 20px))}
+.wnav{display:flex;align-items:center;gap:10px}
+.wcount{min-width:9ch;text-align:right;margin:0}
+.wbtn{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;color:var(--fg);transition:background .2s,border-color .2s}
+.wbtn:hover{background:var(--fg);color:var(--ink);border-color:var(--fg)}
+.wbtn svg{width:20px;height:20px}
+.whelp{margin:12px 0 0;opacity:.6}
+.no3d .wbtn,.no3d .wcount,.no3d .whelp,.no3d .wbar{display:none}
+.ring-stage .wname{font-size:clamp(44px,4.6vw,64px)}
+
 .worlds{position:relative;overflow:hidden}
 .worlds-in{min-height:100svh;display:flex;flex-direction:column;justify-content:center;gap:clamp(18px,3vh,34px);padding-block:90px 40px}
 .whead{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
@@ -592,12 +616,12 @@ footer .brand .bw2{margin-bottom:8px}
     <div class="worlds-in">
       <div class="whead wrap gut">
         <div><p class="label">The apps</p><h2 class="h2">Each app is<br>its own world.</h2></div>
-        <p class="label" id="whint">Keep scrolling →</p>
+        <div class="wnav"><p class="label wcount" id="wcount" aria-live="polite">01 / 04</p><button class="wbtn" id="wprev" type="button" aria-label="Previous app"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button class="wbtn" id="wnext" type="button" aria-label="Next app"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
       </div>
-      <div class="track gut" id="track">
+      <div class="ring-stage" id="ringStage" tabindex="0" role="group" aria-label="Apps, use left and right arrows"><div class="track" id="track">
         <article class="world snip">
           <div class="wtop"><span class="idx">App 01</span><span class="chip"><i></i>Coming to Google Play</span></div>
-          <div class="art"><svg viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="30" fill="#101514"/><rect x="22" y="22" width="70" height="44" rx="9" fill="none" stroke="#2EE6C8" stroke-width="5" opacity=".3"/><rect x="28" y="32" width="70" height="44" rx="9" fill="none" stroke="#2EE6C8" stroke-width="5" opacity=".62"/><rect x="34" y="44" width="72" height="52" rx="10" fill="#2EE6C8"/><path d="M50 86V56H64a9 9 0 0 1 0 18H50M63 74L75 86" fill="none" stroke="#101514" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M95 40L87 100" stroke="#101514" stroke-width="4.5"/></svg></div>
+          <div class="art"><svg viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="30" fill="#101514"/><rect class="rv-b2" x="22" y="22" width="70" height="44" rx="9" fill="none" stroke="#2EE6C8" stroke-width="5" opacity=".3"/><rect class="rv-b1" x="28" y="32" width="70" height="44" rx="9" fill="none" stroke="#2EE6C8" stroke-width="5" opacity=".62"/><g class="rv-f"><rect x="34" y="44" width="72" height="52" rx="10" fill="#2EE6C8"/><path class="rv-r" d="M50 86V56H64a9 9 0 0 1 0 18H50M63 74L75 86" fill="none" stroke="#101514" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path class="rv-s" d="M95 40L87 100" stroke="#101514" stroke-width="4.5"/></g></svg></div>
           <h3 class="wname">Renvo</h3>
           <p class="wline">Find every subscription you pay for, get a heads-up before renewals, and cut what you forgot.</p>
           <button class="wopen" data-open="snip"><span>Open Renvo</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
@@ -629,7 +653,8 @@ footer .brand .bw2{margin-bottom:8px}
           <button class="wopen" data-open="next"><span>See what's next</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </article>
       </div>
-      <div class="wrap gut"><div class="wbar"><i id="wbar"></i></div></div>
+      </div>
+      <div class="wrap gut"><div class="wbar"><i id="wbar"></i></div><p class="label whelp">Scroll, swipe or use the arrows</p></div>
     </div>
   </section>
 
@@ -839,7 +864,7 @@ footer .brand .bw2{margin-bottom:8px}
 <script src="/js/gsap.min.js"></script>
 <script src="/js/ScrollTrigger.min.js"></script>
 <script src="/js/Flip.min.js"></script>
-<script src="/js/site.js?v=202610292145"></script>
+<script src="/js/site.js?v=202611011430"></script>
 <script type="module" src="/js/qrtree.js?v=202610302330"></script>
 
 </body>
