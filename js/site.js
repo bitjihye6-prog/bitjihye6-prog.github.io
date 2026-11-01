@@ -371,7 +371,8 @@ safe("marquee",()=>{
     skew(G.utils.clamp(-12,12,-v/180))}});
 });
 
-/* app ring: the cards burst into a spinning 3D circle, the camera flies in to the first app, then scroll, swipe or arrows turn it */
+/* app ring: the cards burst into a spinning 3D circle, the camera flies in to the first app, then scroll, swipe or arrows turn it.
+   Replays every time the section comes back into view. Per frame only the ring and the dim layers change; card transforms are fixed after the burst. */
 safe("worlds",()=>{
   const sec=$("#worlds"),stage=$("#ringStage"),ring=$("#track"),apps=$$(".world",ring),N=apps.length;
   const names=apps.map(c=>$(".wname",c).textContent.trim()),pad=n=>String(n).padStart(2,"0");
@@ -382,36 +383,40 @@ safe("worlds",()=>{
   // a full circle needs at least 12 cards; with fewer apps the back of the circle repeats them as decoration
   const S=Math.max(12,N),slots=[...apps];
   for(let i=N;i<S;i++){const c=apps[i%N].cloneNode(true);c.setAttribute("aria-hidden","true");c.classList.add("echo");$$("[id]",c).forEach(e=>e.removeAttribute("id"));$$("button,a",c).forEach(e=>{e.tabIndex=-1;e.removeAttribute("data-open")});ring.appendChild(c);slots.push(c)}
-  const STEP=360/S,app=i=>i%N;
-  const I={pop:slots.map(()=>0),cam:0,spin:-140};   // intro state
-  let pos=0,cur=-1,R=0,introDone=false;
-  const geo=()=>{R=apps[0].offsetWidth*1.12/(2*Math.sin(Math.PI/S))};geo();
+  const dims=slots.map(c=>{const d=document.createElement("i");d.className="wdim";c.appendChild(d);return d});
+  const STEP=360/S,app=i=>i%N,mix=(a,b,t)=>a+(b-a)*t;
+  const I={pop:slots.map(()=>0),cam:0,spin:-140};
+  let pos=0,cur=-1,R=0,cardsDirty=true,last={};
+  const geo=()=>{R=apps[0].offsetWidth*1.12/(2*Math.sin(Math.PI/S));cardsDirty=true};geo();
   addEventListener("resize",()=>{geo();draw()});
-  const mix=(a,b,t)=>a+(b-a)*t;
   function draw(){
-    const c=I.cam,far=R*2.6+900;
-    ring.style.transform=`translate3d(0,${mix(-60,0,c)}px,${mix(-R-far,-R,c)}px) rotateX(${mix(-24,-3,c)}deg) rotateY(${-pos*STEP+I.spin}deg)`;
+    const c=I.cam,far=R*2.6+900,live=c<.999;
+    ring.style.transform=`translate3d(0,${mix(-60,0,c).toFixed(1)}px,${mix(-R-far,-R,c).toFixed(1)}px) rotateX(${mix(-24,-3,c).toFixed(2)}deg) rotateY(${(-pos*STEP+I.spin).toFixed(2)}deg)`;
     slots.forEach((el,i)=>{
       const p=I.pop[i],a=i*STEP;
-      let rel=((a-pos*STEP+I.spin)%360+540)%360-180;const ad=Math.abs(rel);
-      el.style.transform=`rotateY(${a}deg) translateZ(${R*mix(.15,1,p)}px) scale(${mix(.2,1,p)})`;
-      el.style.opacity=p<.02?0:Math.min(1,p*1.6);
-      el.style.setProperty("--dim",Math.min(.82,(ad/180)*mix(1.05,1.6,c)).toFixed(3));
-      el.style.zIndex=200-Math.round(ad);
+      if(cardsDirty){el.style.transform=`rotateY(${a}deg) translateZ(${(R*mix(.15,1,p)).toFixed(1)}px) scale(${mix(.2,1,p).toFixed(3)})`;el.style.opacity=p<.02?0:Math.min(1,p*1.6)}
+      const rel=((a-pos*STEP+I.spin)%360+540)%360-180,ad=Math.abs(rel);
+      const show=live||ad<84,dm=Math.min(.82,(ad/180)*mix(1.05,1.6,c));
+      const k=last[i]||(last[i]={});
+      if(k.s!==show){k.s=show;el.style.visibility=show?"visible":"hidden"}
+      if(show&&Math.abs((k.d??-1)-dm)>.01){k.d=dm;dims[i].style.opacity=dm.toFixed(2)}
     });
+    if(I.pop.every(p=>p>=1)&&!live)cardsDirty=false;
     const on=app(Math.round(pos));if(on!==cur){cur=on;apps.forEach((c,i)=>{c.classList.toggle("on",i===on);$$("button,a",c).forEach(b=>b.tabIndex=i===on?0:-1)});label(on)}
   }
   const span=()=>innerHeight*(0.55*Math.max(1,N-1)+0.35);
-  const st=ST.create({trigger:sec,start:"top top",end:()=>"+="+span(),pin:true,scrub:.7,anticipatePin:1,invalidateOnRefresh:true,
+  const st=ST.create({trigger:sec,start:"top top",end:()=>"+="+span(),pin:true,scrub:.5,anticipatePin:1,invalidateOnRefresh:true,
     onUpdate:s=>{pos=s.progress*(N-1);G.set("#wbar",{scaleX:s.progress});draw()},
     snap:{snapTo:1/Math.max(1,N-1),duration:{min:.25,max:.7},delay:.08,ease:"power2.inOut"}});
-  // the "suddenly appearing" moment: plays once when the section comes into view
-  const intro=G.timeline({paused:true,onUpdate:draw,onComplete:()=>{introDone=true}});
-  const order=slots.map((_,i)=>(i+Math.floor(S/2))%S);
-  order.forEach((i,k)=>intro.to(I.pop,{[i]:1,duration:.55,ease:"back.out(1.7)"},k*.045));
+  // the burst: cards pop into a spinning circle, then the camera flies in
+  const intro=G.timeline({paused:true,onUpdate:draw,onStart:()=>{cardsDirty=true}});
+  for(let k=0;k<S;k++){const i=(k+Math.floor(S/2))%S;intro.to(I.pop,{[i]:1,duration:.55,ease:"back.out(1.7)"},k*.045)}
   intro.to(I,{spin:0,duration:2.4,ease:"expo.inOut"},0.1).to(I,{cam:1,duration:1.5,ease:"expo.inOut"},1.05);
-  ST.create({trigger:sec,start:"top 35%",once:true,onEnter:()=>intro.play()});
-  if(st.progress>0||sec.getBoundingClientRect().bottom<0)intro.progress(1);
+  const reset=()=>{intro.pause(0);I.pop.fill(0);I.cam=0;I.spin=-140;cardsDirty=true;draw()};
+  // replay every time the section comes back into view, from above or below
+  ST.create({trigger:sec,start:()=>st.start-innerHeight*.65,end:()=>st.end+innerHeight*.65,
+    onEnter:()=>intro.restart(),onEnterBack:()=>intro.restart(),onLeave:reset,onLeaveBack:reset});
+  if(scrollY>st.start-innerHeight*.65&&scrollY<st.end+innerHeight*.65)intro.restart();else reset();
   const go=i=>{i=G.utils.clamp(0,N-1,i);scrollTo({top:st.start+(st.end-st.start)*i/Math.max(1,N-1)+1,behavior:"smooth"})};
   $("#wprev").addEventListener("click",()=>go(cur-1));$("#wnext").addEventListener("click",()=>go(cur+1));
   stage.addEventListener("keydown",e=>{if(e.key==="ArrowRight"){e.preventDefault();go(cur+1)}if(e.key==="ArrowLeft"){e.preventDefault();go(cur-1)}});
@@ -420,22 +425,21 @@ safe("worlds",()=>{
   stage.addEventListener("pointerdown",e=>{if(e.button)return;sx=e.clientX;sy=e.clientY;sTop=scrollY;dragging=true;moved=false});
   addEventListener("pointermove",e=>{if(!dragging)return;const dx=e.clientX-sx,dy=e.clientY-sy;
     if(!moved){if(Math.abs(dx)<8)return;if(Math.abs(dy)>Math.abs(dx)){dragging=false;return}moved=true;stage.classList.add("drag")}
-    const per=(st.end-st.start)/Math.max(1,N-1);scrollTo(0,sTop-dx/apps[0].offsetWidth*per)});
+    const per=(st.end-st.start)/Math.max(1,N-1);scrollTo(0,sTop-dx/apps[0].offsetWidth*per)},{passive:true});
   const up=()=>{if(!dragging)return;dragging=false;stage.classList.remove("drag");if(moved){const blk=e=>{e.stopPropagation();e.preventDefault()};addEventListener("click",blk,{capture:true,once:true});setTimeout(()=>removeEventListener("click",blk,true),50)}};
   addEventListener("pointerup",up);addEventListener("pointercancel",up);
-  draw();
-  $$(".world.snip .rv-s").forEach(p=>{const L=p.getTotalLength();G.set(p,{strokeDasharray:L,strokeDashoffset:0})});
+  $$("#track > .world.snip:not(.echo) .rv-s").forEach(p=>{const L=p.getTotalLength();G.set(p,{strokeDasharray:L,strokeDashoffset:0})});
   G.timeline({repeat:-1,repeatDelay:1.1,defaults:{ease:"power3.inOut"}})
-    .to(".world.snip .rv-b2",{x:-6,y:-6,opacity:.12,duration:.5})
-    .to(".world.snip .rv-b1",{x:-6,y:-10,duration:.5},"<.05")
-    .to(".world.snip .rv-f",{y:-14,duration:.45},"<.05")
-    .fromTo(".world.snip .rv-s",{strokeDashoffset:(i,t)=>t.getTotalLength()},{strokeDashoffset:0,duration:.35,ease:"power2.in"},"-=.1")
-    .to(".world.snip .rv-f",{y:0,duration:.6,ease:"bounce.out"})
-    .to(".world.snip .rv-b1",{x:0,y:0,duration:.6,ease:"back.out(2)"},"<.1")
-    .to(".world.snip .rv-b2",{x:0,y:0,opacity:.3,duration:.6,ease:"back.out(2)"},"<.08");
-  $$(".world.lastly .st").forEach(p=>{const L=p.getTotalLength();G.set(p,{strokeDasharray:L})});
-  G.timeline({repeat:-1,repeatDelay:1.4}).fromTo(".world.lastly .st",{strokeDashoffset:(i,t)=>t.getTotalLength()},{strokeDashoffset:0,duration:.9,stagger:.18,ease:"power3.inOut"}).to({},{duration:1.2});
-  G.to(".qm",{rotation:12,scale:1.1,duration:1.6,repeat:-1,yoyo:true,ease:"sine.inOut"});
+    .to("#track > .world.snip:not(.echo) .rv-b2",{x:-6,y:-6,opacity:.12,duration:.5})
+    .to("#track > .world.snip:not(.echo) .rv-b1",{x:-6,y:-10,duration:.5},"<.05")
+    .to("#track > .world.snip:not(.echo) .rv-f",{y:-14,duration:.45},"<.05")
+    .fromTo("#track > .world.snip:not(.echo) .rv-s",{strokeDashoffset:(i,t)=>t.getTotalLength()},{strokeDashoffset:0,duration:.35,ease:"power2.in"},"-=.1")
+    .to("#track > .world.snip:not(.echo) .rv-f",{y:0,duration:.6,ease:"bounce.out"})
+    .to("#track > .world.snip:not(.echo) .rv-b1",{x:0,y:0,duration:.6,ease:"back.out(2)"},"<.1")
+    .to("#track > .world.snip:not(.echo) .rv-b2",{x:0,y:0,opacity:.3,duration:.6,ease:"back.out(2)"},"<.08");
+  $$("#track > .world.lastly:not(.echo) .st").forEach(p=>{const L=p.getTotalLength();G.set(p,{strokeDasharray:L})});
+  G.timeline({repeat:-1,repeatDelay:1.4}).fromTo("#track > .world.lastly:not(.echo) .st",{strokeDashoffset:(i,t)=>t.getTotalLength()},{strokeDashoffset:0,duration:.9,stagger:.18,ease:"power3.inOut"}).to({},{duration:1.2});
+  G.to("#track > .world:not(.echo) .qm",{rotation:12,scale:1.1,duration:1.6,repeat:-1,yoyo:true,ease:"sine.inOut"});
 });
 
 /* Lastly time-lapse (pinned, scroll = time) */
