@@ -111,7 +111,7 @@ safe("detail",()=>{
   function close(then){if(!state)return;const {btn,card}=state;state=null;
     const done=()=>{det.hidden=true;det.innerHTML="";document.documentElement.style.overflow="";if(then)then();else btn.focus({preventScroll:true})};
     if(motion){G.timeline({onComplete:done}).to($$(".di",det),{opacity:0,y:-20,duration:.2,stagger:.015}).to(det,{clipPath:inset(card.getBoundingClientRect()),duration:.6,ease:"expo.inOut"},"-=.05")}else done()}
-  $$("[data-open]").forEach(b=>b.addEventListener("click",()=>open(b.dataset.open,b)));
+  document.addEventListener("click",e=>{const b=e.target.closest("[data-open]");if(b)open(b.dataset.open,b)});
   det.addEventListener("click",e=>{if(e.target.closest(".close")||e.target.closest("[data-back]"))close();const j=e.target.closest("[data-jump]");if(j){e.preventDefault();const h=j.dataset.jump;close(()=>{const el=$(h);el&&el.scrollIntoView({behavior:RM?"auto":"smooth"})})}});
   addEventListener("keydown",e=>{if(!state)return;if(e.key==="Escape")close();if(e.key==="Tab"){const f=$$("a,button",det);const a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}});
 });
@@ -381,8 +381,8 @@ safe("worlds",()=>{
   if(!motion){sec.classList.add("no3d");return}
   stage.classList.add("is3d");
   // a full circle needs at least 12 cards; with fewer apps the back of the circle repeats them as decoration
-  const S=Math.max(12,N),slots=[...apps];
-  for(let i=N;i<S;i++){const c=apps[i%N].cloneNode(true);c.setAttribute("aria-hidden","true");c.classList.add("echo");$$("[id]",c).forEach(e=>e.removeAttribute("id"));$$("button,a",c).forEach(e=>{e.tabIndex=-1;e.removeAttribute("data-open")});ring.appendChild(c);slots.push(c)}
+  const S=N*Math.ceil(12/N),slots=[...apps];   // a multiple of N so the order repeats cleanly all the way round
+  for(let i=N;i<S;i++){const c=apps[i%N].cloneNode(true);c.setAttribute("aria-hidden","true");c.classList.add("echo");$$("[id]",c).forEach(e=>e.removeAttribute("id"));$$("button,a",c).forEach(e=>{e.tabIndex=-1});ring.appendChild(c);slots.push(c)}
   const dims=slots.map(c=>{const d=document.createElement("i");d.className="wdim";c.appendChild(d);return d});
   const STEP=360/S,app=i=>i%N,mix=(a,b,t)=>a+(b-a)*t;
   const I={pop:slots.map(()=>0),cam:0,spin:-140};
@@ -402,12 +402,12 @@ safe("worlds",()=>{
       if(show&&Math.abs((k.d??-1)-dm)>.01){k.d=dm;dims[i].style.opacity=dm.toFixed(2)}
     });
     if(I.pop.every(p=>p>=1)&&!live)cardsDirty=false;
-    const on=app(Math.round(pos));if(on!==cur){cur=on;apps.forEach((c,i)=>{c.classList.toggle("on",i===on);$$("button,a",c).forEach(b=>b.tabIndex=i===on?0:-1)});label(on)}
+    const on=Math.round(pos)%S;if(on!==cur){cur=on;slots.forEach((c,i)=>c.classList.toggle("on",i===on));label(app(on))}
   }
-  const span=()=>innerHeight*(0.55*Math.max(1,N-1)+0.35);
+  const span=()=>innerHeight*Math.max(2.4,0.3*S);   // one full lap
   const st=ST.create({trigger:sec,start:"top top",end:()=>"+="+span(),pin:true,scrub:.5,anticipatePin:1,invalidateOnRefresh:true,
-    onUpdate:s=>{pos=s.progress*(N-1);G.set("#wbar",{scaleX:s.progress});draw()},
-    snap:{snapTo:1/Math.max(1,N-1),duration:{min:.25,max:.7},delay:.08,ease:"power2.inOut"}});
+    onUpdate:s=>{pos=s.progress*S;G.set("#wbar",{scaleX:s.progress});draw()},
+    snap:{snapTo:1/S,duration:{min:.25,max:.7},delay:.08,ease:"power2.inOut"}});
   // the burst: cards pop into a spinning circle, then the camera flies in
   const intro=G.timeline({paused:true,onUpdate:draw,onStart:()=>{cardsDirty=true}});
   for(let k=0;k<S;k++){const i=(k+Math.floor(S/2))%S;intro.to(I.pop,{[i]:1,duration:.55,ease:"back.out(1.7)"},k*.045)}
@@ -417,29 +417,30 @@ safe("worlds",()=>{
   ST.create({trigger:sec,start:()=>st.start-innerHeight*.65,end:()=>st.end+innerHeight*.65,
     onEnter:()=>intro.restart(),onEnterBack:()=>intro.restart(),onLeave:reset,onLeaveBack:reset});
   if(scrollY>st.start-innerHeight*.65&&scrollY<st.end+innerHeight*.65)intro.restart();else reset();
-  const go=i=>{i=G.utils.clamp(0,N-1,i);scrollTo({top:st.start+(st.end-st.start)*i/Math.max(1,N-1)+1,behavior:"smooth"})};
-  $("#wprev").addEventListener("click",()=>go(cur-1));$("#wnext").addEventListener("click",()=>go(cur+1));
-  stage.addEventListener("keydown",e=>{if(e.key==="ArrowRight"){e.preventDefault();go(cur+1)}if(e.key==="ArrowLeft"){e.preventDefault();go(cur-1)}});
-  slots.forEach((c,i)=>c.addEventListener("click",e=>{if(c!==apps[cur]){e.preventDefault();e.stopPropagation();go(app(i))}},true));
+  const go=i=>{i=G.utils.clamp(0,S,i);scrollTo({top:st.start+(st.end-st.start)*i/S+1,behavior:"smooth"})};
+  const here=()=>Math.round(pos);
+  $("#wprev").addEventListener("click",()=>go(here()-1));$("#wnext").addEventListener("click",()=>go(here()+1));
+  stage.addEventListener("keydown",e=>{if(e.key==="ArrowRight"){e.preventDefault();go(here()+1)}if(e.key==="ArrowLeft"){e.preventDefault();go(here()-1)}});
+  slots.forEach((c,i)=>c.addEventListener("click",e=>{if(i!==cur){e.preventDefault();e.stopPropagation();const h=here();let d=((i-h)%S+S)%S;if(d>S/2)d-=S;go(h+d)}},true));
   let sx=0,sy=0,sTop=0,dragging=false,moved=false;
   stage.addEventListener("pointerdown",e=>{if(e.button)return;sx=e.clientX;sy=e.clientY;sTop=scrollY;dragging=true;moved=false});
   addEventListener("pointermove",e=>{if(!dragging)return;const dx=e.clientX-sx,dy=e.clientY-sy;
     if(!moved){if(Math.abs(dx)<8)return;if(Math.abs(dy)>Math.abs(dx)){dragging=false;return}moved=true;stage.classList.add("drag")}
-    const per=(st.end-st.start)/Math.max(1,N-1);scrollTo(0,sTop-dx/apps[0].offsetWidth*per)},{passive:true});
+    const per=(st.end-st.start)/S;scrollTo(0,sTop-dx/apps[0].offsetWidth*per)},{passive:true});
   const up=()=>{if(!dragging)return;dragging=false;stage.classList.remove("drag");if(moved){const blk=e=>{e.stopPropagation();e.preventDefault()};addEventListener("click",blk,{capture:true,once:true});setTimeout(()=>removeEventListener("click",blk,true),50)}};
   addEventListener("pointerup",up);addEventListener("pointercancel",up);
-  $$("#track > .world.snip:not(.echo) .rv-s").forEach(p=>{const L=p.getTotalLength();G.set(p,{strokeDasharray:L,strokeDashoffset:0})});
+  $$("#track > .world.snip .rv-s").forEach(p=>{const L=p.getTotalLength();G.set(p,{strokeDasharray:L,strokeDashoffset:0})});
   G.timeline({repeat:-1,repeatDelay:1.1,defaults:{ease:"power3.inOut"}})
-    .to("#track > .world.snip:not(.echo) .rv-b2",{x:-6,y:-6,opacity:.12,duration:.5})
-    .to("#track > .world.snip:not(.echo) .rv-b1",{x:-6,y:-10,duration:.5},"<.05")
-    .to("#track > .world.snip:not(.echo) .rv-f",{y:-14,duration:.45},"<.05")
-    .fromTo("#track > .world.snip:not(.echo) .rv-s",{strokeDashoffset:(i,t)=>t.getTotalLength()},{strokeDashoffset:0,duration:.35,ease:"power2.in"},"-=.1")
-    .to("#track > .world.snip:not(.echo) .rv-f",{y:0,duration:.6,ease:"bounce.out"})
-    .to("#track > .world.snip:not(.echo) .rv-b1",{x:0,y:0,duration:.6,ease:"back.out(2)"},"<.1")
-    .to("#track > .world.snip:not(.echo) .rv-b2",{x:0,y:0,opacity:.3,duration:.6,ease:"back.out(2)"},"<.08");
-  $$("#track > .world.lastly:not(.echo) .st").forEach(p=>{const L=p.getTotalLength();G.set(p,{strokeDasharray:L})});
-  G.timeline({repeat:-1,repeatDelay:1.4}).fromTo("#track > .world.lastly:not(.echo) .st",{strokeDashoffset:(i,t)=>t.getTotalLength()},{strokeDashoffset:0,duration:.9,stagger:.18,ease:"power3.inOut"}).to({},{duration:1.2});
-  G.to("#track > .world:not(.echo) .qm",{rotation:12,scale:1.1,duration:1.6,repeat:-1,yoyo:true,ease:"sine.inOut"});
+    .to("#track > .world.snip .rv-b2",{x:-6,y:-6,opacity:.12,duration:.5})
+    .to("#track > .world.snip .rv-b1",{x:-6,y:-10,duration:.5},"<.05")
+    .to("#track > .world.snip .rv-f",{y:-14,duration:.45},"<.05")
+    .fromTo("#track > .world.snip .rv-s",{strokeDashoffset:(i,t)=>t.getTotalLength()},{strokeDashoffset:0,duration:.35,ease:"power2.in"},"-=.1")
+    .to("#track > .world.snip .rv-f",{y:0,duration:.6,ease:"bounce.out"})
+    .to("#track > .world.snip .rv-b1",{x:0,y:0,duration:.6,ease:"back.out(2)"},"<.1")
+    .to("#track > .world.snip .rv-b2",{x:0,y:0,opacity:.3,duration:.6,ease:"back.out(2)"},"<.08");
+  $$("#track > .world.lastly .st").forEach(p=>{const L=p.getTotalLength();G.set(p,{strokeDasharray:L})});
+  G.timeline({repeat:-1,repeatDelay:1.4}).fromTo("#track > .world.lastly .st",{strokeDashoffset:(i,t)=>t.getTotalLength()},{strokeDashoffset:0,duration:.9,stagger:.18,ease:"power3.inOut"}).to({},{duration:1.2});
+  G.to("#track > .world .qm",{rotation:12,scale:1.1,duration:1.6,repeat:-1,yoyo:true,ease:"sine.inOut"});
 });
 
 /* Lastly time-lapse (pinned, scroll = time) */
