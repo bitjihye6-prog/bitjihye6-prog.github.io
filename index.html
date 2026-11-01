@@ -5,10 +5,10 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Drakiverse Studio is an independent app studio from Canada making small apps that each fix one everyday annoyance. Meet Snip, Lastly and Folderoo. Android first, iOS on the way.">
+<meta name="description" content="Drakiverse Studio is an independent app studio from Canada making small apps that each fix one everyday annoyance. Meet Renvo, Lastly and Folderoo. Android first, iOS on the way.">
 <meta name="theme-color" content="#0b0b0c">
 <meta property="og:title" content="Drakiverse Studio">
-<meta property="og:description" content="Small apps. Big relief. Meet Snip, Lastly and Folderoo.">
+<meta property="og:description" content="Small apps. Big relief. Meet Renvo, Lastly and Folderoo.">
 <meta property="og:url" content="https://drakiverse.studio/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%230b0b0c'/%3E%3Crect x='22' y='22' width='14' height='56' rx='7' fill='%23c8ff2e'/%3E%3Crect x='42' y='22' width='14' height='56' rx='7' fill='%239d8cff'/%3E%3Crect x='62' y='22' width='14' height='56' rx='7' fill='%23ff8fc7'/%3E%3C/svg%3E">
 <style>body{margin:0}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
@@ -17,10 +17,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=Pacifico&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
 <style>
-/* Layout: loader → kinetic hero with two app phones → velocity marquee → pinned horizontal app worlds that open full-screen → live Snip demo (Flip) → pinned Lastly "time-lapse" where scroll is time → scroll-lit manifesto → elastic contact → fit-width DRAKIVERSE footer. Deliberately dark (Snip + Lastly colours on black and cream). */
+/* Layout: loader → kinetic hero with two app phones → velocity marquee → pinned horizontal app worlds that open full-screen → live Renvo demo (Flip) → pinned Lastly "time-lapse" where scroll is time → scroll-lit manifesto → elastic contact → fit-width DRAKIVERSE footer. Deliberately dark (Renvo + Lastly colours on black and cream). */
 :root{
   --bg:#0b0b0c; --surface:#151517; --surface-2:#202023; --fg:#fff1dc; --muted:#b5ac9e; --line:rgba(255,241,220,.13);
-  --snip:#c8ff2e; --snip-ink:#0b0b0b;
+  --snip:#2EE6C8; --snip-ink:#0B1F1B;
   --folderoo:#0F5E5A; --gold:#F6C453;
   --purple:#9d8cff; --pink:#ff8fc7; --orange:#ffa03a; --cream:#fff1dc; --ink:#0b0b0c;
   --spectrum:linear-gradient(90deg,var(--snip),var(--purple),var(--pink),var(--orange));
@@ -521,7 +521,7 @@ footer .brand .bw2{margin-bottom:8px}
     <a class="brand" href="#top" aria-label="Drakiverse Studio home"><span class="dot" aria-hidden="true"></span><span class="bw">DRAKIVERSE<span class="bstudio" aria-hidden="true">.studio<svg viewBox="0 0 300 40" preserveAspectRatio="none"><path d="M4 30 C 70 8, 150 38, 220 18 S 290 10, 296 14"/></svg></span></span></a>
     <nav class="navlinks" id="navlinks" aria-label="Sections">
       <span class="navpill" id="navpill" aria-hidden="true"></span>
-      <a href="#worlds">Apps</a><a href="#demo">Snip</a><a href="#lastly">Lastly</a><a href="#folderoo">Folderoo</a><a href="#contact">Contact</a>
+      <a href="#worlds">Apps</a><a href="#demo">Renvo</a><a href="#lastly">Lastly</a><a href="#folderoo">Folderoo</a><a href="#contact">Contact</a>
     </nav>
   </div>
 </header>
@@ -538,7 +538,7 @@ footer .brand .bw2{margin-bottom:8px}
         <p class="hero-sub h-rise">We build <b>small apps that each fix one everyday annoyance</b>, like forgotten subscriptions, things that quietly expire and insurance claims that drag on. <b>Android first, iOS on the way.</b></p>
         <div class="ctas h-rise">
           <a class="btn primary magnetic" href="#worlds">Meet the apps <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          <a class="btn magnetic" href="#demo">Try Snip live</a>
+          <a class="btn magnetic" href="#demo">Try Renvo live</a>
         </div>
       </div>
       <div class="stage" id="stage">
@@ -554,8 +554,8 @@ footer .brand .bw2{margin-bottom:8px}
             </div>
           </div>
           <div class="phone snip" id="phS">
-            <div class="scr s" role="img" aria-label="Example Snip screen totalling $77.47 a month">
-              <div class="apph"><b>Snip</b><small>This month</small></div>
+            <div class="scr s" role="img" aria-label="Example Renvo screen totalling $77.47 a month">
+              <div class="apph"><b>Renvo</b><small>This month</small></div>
               <div class="tot" id="sTot"><small>Per month</small><strong id="sTotN">$77.47</strong></div>
               <div class="row"><span>Video streaming</span><b>$16.49</b></div>
               <div class="row" id="sGym"><span>Gym</span><b>$45.00</b><i class="cutline" aria-hidden="true"></i></div>
@@ -576,7 +576,7 @@ footer .brand .bw2{margin-bottom:8px}
             </div>
           </div>
         </div>
-        <div class="pillf pf1" id="pf1"><i></i><span><small>Snip</small>Gym cut: $45 a month saved</span></div>
+        <div class="pillf pf1" id="pf1"><i></i><span><small>Renvo</small>Gym cut: $45 a month saved</span></div>
         <div class="pillf pf2" id="pf2"><i></i><span><small>Lastly</small>Milk expires in 2 days</span></div>
         <div class="pillf pf3" id="pf3"><i></i><span><small>Folderoo</small>Claim form due in 5 days</span></div>
       </div>
@@ -597,15 +597,10 @@ footer .brand .bw2{margin-bottom:8px}
       <div class="track gut" id="track">
         <article class="world snip">
           <div class="wtop"><span class="idx">App 01</span><span class="chip"><i></i>Coming to Google Play</span></div>
-          <div class="art"><svg viewBox="0 0 100 100" role="img" aria-label="Snip logo, a card cut in two">
-            <defs><clipPath id="cl1"><polygon points="0,0 56,0 38,100 0,100"/></clipPath><clipPath id="cr1"><polygon points="64,0 100,0 100,100 46,100"/></clipPath></defs>
-            <rect width="100" height="100" rx="24" fill="#0b0b0b"/>
-            <g class="half-l"><g clip-path="url(#cl1)"><rect x="14" y="26" width="72" height="48" rx="9" fill="#c8ff2e"/><rect x="14" y="36" width="72" height="8" fill="#0b0b0b"/></g></g>
-            <g class="half-r"><g clip-path="url(#cr1)"><rect x="14" y="26" width="72" height="48" rx="9" fill="#c8ff2e"/><rect x="14" y="36" width="72" height="8" fill="#0b0b0b"/></g></g>
-          </svg></div>
-          <h3 class="wname">Snip</h3>
+          <div class="art"><svg viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="30" fill="#101514"/><rect x="22" y="22" width="70" height="44" rx="9" fill="none" stroke="#2EE6C8" stroke-width="5" opacity=".3"/><rect x="28" y="32" width="70" height="44" rx="9" fill="none" stroke="#2EE6C8" stroke-width="5" opacity=".62"/><rect x="34" y="44" width="72" height="52" rx="10" fill="#2EE6C8"/><path d="M50 86V56H64a9 9 0 0 1 0 18H50M63 74L75 86" fill="none" stroke="#101514" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M95 40L87 100" stroke="#101514" stroke-width="4.5"/></svg></div>
+          <h3 class="wname">Renvo</h3>
           <p class="wline">Find every subscription you pay for, get a heads-up before renewals, and cut what you forgot.</p>
-          <button class="wopen" data-open="snip"><span>Open Snip</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          <button class="wopen" data-open="snip"><span>Open Renvo</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </article>
         <article class="world lastly">
           <div class="wtop"><span class="idx">App 02</span><span class="chip"><i></i>Coming soon to Google Play</span></div>
@@ -641,16 +636,16 @@ footer .brand .bw2{margin-bottom:8px}
   <section class="section gut" id="demo">
     <div class="wrap demo-grid">
       <div class="demo-copy">
-        <p class="label">Meet Snip · Subscription tracker</p>
-        <h2 class="h2 snip-h"><svg class="snip-logo" viewBox="0 0 100 100" aria-hidden="true"><defs><clipPath id="sl1"><polygon points="0,0 56,0 38,100 0,100"/></clipPath><clipPath id="sr1"><polygon points="64,0 100,0 100,100 46,100"/></clipPath></defs><rect width="100" height="100" rx="24" fill="#161618"/><g clip-path="url(#sl1)" class="sh-l"><rect x="14" y="26" width="72" height="48" rx="9" fill="#c8ff2e"/><rect x="14" y="36" width="72" height="8" fill="#161618"/></g><g clip-path="url(#sr1)"><g class="sh-r" transform="translate(3,-2)"><rect x="14" y="26" width="72" height="48" rx="9" fill="#c8ff2e"/><rect x="14" y="36" width="72" height="8" fill="#161618"/></g></g></svg><span>Cut what<br>you <em>forgot.</em></span></h2>
-        <p class="lead">Snip puts every subscription in one list, warns you before anything renews, and shows what you really spend each month and each year.</p>
+        <p class="label">Meet Renvo · Subscription tracker</p>
+        <h2 class="h2 snip-h"><svg class="snip-logo" viewBox="0 0 120 120" aria-hidden="true"><defs><clipPath id="nl2l"><polygon points="0,0 100.3,0 84.3,120 0,120"/></clipPath><clipPath id="nl2r"><polygon points="100.3,0 120,0 120,120 84.3,120"/></clipPath></defs><rect width="120" height="120" rx="30" fill="#101514"/><rect x="22" y="22" width="70" height="44" rx="9" fill="none" stroke="#2EE6C8" stroke-width="5" opacity=".3"/><rect x="28" y="32" width="70" height="44" rx="9" fill="none" stroke="#2EE6C8" stroke-width="5" opacity=".62"/><g clip-path="url(#nl2l)" class="sh-l"><rect x="34" y="44" width="72" height="52" rx="10" fill="#2EE6C8"/><path d="M50 86V56H64a9 9 0 0 1 0 18H50M63 74L75 86" fill="none" stroke="#101514" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></g><g clip-path="url(#nl2r)"><g class="sh-r" transform="translate(3,-2)"><rect x="34" y="44" width="72" height="52" rx="10" fill="#2EE6C8"/></g></g></svg><span>Cut what<br>you <em>forgot.</em></span></h2>
+        <p class="lead">Renvo puts every subscription in one list, warns you before anything renews, and shows what you really spend each month and each year.</p>
         <div class="facts snipfacts"><span>Free for 3 subscriptions</span><span>Pro $4.99 · pay once, unlimited forever</span><span>No bank login</span><span>Android first, iOS next</span></div>
-        <div class="snipctas"><a class="btn primary snipplay" href="https://play.google.com/store/apps/details?id=app.snip.tracker" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3.5v17l9-8.5z" fill="currentColor" opacity=".9"/><path d="M13 12l3.2-3.1L6 3.2z" fill="currentColor" opacity=".6"/><path d="M13 12l3.2 3.1L6 20.8z" fill="currentColor" opacity=".6"/><path d="M16.2 8.9 20 11a1.1 1.1 0 0 1 0 2l-3.8 2.1L13 12z" fill="currentColor"/></svg>View on Google Play</a><a class="btn" href="https://drakiverse.studio/snipapp/" target="_blank" rel="noopener">Screenshots &amp; details ↗</a></div>
+        <div class="snipctas"><a class="btn primary snipplay" href="https://play.google.com/store/apps/details?id=app.renvo.tracker" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3.5v17l9-8.5z" fill="currentColor" opacity=".9"/><path d="M13 12l3.2-3.1L6 3.2z" fill="currentColor" opacity=".6"/><path d="M13 12l3.2 3.1L6 20.8z" fill="currentColor" opacity=".6"/><path d="M16.2 8.9 20 11a1.1 1.1 0 0 1 0 2l-3.8 2.1L13 12z" fill="currentColor"/></svg>View on Google Play</a><a class="btn" href="https://drakiverse.studio/renvo/" target="_blank" rel="noopener">Screenshots &amp; details ↗</a></div>
       </div>
       <div class="demo-show">
         <div class="snipshow" id="snipShow" aria-hidden="true">
           <div class="rcpt" id="rcpt"><div class="rc-top">
-            <div class="rc-head"><b>Snip</b><small>Your monthly receipt</small></div>
+            <div class="rc-head"><b>Renvo</b><small>Your monthly receipt</small></div>
             <div class="rc-line"><span>Video streaming</span><span>$16.49</span></div>
             <div class="rc-line"><span>Music</span><span>$11.99</span></div>
             <div class="rc-line"><span>Cloud storage</span><span>$3.99</span></div>
@@ -748,7 +743,7 @@ footer .brand .bw2{margin-bottom:8px}
         <p class="lead">Every app grows its own tree. When the camera rises above it, the leaves become a QR code: point your phone's camera at it to open the app on Google Play. Or tap <b>Use my hand</b>: move your hand to turn the tree, raise it to lift the camera, and make a fist to see the code.</p>
         <div class="get-tabs" role="tablist" aria-label="Choose an app">
           <button type="button" role="tab" class="get-tab" data-app="lastly" aria-selected="true"><i style="background:var(--purple)"></i>Lastly</button>
-          <button type="button" role="tab" class="get-tab" data-app="snip" aria-selected="false"><i style="background:var(--snip)"></i>Snip</button>
+          <button type="button" role="tab" class="get-tab" data-app="snip" aria-selected="false"><i style="background:var(--snip)"></i>Renvo</button>
           <button type="button" role="tab" class="get-tab" data-app="folderoo" aria-selected="false"><i style="background:var(--gold)"></i>Folderoo</button>
         </div>
         <p class="get-note">Already on your phone? Just tap the code.</p>
@@ -787,7 +782,7 @@ footer .brand .bw2{margin-bottom:8px}
       <p class="lead">Feedback, bug reports, partnerships or the annoyance you want our next app to fix. Every message gets read.</p>
       <div class="mailrow"><span class="mail" id="mail">hello@drakiverse.studio</span><button class="copy" id="copy" type="button">Copy</button></div>
       <p class="label am-title">App support · tap an app to copy its email</p>
-      <div class="appicons"><button class="appicon" type="button" data-copy-email="snip@drakiverse.studio" aria-label="Copy Snip support email, snip@drakiverse.studio" title="snip@drakiverse.studio"><svg viewBox="0 0 100 100" aria-hidden="true"><defs><clipPath id="cl4"><polygon points="0,0 56,0 38,100 0,100"/></clipPath><clipPath id="cr4"><polygon points="64,0 100,0 100,100 46,100"/></clipPath></defs><rect width="100" height="100" rx="24" fill="#0b0b0b"/><g clip-path="url(#cl4)"><rect x="14" y="26" width="72" height="48" rx="9" fill="#c8ff2e"/><rect x="14" y="36" width="72" height="8" fill="#0b0b0b"/></g><g clip-path="url(#cr4)" transform="translate(3,-2)"><rect x="14" y="26" width="72" height="48" rx="9" fill="#c8ff2e"/><rect x="14" y="36" width="72" height="8" fill="#0b0b0b"/></g></svg><span>Snip</span><b class="ok" aria-hidden="true">✓</b></button><button class="appicon" type="button" data-copy-email="lastly@drakiverse.studio" aria-label="Copy Lastly support email, lastly@drakiverse.studio" title="lastly@drakiverse.studio"><svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="24" fill="#fff1dc"/><path d="M28 22V78H78" fill="none" stroke="#9d8cff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="M39 22V67H78" fill="none" stroke="#ff8fc7" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="M50 22V56H78" fill="none" stroke="#ffa03a" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Lastly</span><b class="ok" aria-hidden="true">✓</b></button><button class="appicon" type="button" data-copy-email="folderoo@drakiverse.studio" aria-label="Copy Folderoo support email, folderoo@drakiverse.studio" title="folderoo@drakiverse.studio"><svg viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="27" fill="#0F5E5A"/><ellipse cx="58" cy="107" rx="24" ry="3.2" fill="#0A4441"/><g transform="translate(2 -8) rotate(-14 60 70)"><path d="M42 90 Q24 98 12 86 Q26 91 44 82 Z" fill="#E8A21F"/><ellipse cx="54" cy="99" rx="17" ry="5" fill="#E8A21F" transform="rotate(18 54 99)"/><ellipse cx="58" cy="72" rx="23" ry="26" fill="#E8A21F"/><ellipse cx="69" cy="48" rx="8" ry="13" fill="#E8A21F" transform="rotate(28 69 48)"/><ellipse cx="66" cy="23" rx="4.2" ry="9.5" fill="#E8A21F" transform="rotate(-34 66 23)"/><ellipse cx="66" cy="24" rx="1.9" ry="5.8" fill="#F3A6A0" transform="rotate(-34 66 24)"/><ellipse cx="73" cy="21" rx="4.2" ry="9.5" fill="#E8A21F" transform="rotate(-20 73 21)"/><ellipse cx="73" cy="22" rx="1.9" ry="5.8" fill="#F3A6A0" transform="rotate(-20 73 22)"/><ellipse cx="75" cy="36" rx="12" ry="10" fill="#E8A21F"/><ellipse cx="85" cy="40" rx="8" ry="6" fill="#E8A21F"/><circle cx="78" cy="33" r="2.3" fill="#17323A"/><circle cx="92" cy="39" r="2" fill="#17323A"/><ellipse cx="81" cy="60" rx="3.5" ry="8" fill="#E8A21F" transform="rotate(-70 81 60)"/><path d="M39 62 h12 a2 2 0 0 1 1.6 0.8 l2.8 3.6 h20.6 a3 3 0 0 1 3 3 v21 a5 5 0 0 1 -5 5 H44 a5 5 0 0 1 -5 -5 Z" fill="#0A4441"/><rect x="47" y="55" width="23" height="27" rx="2.8" fill="#FFFFFF" transform="rotate(-6 58 68)"/><rect x="51" y="60" width="13" height="2.6" rx="1.3" fill="#B9CBC8" transform="rotate(-6 58 68)"/><rect x="51" y="65.5" width="9" height="2.6" rx="1.3" fill="#B9CBC8" transform="rotate(-6 58 68)"/><path d="M39 76 Q59.5 86 79 76 V91 a5 5 0 0 1 -5 5 H44 a5 5 0 0 1 -5 -5 Z" fill="#5FC4B8"/></g></svg><span>Folderoo</span><b class="ok" aria-hidden="true">✓</b></button></div>
+      <div class="appicons"><button class="appicon" type="button" data-copy-email="renvo@drakiverse.studio" aria-label="Copy Renvo support email, renvo@drakiverse.studio" title="renvo@drakiverse.studio"><svg viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="30" fill="#101514"/><rect x="22" y="22" width="70" height="44" rx="9" fill="none" stroke="#2EE6C8" stroke-width="5" opacity=".3"/><rect x="28" y="32" width="70" height="44" rx="9" fill="none" stroke="#2EE6C8" stroke-width="5" opacity=".62"/><rect x="34" y="44" width="72" height="52" rx="10" fill="#2EE6C8"/><path d="M50 86V56H64a9 9 0 0 1 0 18H50M63 74L75 86" fill="none" stroke="#101514" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M95 40L87 100" stroke="#101514" stroke-width="4.5"/></svg><span>Renvo</span><b class="ok" aria-hidden="true">✓</b></button><button class="appicon" type="button" data-copy-email="lastly@drakiverse.studio" aria-label="Copy Lastly support email, lastly@drakiverse.studio" title="lastly@drakiverse.studio"><svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="24" fill="#fff1dc"/><path d="M28 22V78H78" fill="none" stroke="#9d8cff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="M39 22V67H78" fill="none" stroke="#ff8fc7" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="M50 22V56H78" fill="none" stroke="#ffa03a" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Lastly</span><b class="ok" aria-hidden="true">✓</b></button><button class="appicon" type="button" data-copy-email="folderoo@drakiverse.studio" aria-label="Copy Folderoo support email, folderoo@drakiverse.studio" title="folderoo@drakiverse.studio"><svg viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="27" fill="#0F5E5A"/><ellipse cx="58" cy="107" rx="24" ry="3.2" fill="#0A4441"/><g transform="translate(2 -8) rotate(-14 60 70)"><path d="M42 90 Q24 98 12 86 Q26 91 44 82 Z" fill="#E8A21F"/><ellipse cx="54" cy="99" rx="17" ry="5" fill="#E8A21F" transform="rotate(18 54 99)"/><ellipse cx="58" cy="72" rx="23" ry="26" fill="#E8A21F"/><ellipse cx="69" cy="48" rx="8" ry="13" fill="#E8A21F" transform="rotate(28 69 48)"/><ellipse cx="66" cy="23" rx="4.2" ry="9.5" fill="#E8A21F" transform="rotate(-34 66 23)"/><ellipse cx="66" cy="24" rx="1.9" ry="5.8" fill="#F3A6A0" transform="rotate(-34 66 24)"/><ellipse cx="73" cy="21" rx="4.2" ry="9.5" fill="#E8A21F" transform="rotate(-20 73 21)"/><ellipse cx="73" cy="22" rx="1.9" ry="5.8" fill="#F3A6A0" transform="rotate(-20 73 22)"/><ellipse cx="75" cy="36" rx="12" ry="10" fill="#E8A21F"/><ellipse cx="85" cy="40" rx="8" ry="6" fill="#E8A21F"/><circle cx="78" cy="33" r="2.3" fill="#17323A"/><circle cx="92" cy="39" r="2" fill="#17323A"/><ellipse cx="81" cy="60" rx="3.5" ry="8" fill="#E8A21F" transform="rotate(-70 81 60)"/><path d="M39 62 h12 a2 2 0 0 1 1.6 0.8 l2.8 3.6 h20.6 a3 3 0 0 1 3 3 v21 a5 5 0 0 1 -5 5 H44 a5 5 0 0 1 -5 -5 Z" fill="#0A4441"/><rect x="47" y="55" width="23" height="27" rx="2.8" fill="#FFFFFF" transform="rotate(-6 58 68)"/><rect x="51" y="60" width="13" height="2.6" rx="1.3" fill="#B9CBC8" transform="rotate(-6 58 68)"/><rect x="51" y="65.5" width="9" height="2.6" rx="1.3" fill="#B9CBC8" transform="rotate(-6 58 68)"/><path d="M39 76 Q59.5 86 79 76 V91 a5 5 0 0 1 -5 5 H44 a5 5 0 0 1 -5 -5 Z" fill="#5FC4B8"/></g></svg><span>Folderoo</span><b class="ok" aria-hidden="true">✓</b></button></div>
       <p class="label" id="copyLive" aria-live="polite" style="margin-top:12px;min-height:1.4em"></p>
     </div>
   </section>
@@ -804,7 +799,7 @@ footer .brand .bw2{margin-bottom:8px}
       <nav class="fcol fin" aria-label="Apps">
         <h3>Apps</h3>
         <ul>
-          <li><a class="flink" href="https://drakiverse.studio/snipapp/" style="--lc:var(--snip)"><span class="sw" aria-hidden="true"></span>Snip<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+          <li><a class="flink" href="https://drakiverse.studio/renvo/" style="--lc:var(--snip)"><span class="sw" aria-hidden="true"></span>Renvo<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
           <li><a class="flink" href="#lastly" style="--lc:var(--purple)"><span class="sw" aria-hidden="true"></span>Lastly<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
           <li><a class="flink" href="https://drakiverse.studio/folderoo/" style="--lc:var(--gold)"><span class="sw" aria-hidden="true"></span>Folderoo<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
           <li><a class="flink" href="#contact" style="--lc:var(--orange)"><span class="sw" aria-hidden="true"></span>App 04 <span class="fbadge">In the lab</span></a></li>
