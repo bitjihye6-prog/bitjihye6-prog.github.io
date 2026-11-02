@@ -55,7 +55,6 @@ h2{margin:0 0 12px;font-size:clamp(30px,4.5vw,44px);line-height:1.08;letter-spac
 .price{font-size:34px;font-weight:800;letter-spacing:-.03em}
 .priv{background:var(--surface2);border:1px solid var(--line);border-radius:22px;padding:28px}
 footer{border-top:1px solid var(--line);padding-block:32px 48px;color:var(--muted);font-size:15px;display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between}
-.vwrap{position:relative}.sound{position:absolute;z-index:2;left:50%;bottom:16px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:rgba(16,21,20,.82);color:var(--fg);font:700 14px Manrope,system-ui,sans-serif;cursor:pointer;backdrop-filter:blur(6px)}.sound .w{opacity:.35}.sound.on{background:var(--mint);color:var(--ink);border-color:var(--mint)}.sound.on .w{opacity:1}.sound:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
 .demo{display:grid;grid-template-columns:minmax(0,320px) 1fr;gap:40px;align-items:center;max-width:860px;margin:28px auto 0}.demo .phone video{display:block;width:100%;height:auto;border-radius:inherit}.steps{list-style:none;counter-reset:s;padding:0;margin:0;display:grid;gap:18px}.steps li{counter-increment:s;position:relative;padding-left:52px;color:var(--muted)}.steps li:before{content:counter(s);position:absolute;left:0;top:0;width:36px;height:36px;border-radius:12px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;font-weight:800;color:var(--mint)}.steps b{display:block;color:var(--fg,#F2F5EF);margin-bottom:2px}
 @media(max-width:820px){.demo{grid-template-columns:1fr;max-width:320px}}
 @media(max-width:820px){.hero{grid-template-columns:1fr;gap:32px;padding-block:20px 48px}.three,.plans{grid-template-columns:1fr}.gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 14px}nav .links{display:none}}
@@ -88,7 +87,7 @@ footer{border-top:1px solid var(--line);padding-block:32px 48px;color:var(--mute
 
 <section id="scan-demo"><h2>Scan a receipt, see it fill in</h2>
 <p class="sub">Pick a screenshot or snap a photo. Renvo reads it on your phone, fills in the name, price, billing cycle and renewal date, and you check it before saving. The photo is never uploaded or kept. Part of Renvo Pro.</p>
-<div class="demo"><div class="phone vwrap"><button class="sound" id="demoSound" type="button" aria-pressed="false"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path class="w" d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg><span>Tap for sound</span></button><video src="img/scan-demo.mp4" poster="img/scan-demo-poster.jpg" width="390" height="844" autoplay muted loop playsinline preload="metadata" aria-label="Demo: tap Scan a receipt, choose a screenshot, Renvo reads it on the phone, the add screen fills in ChatGPT Plus at $28.00 monthly renewing Dec 1, and the new card joins the stack"></video></div>
+<div class="demo"><div class="phone"><video src="img/scan-demo.mp4" poster="img/scan-demo-poster.jpg" width="390" height="844" autoplay muted loop playsinline preload="metadata" aria-label="Demo: tap Scan a receipt, choose a screenshot, Renvo reads it on the phone, the add screen fills in ChatGPT Plus at $28.00 monthly renewing Dec 1, and the new card joins the stack"></video></div>
 <ol class="steps"><li><b>Tap “Scan a receipt”</b>Right on the home screen.</li><li><b>Pick a screenshot or take a photo</b>A receipt, renewal email or app store receipt.</li><li><b>Renvo reads it on your phone</b>The total with tax, the billing cycle and the next charge date.</li><li><b>Check it and save</b>Every filled field is marked, so you can fix anything first.</li></ol></div></section>
 
 <section id="screens"><h2>A look inside</h2>
@@ -114,5 +113,4 @@ footer{border-top:1px solid var(--line);padding-block:32px 48px;color:var(--mute
 <a class="btn" href="privacy.html">Read the privacy policy</a></div></section>
 
 <footer><span>© Drakiverse Studio</span><span><a href="/">All apps</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="mailto:renvo@drakiverse.studio">renvo@drakiverse.studio</a></span></footer>
-</div><script src="/js/renvo-demo.js" defer></script>
-</body></html>
+</div></body></html>
