@@ -8,6 +8,16 @@ const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
 const motion=!!(G&&ST)&&!RM;
 if(G){G.registerPlugin(...[ST,FL].filter(Boolean))}
 
+/* always open at the top: reloads and the Back button start from the beginning, not where the last visit stopped.
+   A link to a section (e.g. /#worlds) still jumps to that section. */
+safe("start-at-top",()=>{
+  if("scrollRestoration" in history)history.scrollRestoration="manual";
+  if(ST&&ST.clearScrollMemory)ST.clearScrollMemory("manual");
+  const toTop=()=>{const id=location.hash.slice(1);if(!id||!document.getElementById(id))scrollTo(0,0)};
+  toTop();
+  addEventListener("pageshow",e=>{if(e.persisted){toTop();ST&&ST.refresh()}});
+});
+
 /* ---------- helpers ---------- */
 function splitChars(el){
   const text=el.textContent;el.textContent="";
