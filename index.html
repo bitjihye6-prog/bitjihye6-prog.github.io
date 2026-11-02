@@ -159,7 +159,7 @@ footer .brand .bw2{margin-bottom:8px}
 .ring-stage.is3d .world:not(.on){cursor:pointer}
 .ring-stage .orbit{display:none}
 .ring-stage.is3d{--sh:max(460px,min(64svh,540px))}
-.ring-stage.is3d .orbit{display:block;position:absolute;left:0;right:0;bottom:0;top:-340px;perspective:1300px;perspective-origin:50% calc(100% - var(--sh)*.6);-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 90px,#000 calc(100% - var(--sh)*.62),transparent calc(100% - var(--sh)*.42));mask-image:linear-gradient(to bottom,transparent 0,#000 90px,#000 calc(100% - var(--sh)*.62),transparent calc(100% - var(--sh)*.42));pointer-events:none;opacity:0;transition:opacity .8s}
+.ring-stage.is3d .orbit{display:block;position:absolute;left:0;right:0;bottom:0;top:-220px;z-index:0;perspective:1300px;perspective-origin:50% calc(100% - var(--sh)*.6);-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 150px,#000 calc(100% - var(--sh)*.62),transparent calc(100% - var(--sh)*.42));mask-image:linear-gradient(to bottom,transparent 0,#000 150px,#000 calc(100% - var(--sh)*.62),transparent calc(100% - var(--sh)*.42));pointer-events:none;opacity:0;transition:opacity .8s}
 .ring-stage.is3d .orbit.show{opacity:1}
 .orbit-turn{position:absolute;left:50%;top:calc(100% - var(--sh)*.5);transform-style:preserve-3d}
 .orbit-spin{position:absolute;left:0;top:0;transform-style:preserve-3d}
@@ -171,7 +171,7 @@ footer .brand .bw2{margin-bottom:8px}
 .ring-stage.is3d .wname{font-size:clamp(44px,4.6vw,64px)}
 .ring-stage.is3d .wline{font-size:15px}
 .ring-stage.is3d .art svg{height:min(160px,40vw,calc(100% - 20px))}
-.wnav{display:flex;align-items:center;gap:10px}
+.wnav{display:flex;align-items:center;gap:10px;position:relative;z-index:6}
 .wcount{min-width:9ch;text-align:right;margin:0}
 .wbtn{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;color:var(--fg);transition:background .2s,border-color .2s}
 .wbtn:hover{background:var(--fg);color:var(--ink);border-color:var(--fg)}
@@ -182,7 +182,7 @@ footer .brand .bw2{margin-bottom:8px}
 
 .worlds{position:relative;overflow:hidden}
 .worlds-in{min-height:100svh;display:flex;flex-direction:column;justify-content:center;gap:clamp(18px,3vh,34px);padding-block:90px 40px}
-.whead{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.whead{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;position:relative;z-index:5}
 .h2{font-family:var(--f-display);font-weight:700;font-size:clamp(40px,6.4vw,94px);line-height:.92;letter-spacing:-.035em;margin:8px 0 0;text-wrap:balance}
 .track{display:flex;gap:clamp(16px,2vw,28px);width:max-content}
 .world{position:relative;width:min(84vw,540px);height:min(62svh,560px);min-height:410px;border-radius:30px;padding:clamp(20px,2.4vw,30px);display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
@@ -885,7 +885,7 @@ footer .brand .bw2{margin-bottom:8px}
 <script src="/js/gsap.min.js"></script>
 <script src="/js/ScrollTrigger.min.js"></script>
 <script src="/js/Flip.min.js"></script>
-<script src="/js/site.js?v=202611012145"></script>
+<script src="/js/site.js?v=202611012200"></script>
 <script type="module" src="/js/qrtree.js?v=202610302330"></script>
 
 </body>

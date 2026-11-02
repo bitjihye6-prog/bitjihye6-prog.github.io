@@ -418,10 +418,11 @@ safe("worlds",()=>{
     if(I.pop.every(p=>p>=1)&&!live)cardsDirty=false;
     const on=Math.round(pos)%S;if(on!==cur){cur=on;slots.forEach((c,i)=>c.classList.toggle("on",i===on));label(app(on))}
   }
-  const span=()=>innerHeight*Math.max(2.4,0.3*S);   // one full lap
+  const L=N;   // steps: through every app once and back to the first
+  const span=()=>innerHeight*Math.max(1.4,0.42*L);
   const st=ST.create({trigger:sec,start:"top top",end:()=>"+="+span(),pin:true,scrub:.5,anticipatePin:1,invalidateOnRefresh:true,
-    onUpdate:s=>{pos=s.progress*S;G.set("#wbar",{scaleX:s.progress});draw()},
-    snap:{snapTo:1/S,duration:{min:.25,max:.7},delay:.08,ease:"power2.inOut"}});
+    onUpdate:s=>{pos=s.progress*L;G.set("#wbar",{scaleX:s.progress});draw()},
+    snap:{snapTo:1/L,directional:false,duration:{min:.25,max:.7},delay:.08,ease:"power2.inOut"}});
   // the burst: cards pop into a spinning circle, then the camera flies in
   const intro=G.timeline({paused:true,onUpdate:draw,onStart:()=>{cardsDirty=true}});
   for(let k=0;k<S;k++){const i=(k+Math.floor(S/2))%S;intro.to(I.pop,{[i]:1,duration:.55,ease:"back.out(1.7)"},k*.045)}
@@ -431,16 +432,20 @@ safe("worlds",()=>{
   ST.create({trigger:sec,start:()=>st.start-innerHeight*.65,end:()=>st.end+innerHeight*.65,
     onEnter:()=>intro.restart(),onEnterBack:()=>intro.restart(),onLeave:reset,onLeaveBack:reset});
   if(scrollY>st.start-innerHeight*.65&&scrollY<st.end+innerHeight*.65)intro.restart();else reset();
-  const go=i=>{i=G.utils.clamp(0,S,i);scrollTo({top:st.start+(st.end-st.start)*i/S+1,behavior:"smooth"})};
+  // arrows move the page with a GSAP tween (native smooth scrolling can stall on Android while the section is pinned)
+  const sc={y:0};let goTw=null;
+  const glideTo=y=>{goTw&&goTw.kill();sc.y=scrollY;goTw=G.to(sc,{y,duration:.65,ease:"power2.inOut",onUpdate:()=>scrollTo(0,sc.y)})};
+  const go=i=>{if(i>L){glideTo(st.end+innerHeight*.9);return}if(i<0){glideTo(Math.max(0,st.start-innerHeight*.9));return}
+    glideTo(st.start+(st.end-st.start)*i/L)};
   const here=()=>Math.round(pos);
   $("#wprev").addEventListener("click",()=>go(here()-1));$("#wnext").addEventListener("click",()=>go(here()+1));
   stage.addEventListener("keydown",e=>{if(e.key==="ArrowRight"){e.preventDefault();go(here()+1)}if(e.key==="ArrowLeft"){e.preventDefault();go(here()-1)}});
-  slots.forEach((c,i)=>c.addEventListener("click",e=>{if(i!==cur){e.preventDefault();e.stopPropagation();const h=here();let d=((i-h)%S+S)%S;if(d>S/2)d-=S;go(h+d)}},true));
+  slots.forEach((c,i)=>c.addEventListener("click",e=>{if(i!==cur){e.preventDefault();e.stopPropagation();const h=here();let d=((i-h)%S+S)%S;if(d>S/2)d-=S;let t=h+d;if(t<0||t>L)t=app(i);go(t)}},true));
   let sx=0,sy=0,sTop=0,dragging=false,moved=false;
   stage.addEventListener("pointerdown",e=>{if(e.button)return;sx=e.clientX;sy=e.clientY;sTop=scrollY;dragging=true;moved=false});
   addEventListener("pointermove",e=>{if(!dragging)return;const dx=e.clientX-sx,dy=e.clientY-sy;
     if(!moved){if(Math.abs(dx)<8)return;if(Math.abs(dy)>Math.abs(dx)){dragging=false;return}moved=true;stage.classList.add("drag")}
-    const per=(st.end-st.start)/S;scrollTo(0,sTop-dx/apps[0].offsetWidth*per)},{passive:true});
+    const per=(st.end-st.start)/L;scrollTo(0,sTop-dx/apps[0].offsetWidth*per)},{passive:true});
   const up=()=>{if(!dragging)return;dragging=false;stage.classList.remove("drag");if(moved){const blk=e=>{e.stopPropagation();e.preventDefault()};addEventListener("click",blk,{capture:true,once:true});setTimeout(()=>removeEventListener("click",blk,true),50)}};
   addEventListener("pointerup",up);addEventListener("pointercancel",up);
   $$("#track > .world.snip .rv-s").forEach(p=>{const L=p.getTotalLength();G.set(p,{strokeDasharray:L,strokeDashoffset:0})});
