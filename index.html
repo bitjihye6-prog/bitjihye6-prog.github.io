@@ -137,11 +137,12 @@ footer .brand .bw2{margin-bottom:8px}
 
 
 /* marquee */
-.marquee{padding-block:26px;border-block:1px solid var(--line);overflow:hidden;background:var(--surface)}
+.marquee{padding-block:14px;overflow:hidden}
 .mrow{display:flex;width:max-content;will-change:transform}
-.mrow span{font-family:var(--f-display);font-weight:700;font-size:clamp(34px,6vw,86px);letter-spacing:-.03em;line-height:1.05;display:inline-flex;align-items:center;gap:.35em;padding-right:.35em;white-space:nowrap}
-.mrow .o{color:transparent;-webkit-text-stroke:1.5px var(--fg)}
-.mrow em{width:.42em;height:.42em;border-radius:.12em;flex:none;display:inline-block}
+.mrow span{font-family:var(--f-body,'Plus Jakarta Sans'),sans-serif;font-weight:600;font-size:clamp(18px,2.2vw,28px);letter-spacing:-.01em;line-height:1.5;display:inline-flex;align-items:center;gap:.7em;padding-right:.7em;white-space:nowrap}
+.mrow .o{font-family:Pacifico,cursive;font-weight:400;font-size:1.05em;color:var(--pink)}
+#m2 .o{color:var(--purple)}
+.mrow em{width:.3em;height:.3em;border-radius:50%;flex:none;display:inline-block}
 .mrow em.a{background:var(--snip)}.mrow em.b{background:var(--purple)}.mrow em.c{background:var(--pink)}.mrow em.d{background:var(--orange)}
 
 /* worlds */
@@ -156,6 +157,19 @@ footer .brand .bw2{margin-bottom:8px}
 .ring-stage .wdim{display:none}.ring-stage.is3d .wdim{display:block;position:absolute;inset:0;border-radius:inherit;background:#0b0b0c;opacity:0;pointer-events:none;will-change:opacity}
 .ring-stage .echo{display:none}.ring-stage.is3d .echo{display:flex}
 .ring-stage.is3d .world:not(.on){cursor:pointer}
+.ring-stage .orbit{display:none}
+.ring-stage.is3d .orbit{display:block;position:absolute;inset:0;perspective:1300px;perspective-origin:50% 40%;-webkit-mask-image:linear-gradient(to bottom,#000 0,#000 38%,transparent 58%);mask-image:linear-gradient(to bottom,#000 0,#000 38%,transparent 58%);pointer-events:none;opacity:0;transition:opacity .8s}
+.ring-stage.is3d .orbit.show{opacity:1}
+.orbit-turn{position:absolute;left:50%;top:50%;transform-style:preserve-3d}
+.orbit-spin{position:absolute;left:0;top:0;transform-style:preserve-3d;animation:orbitspin 36s linear infinite;animation-play-state:paused}
+.orbit.run .orbit-spin{animation-play-state:running}
+@keyframes orbitspin{from{transform:rotateY(0)}to{transform:rotateY(-360deg)}}
+.orb{position:absolute;backface-visibility:hidden;width:210px;height:280px;margin:-140px 0 0 -105px;border-radius:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;font:700 20px/1 var(--f-display);letter-spacing:-.02em;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.orb svg,.orb .q{width:96px;height:96px;border-radius:22px}
+.orb .q{display:grid;place-items:center;font-size:44px;background:var(--spectrum);-webkit-background-clip:text;background-clip:text;color:transparent}
+.orb{font-size:28px}.orb::after{content:"";position:absolute;inset:0;border-radius:inherit;background:#0b0b0c;opacity:.35}
+@media (prefers-reduced-motion:reduce){.orbit-spin{animation:none}}
+
 .ring-stage.is3d .wname{font-size:clamp(44px,4.6vw,64px)}
 .ring-stage.is3d .wline{font-size:15px}
 .ring-stage.is3d .art svg{height:min(160px,40vw,calc(100% - 20px))}
@@ -873,7 +887,7 @@ footer .brand .bw2{margin-bottom:8px}
 <script src="/js/gsap.min.js"></script>
 <script src="/js/ScrollTrigger.min.js"></script>
 <script src="/js/Flip.min.js"></script>
-<script src="/js/site.js?v=202611011510"></script>
+<script src="/js/site.js?v=202611012140"></script>
 <script type="module" src="/js/qrtree.js?v=202610302330"></script>
 
 </body>
