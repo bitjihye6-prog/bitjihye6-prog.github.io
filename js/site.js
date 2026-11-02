@@ -404,7 +404,7 @@ safe("worlds",()=>{
   function draw(){
     const c=I.cam,far=R*2.6+900,live=c<.999;
     ring.style.transform=`translate3d(0,${mix(-60,0,c).toFixed(1)}px,${mix(-R-far,-R,c).toFixed(1)}px) rotateX(${mix(-24,-3,c).toFixed(2)}deg) rotateY(${(-pos*STEP+I.spin).toFixed(2)}deg)`;
-    oTurn.style.transform=`translate3d(0,-150px,-1500px) rotateX(-22deg) rotateY(${(-pos*STEP*.5+I.spin*.5).toFixed(2)}deg)`;
+    oTurn.style.transform=`translate3d(0,-150px,-1500px) rotateX(-22deg) rotateY(${(-pos*STEP*.6+I.spin*.6).toFixed(2)}deg)`;   // turns only when the main circle turns
     orbit.classList.toggle("show",c>.6);
     slots.forEach((el,i)=>{
       const p=I.pop[i],a=i*STEP;
@@ -429,7 +429,7 @@ safe("worlds",()=>{
   const reset=()=>{intro.pause(0);I.pop.fill(0);I.cam=0;I.spin=-140;cardsDirty=true;draw()};
   // replay every time the section comes back into view, from above or below
   ST.create({trigger:sec,start:()=>st.start-innerHeight*.65,end:()=>st.end+innerHeight*.65,
-    onToggle:s=>orbit.classList.toggle("run",s.isActive),onEnter:()=>intro.restart(),onEnterBack:()=>intro.restart(),onLeave:reset,onLeaveBack:reset});
+    onEnter:()=>intro.restart(),onEnterBack:()=>intro.restart(),onLeave:reset,onLeaveBack:reset});
   if(scrollY>st.start-innerHeight*.65&&scrollY<st.end+innerHeight*.65)intro.restart();else reset();
   const go=i=>{i=G.utils.clamp(0,S,i);scrollTo({top:st.start+(st.end-st.start)*i/S+1,behavior:"smooth"})};
   const here=()=>Math.round(pos);
