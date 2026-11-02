@@ -384,6 +384,18 @@ safe("worlds",()=>{
   const S=N*Math.ceil(12/N),slots=[...apps];   // a multiple of N so the order repeats cleanly all the way round
   for(let i=N;i<S;i++){const c=apps[i%N].cloneNode(true);c.setAttribute("aria-hidden","true");c.classList.add("echo");$$("[id]",c).forEach(e=>e.removeAttribute("id"));$$("button,a",c).forEach(e=>{e.tabIndex=-1});ring.appendChild(c);slots.push(c)}
   const dims=slots.map(c=>{const d=document.createElement("i");d.className="wdim";c.appendChild(d);return d});
+  // background orbit: a wider circle of small app cards that keeps spinning behind the main cards
+  const orbit=document.createElement("div");orbit.className="orbit";orbit.setAttribute("aria-hidden","true");
+  const oTurn=document.createElement("div");oTurn.className="orbit-turn";const oSpin=document.createElement("div");oSpin.className="orbit-spin";
+  oTurn.appendChild(oSpin);orbit.appendChild(oTurn);stage.insertBefore(orbit,ring);
+  const OS=Math.max(20,N*5),ostep=360/OS,OR=1250;
+  for(let i=0;i<OS;i++){const src=apps[i%N],cs=getComputedStyle(src),o=document.createElement("div");o.className="orb";
+    o.style.background=cs.backgroundColor;o.style.color=cs.color;
+    const sv=$(".art svg",src);if(sv){const k=sv.cloneNode(true);k.removeAttribute("class");$$("[id],[class]",k).forEach(e=>{e.removeAttribute("id");e.removeAttribute("class")});o.appendChild(k)}else{const q=document.createElement("span");q.className="q";q.textContent="?";o.appendChild(q)}
+    const nm=document.createElement("span");nm.textContent=$(".wname",src).textContent.trim();o.appendChild(nm);
+    o.style.transform=`rotateY(${i*ostep}deg) translateZ(${OR}px)`;oSpin.appendChild(o);
+    const back=o.cloneNode(true);back.style.transform=`rotateY(${i*ostep}deg) translateZ(${OR}px) rotateY(180deg)`;oSpin.appendChild(back)}   // the side seen at the back of the circle reads the right way round
+
   const STEP=360/S,app=i=>i%N,mix=(a,b,t)=>a+(b-a)*t;
   const I={pop:slots.map(()=>0),cam:0,spin:-140};
   let pos=0,cur=-1,R=0,cardsDirty=true,last={};
@@ -392,6 +404,8 @@ safe("worlds",()=>{
   function draw(){
     const c=I.cam,far=R*2.6+900,live=c<.999;
     ring.style.transform=`translate3d(0,${mix(-60,0,c).toFixed(1)}px,${mix(-R-far,-R,c).toFixed(1)}px) rotateX(${mix(-24,-3,c).toFixed(2)}deg) rotateY(${(-pos*STEP+I.spin).toFixed(2)}deg)`;
+    oTurn.style.transform=`translate3d(0,-150px,-1500px) rotateX(-22deg) rotateY(${(-pos*STEP*.5+I.spin*.5).toFixed(2)}deg)`;
+    orbit.classList.toggle("show",c>.6);
     slots.forEach((el,i)=>{
       const p=I.pop[i],a=i*STEP;
       if(cardsDirty){el.style.transform=`rotateY(${a}deg) translateZ(${(R*mix(.15,1,p)).toFixed(1)}px) scale(${mix(.2,1,p).toFixed(3)})`;el.style.opacity=p<.02?0:Math.min(1,p*1.6)}
@@ -415,7 +429,7 @@ safe("worlds",()=>{
   const reset=()=>{intro.pause(0);I.pop.fill(0);I.cam=0;I.spin=-140;cardsDirty=true;draw()};
   // replay every time the section comes back into view, from above or below
   ST.create({trigger:sec,start:()=>st.start-innerHeight*.65,end:()=>st.end+innerHeight*.65,
-    onEnter:()=>intro.restart(),onEnterBack:()=>intro.restart(),onLeave:reset,onLeaveBack:reset});
+    onToggle:s=>orbit.classList.toggle("run",s.isActive),onEnter:()=>intro.restart(),onEnterBack:()=>intro.restart(),onLeave:reset,onLeaveBack:reset});
   if(scrollY>st.start-innerHeight*.65&&scrollY<st.end+innerHeight*.65)intro.restart();else reset();
   const go=i=>{i=G.utils.clamp(0,S,i);scrollTo({top:st.start+(st.end-st.start)*i/S+1,behavior:"smooth"})};
   const here=()=>Math.round(pos);
