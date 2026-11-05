@@ -258,6 +258,11 @@ footer .brand .bw2{margin-bottom:8px}
 .get-stage{position:relative;display:flex;flex-direction:column;align-items:center;gap:14px;min-width:0}
 .qr-card.dark .qr-logo{background:#0b0b0c}
 .qr-hand{border-color:rgba(255,143,199,.45)}
+.hand-guide{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.hand-guide li{display:flex;align-items:center;gap:8px;padding:9px 14px;border:1px solid var(--line);border-radius:999px;font:500 14px var(--f-body);color:var(--muted);transition:background .25s,color .25s,border-color .25s}
+.hand-guide li span{font-size:18px;line-height:1}
+.hand-guide li b{font-weight:700;color:var(--fg)}
+.hand-guide li.on{background:rgba(255,143,199,.14);border-color:rgba(255,143,199,.6);color:var(--fg)}
 .hand-status{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;color:var(--fg);margin:0;text-align:center}
 .hand-cam{position:absolute;right:0;top:0;width:clamp(96px,22%,150px);aspect-ratio:3/4;border-radius:18px;overflow:hidden;background:var(--surface);border:1px solid var(--line);box-shadow:0 20px 40px -20px rgba(0,0,0,.7)}
 .hand-cam video,.hand-cam canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
@@ -802,6 +807,11 @@ footer .brand .bw2{margin-bottom:8px}
         </a>
         <p class="qr-cap" id="qrCap">Scan for <b>Lastly</b></p>
         <div class="qr-btns"><button type="button" class="qr-again" id="qrQuick">Show QR ⚡</button><button type="button" class="qr-again" id="qrToggle">Replay ↺</button><button type="button" class="qr-again qr-hand" id="qrHand" aria-pressed="false">Use my hand ✋</button></div>
+        <ol class="hand-guide" id="handGuide" hidden aria-label="How to use your hand">
+          <li data-k="move"><span aria-hidden="true">🖐️</span>Move your hand to turn the tree</li>
+          <li data-k="lift"><span aria-hidden="true">☝️</span>Raise it to lift the camera</li>
+          <li data-k="fist"><span aria-hidden="true">✊</span><b>Close your fist to see the QR code</b></li>
+        </ol>
         <p class="hand-status" id="handStatus" role="status" hidden></p>
         <div class="hand-cam" id="handCam" hidden><video id="handVideo" muted playsinline></video><canvas id="handSkel"></canvas><span>Stays on your device</span></div>
       </div>
@@ -886,7 +896,7 @@ footer .brand .bw2{margin-bottom:8px}
 <script src="/js/ScrollTrigger.min.js"></script>
 <script src="/js/Flip.min.js"></script>
 <script src="/js/site.js?v=202611012340"></script>
-<script type="module" src="/js/qrtree.js?v=202610302330"></script>
+<script type="module" src="/js/qrtree.js?v=202611051000"></script>
 
 </body>
 </html>
