@@ -41,22 +41,23 @@ const footWord=$("#footword");let footLetters=[];
 safe("big-fit",()=>{const big=$("#big");const fit=()=>{big.style.fontSize="";const cs=parseFloat(getComputedStyle(big).fontSize);const avail=big.parentElement.clientWidth;big.style.width="max-content";const w=big.scrollWidth;big.style.width="";if(w>avail)big.style.fontSize=(cs*avail/w*.97)+"px"};fit();addEventListener("resize",fit);document.fonts&&document.fonts.ready.then(fit)});
 safe("foot-build",()=>{footWord.innerHTML=[..."DRAKIVERSE"].map(c=>`<span aria-hidden="true">${c}</span>`).join("");footLetters=$$("span",footWord);fitWord(footWord);addEventListener("resize",()=>fitWord(footWord));document.fonts&&document.fonts.ready.then(()=>{fitWord(footWord);ST&&ST.refresh()})});
 
-/* "Say hello." scrambles into place once when it scrolls into view (the orange dot stays put).
+/* "Say hello." scrambles into place every time it scrolls into view (the orange dot stays put).
    Each letter's width is locked while it scrambles so the line never jumps. The footer DRAKIVERSE stays still. */
 safe("big-scramble",()=>{
   if(RM||!("IntersectionObserver" in window))return;
   const POOL="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz#%&*";
   const letters=bigLetters.filter(s=>s.className!=="dotc");
+  const finals=letters.map(s=>s.textContent);let busy=false;
   const run=()=>{
-    const finals=letters.map(s=>s.textContent);
+    if(busy)return;busy=true;
     letters.forEach(s=>{s.style.width=s.getBoundingClientRect().width+"px";s.style.textAlign="center";s.style.overflow="hidden"});
     let f=0;const steps=finals.length*3+4;
     const tick=()=>{letters.forEach((s,i)=>{s.textContent=f>=i*3+4?finals[i]:POOL[Math.floor(Math.random()*POOL.length)]});
-      if(++f<=steps)setTimeout(tick,45);else letters.forEach(s=>{s.style.width="";s.style.textAlign="";s.style.overflow=""})};
+      if(++f<=steps)setTimeout(tick,45);else{letters.forEach(s=>{s.style.width="";s.style.textAlign="";s.style.overflow=""});busy=false}};
     tick();
   };
-  const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){io.disconnect();(document.fonts?document.fonts.ready:Promise.resolve()).then(run)}},{threshold:.4});
-  io.observe($("#big"));
+  const ready=document.fonts?document.fonts.ready:Promise.resolve();
+  new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting))ready.then(run)},{threshold:.4}).observe($("#big"));
 });
 
 /* ---------- nav pill + copy (no library needed) ---------- */
