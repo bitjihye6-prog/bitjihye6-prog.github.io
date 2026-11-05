@@ -127,20 +127,20 @@ safe("detail",()=>{
   };
   const det=$("#detail");let state=null;
   const inset=r=>{const vw=document.documentElement.clientWidth,vh=innerHeight;return `inset(${r.top}px ${vw-r.right}px ${vh-r.bottom}px ${r.left}px round 30px)`};
-  function open(id,btn){const w=D[id],card=btn.closest(".world");state={btn,card};
+  function open(id,btn){const w=D[id],card=btn.closest(".world")||btn;state={btn,card};
     det.className="detail gut "+w.tone;
     det.innerHTML=`<div class="dinner"><div class="dbar di"><span class="idx">${w.num}</span><button class="close" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
-      <div class="dtitle di">${w.logo}<h2 id="dTitle">${w.name}</h2></div><p class="kick di">${w.kick}</p><p class="dbody di">${w.body}</p>
+      <div class="dtitle di">${w.logo}<h2 id="dTitle">${w.name}</h2></div><p class="kick di">${w.kick}</p><p class="dbody di">${w.body}</p>${id==="next"?'<div class="dlab di" data-lab-detail></div>':""}
       <ul class="feats">${w.feats.map((f,i)=>`<li class="di"><span>0${i+1}</span>${f}</li>`).join("")}</ul>
       <div class="dctas di"><a class="dbtn solid" href="${w.cta[0]}" data-jump="${w.cta[0]}">${w.cta[1]}</a>${(w.ext||[]).map(([h,t])=>`<a class="dbtn" href="${h}" target="_blank" rel="noopener">${t} ↗</a>`).join("")}<button class="dbtn" type="button" data-back>Back to the apps</button></div></div>`;
-    det.hidden=false;det.scrollTop=0;document.documentElement.style.overflow="hidden";
+    det.hidden=false;det.scrollTop=0;{const lb=$("[data-lab-detail]",det);if(lb&&window.DKLab)DKLab.mount(lb,{pill:true})}document.documentElement.style.overflow="hidden";
     if(motion){const tl=G.timeline();tl.fromTo(det,{clipPath:inset(card.getBoundingClientRect())},{clipPath:"inset(0px 0px 0px 0px round 0px)",duration:.95,ease:"expo.inOut"})
       .from($$(".di",det),{y:60,opacity:0,duration:.8,stagger:.06,ease:"expo.out"},"-=.45")}
     setTimeout(()=>{const c=$(".close",det);c&&c.focus({preventScroll:true})},60)}
   function close(then){if(!state)return;const {btn,card}=state;state=null;
     const done=()=>{det.hidden=true;det.innerHTML="";document.documentElement.style.overflow="";if(then)then();else btn.focus({preventScroll:true})};
     if(motion){G.timeline({onComplete:done}).to($$(".di",det),{opacity:0,y:-20,duration:.2,stagger:.015}).to(det,{clipPath:inset(card.getBoundingClientRect()),duration:.6,ease:"expo.inOut"},"-=.05")}else done()}
-  document.addEventListener("click",e=>{const b=e.target.closest("[data-open]");if(b)open(b.dataset.open,b)});
+  document.addEventListener("click",e=>{const b=e.target.closest("[data-open]");if(b){e.preventDefault();open(b.dataset.open,b)}});
   det.addEventListener("click",e=>{if(e.target.closest(".close")||e.target.closest("[data-back]"))close();const j=e.target.closest("[data-jump]");if(j){e.preventDefault();const h=j.dataset.jump;close(()=>{const el=$(h);el&&el.scrollIntoView({behavior:RM?"auto":"smooth"})})}});
   addEventListener("keydown",e=>{if(!state)return;if(e.key==="Escape")close();if(e.key==="Tab"){const f=$$("a,button",det);const a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}});
 });
@@ -420,7 +420,7 @@ safe("worlds",()=>{
   const OS=Math.max(20,N*5),ostep=360/OS,OR=1250;
   for(let i=0;i<OS;i++){const src=apps[i%N],cs=getComputedStyle(src),o=document.createElement("div");o.className="orb";
     o.style.background=cs.backgroundColor;o.style.color=cs.color;
-    const sv=$(".art svg",src);if(sv){const k=sv.cloneNode(true);k.removeAttribute("class");$$("[id],[class]",k).forEach(e=>{e.removeAttribute("id");e.removeAttribute("class")});o.appendChild(k)}else{const q=document.createElement("span");q.className="q";q.textContent="?";o.appendChild(q)}
+    const sv=$(".art svg",src);if(sv){const k=sv.cloneNode(true);k.removeAttribute("class");$$("[id],[class]",k).forEach(e=>{e.removeAttribute("id");e.removeAttribute("class")});o.appendChild(k)}else if(window.DKLab){o.insertAdjacentHTML("beforeend",DKLab.icon())}else{const q=document.createElement("span");q.className="q";q.textContent="?";o.appendChild(q)}
     const nm=document.createElement("span");nm.textContent=$(".wname",src).textContent.trim();o.appendChild(nm);
     o.style.transform=`rotateY(${i*ostep}deg) translateZ(${OR}px)`;oSpin.appendChild(o);
     const back=o.cloneNode(true);back.style.transform=`rotateY(${i*ostep}deg) translateZ(${OR}px) rotateY(180deg)`;oSpin.appendChild(back)}   // the side seen at the back of the circle reads the right way round
@@ -527,6 +527,9 @@ safe("footer",()=>{
   tt.addEventListener("pointerleave",()=>{qx(0);qy(0)});
   tt.addEventListener("click",e=>{e.preventDefault();G.to("#toRing",{rotation:"+=360",duration:.9,ease:"expo.inOut"});scrollTo({top:0,behavior:"smooth"})});
 });
+
+/* App 04 lab animation on the card (and its echo copies in the ring) */
+safe("lab",()=>{if(window.DKLab)$$("[data-lab]").forEach(e=>DKLab.mount(e))});
 
 addEventListener("load",()=>ST.refresh());
 })();
