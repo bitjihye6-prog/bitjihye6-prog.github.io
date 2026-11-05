@@ -65,7 +65,10 @@ function setApp(a){
 }
 
 /* ---------- 3D ---------- */
-async function boot(){
+let booting=null;
+// one shared start-up, so preloading and playing never build two 3D scenes
+function boot(){if(!booting)booting=boot1();return booting}
+async function boot1(){
   if(S)return true;if(RM)return false;
   let T;try{const c=document.createElement("canvas");if(!(c.getContext("webgl2")||c.getContext("webgl")))return false;T=await import("./three.module.min.js")}catch(e){return false}
   const r=new T.WebGLRenderer({antialias:true,alpha:true});r.setPixelRatio(Math.min(devicePixelRatio||1,2));r.shadowMap.enabled=true;r.shadowMap.type=T.PCFSoftShadowMap;
@@ -116,7 +119,7 @@ function build(){
   G.traverse(o=>{if(o.isInstancedMesh)o.frustumCulled=false});
   if(U.mesh){S.items.forEach((it,k)=>U.mesh.setColorAt(k,it.c));U.mesh.instanceColor.needsUpdate=true}
 }
-const SHOW={snip:6.2,lastly:6.2,folderoo:6.2},HOLD=8;let FLY=1.9;
+const SHOW={snip:4,lastly:4,folderoo:4},HOLD=8,GROW=1.7; /* GROW: the tree grows 1.7x faster than before */let FLY=1.9;
 function restart(){FLY=1.9;card.classList.remove("code");S.t0=performance.now();if(S.U)S.U.si=undefined}
 // "Show QR": skip ahead to the fully grown tree and fly overhead in under a second
 async function quick(){if(RM||!(await boot())){card.classList.add("code");return}if(S.built!==app){build();S.built=app}FLY=.8;S.t0=performance.now()-SHOW[app]*1000;if(!S.raf)S.raf=requestAnimationFrame(frame)}
@@ -131,12 +134,12 @@ function frame(now){
   cam.position.set(Math.sin(az)*Math.cos(el)*dist,Math.sin(el)*dist+ly,Math.cos(az)*Math.cos(el)*dist);cam.lookAt(0,ly,0);
   const d=new T.Object3D(),col=new T.Color(),fade=eio((t-show+.2)/1.3);
   if(U.mesh){U.mesh.instanceMatrix.needsUpdate=true;U.mesh.instanceColor.needsUpdate=true}
-  {const g=eio(t/1.4),gl=Math.max(.01,eio((t-.5)/1.1));U.trunk.scale.set(1,Math.max(.01,g),1);U.trunk.position.y=U.H0*g/2;U.twigs.scale.setScalar(Math.max(.01,eio((t-.3)/1)));
-    U.leaves.scale.setScalar(gl);U.leaves.position.y=U.H0*(1-gl);U.blades.scale.setScalar(Math.max(.01,eio((t-.9)/1.2)));
-    U.dd.forEach((q,k)=>{q.y-=q.v*.016;if(q.y<.3)q.y=U.H0*1.4;const a=q.a+t*.3;d.position.set(Math.cos(a)*q.r+Math.sin(t*2+q.s)*.6,q.y,Math.sin(a)*q.r);d.rotation.set(t*2+q.s,t*1.3,q.s);d.scale.setScalar(t>1.5&&t<show?.9:0);d.updateMatrix();U.drift.setMatrixAt(k,d.matrix)});U.drift.instanceMatrix.needsUpdate=true;
+  {const tg=t*GROW,g=eio(tg/1.4),gl=Math.max(.01,eio((tg-.5)/1.1));U.trunk.scale.set(1,Math.max(.01,g),1);U.trunk.position.y=U.H0*g/2;U.twigs.scale.setScalar(Math.max(.01,eio((tg-.3)/1)));
+    U.leaves.scale.setScalar(gl);U.leaves.position.y=U.H0*(1-gl);U.blades.scale.setScalar(Math.max(.01,eio((tg-.9)/1.2)));
+    U.dd.forEach((q,k)=>{q.y-=q.v*.016;if(q.y<.3)q.y=U.H0*1.4;const a=q.a+t*.3;d.position.set(Math.cos(a)*q.r+Math.sin(t*2+q.s)*.6,q.y,Math.sin(a)*q.r);d.rotation.set(t*2+q.s,t*1.3,q.s);d.scale.setScalar(tg>1.5&&t<show?.9:0);d.updateMatrix();U.drift.setMatrixAt(k,d.matrix)});U.drift.instanceMatrix.needsUpdate=true;
     U.sun.material.opacity=(HAND?top:eio((t-show)/FLY))*.9;
     // Lastly: the tree walks through the seasons while it turns
-    if(app==="lastly"){const ss=PAL.lastly.seasons,si=HAND?Math.floor(t/2.5)%ss.length:Math.min(ss.length-1,Math.floor(t/2));if(si!==U.si){U.si=si;const pal=ss[si];U.tint.forEach(([pk,sh],k)=>U.leaves.setColorAt(k,col.set(pal[(pk*pal.length)|0]).multiplyScalar(sh)));U.leaves.instanceColor.needsUpdate=true;
+    if(app==="lastly"){const ss=PAL.lastly.seasons,si=HAND?Math.floor(t/2.5)%ss.length:Math.min(ss.length-1,Math.floor(t/1.35));if(si!==U.si){U.si=si;const pal=ss[si];U.tint.forEach(([pk,sh],k)=>U.leaves.setColorAt(k,col.set(pal[(pk*pal.length)|0]).multiplyScalar(sh)));U.leaves.instanceColor.needsUpdate=true;
       U.fall.forEach((pk,k)=>U.blades.setColorAt(k,col.set(pal[(pk*pal.length)|0])));U.blades.instanceColor.needsUpdate=true;for(let k=0;k<40;k++)U.drift.setColorAt(k,col.set(pal[k%pal.length]));U.drift.instanceColor.needsUpdate=true}}}
   S.r.shadowMap.autoUpdate=t<2.6||!!S.needShadow;S.needShadow=false;
   if(HAND)card.classList.toggle("code",HAND.topT>=1&&HAND.top>.7);else card.classList.toggle("code",t>=TOP-.35);
@@ -154,7 +157,9 @@ async function play(){
 /* ---------- wiring ---------- */
 setApp("lastly");
 /* ---------- hand control: move to turn the tree, raise your hand to lift the camera, make a fist for the QR code ---------- */
-const handBtn=$("#qrHand"),camBox=$("#handCam"),hStat=$("#handStatus");
+const handBtn=$("#qrHand"),camBox=$("#handCam"),hStat=$("#handStatus"),guide=$("#handGuide");
+// The three gestures stay on screen the whole time the camera is on; the one you're doing lights up.
+function guideStep(k){if(guide)guide.querySelectorAll("li").forEach(li=>li.classList.toggle("on",li.dataset.k===k||(k==="open"&&li.dataset.k==="fist")))}
 function onHand(h){
   if(!HAND)return;
   if(!h){HAND.fistAt=0;return}
@@ -162,9 +167,10 @@ function onHand(h){
   const now=performance.now();
   if(h.fist){if(!HAND.fistAt)HAND.fistAt=now;if(now-HAND.fistAt>300&&HAND.topT<1){HAND.topT=1;HAND.tw={from:HAND.top,to:1,t0:now,dur:1100}}}
   else{HAND.fistAt=0;if(h.open){const lift=Math.max(0,Math.min(.55,(.75-h.y)/.5*.55));if(HAND.topT>=1)HAND.tw={from:HAND.top,to:lift,t0:now,dur:900};HAND.topT=lift}}
-  hStat.textContent=HAND.topT>=1?"QR code. Open your hand to grow the tree back":h.fist?"Hold the fist…":"Move to turn · raise to lift · fist for the QR";
+  hStat.textContent=HAND.topT>=1?"There's your QR code. Open your hand to grow the tree back":h.fist?"Keep your fist closed…":"Hand found. Now close your fist ✊ to see the QR code";
+  guideStep(HAND.topT>=1?"open":h.fist?"fist":HAND.topT>.1?"lift":"move");
 }
-function stopHand(){card.classList.remove("snap");if(CAM)CAM.stop();CAM=null;HAND=null;camBox.hidden=true;hStat.hidden=true;handBtn.textContent="Use my hand ✋";handBtn.setAttribute("aria-pressed","false")}
+function stopHand(){if(guide)guide.hidden=true;card.classList.remove("snap");if(CAM)CAM.stop();CAM=null;HAND=null;camBox.hidden=true;hStat.hidden=true;handBtn.textContent="Use my hand ✋";handBtn.setAttribute("aria-pressed","false")}
 async function toggleHand(){
   if(CAM||HAND){stopHand();play();return}
   hStat.hidden=false;handBtn.disabled=true;
@@ -172,23 +178,26 @@ async function toggleHand(){
   if(S.built!==app){build();S.built=app}
   HAND={az:.5,azT:.5,top:0,topT:0,fistAt:0};
   const {startHandCam}=await import("./handcam.js?v=3");
+  if(guide){guide.hidden=false;guideStep("")}
   camBox.hidden=false; // keep the video on screen while starting: iPhones only give frames from a visible video
   const force=(location.hash.match(/engine=([\w-]+)/)||[])[1];
   CAM=await startHandCam({video:$("#handVideo"),canvas:$("#handSkel"),color:()=>LIGHT[app][0],onHand,onStatus:t=>hStat.textContent=t,force});
   handBtn.disabled=false;
-  if(!CAM){HAND=null;camBox.hidden=true;return}
+  if(!CAM){HAND=null;camBox.hidden=true;if(guide)guide.hidden=true;return}
   window.__cam=CAM;handBtn.textContent="Stop camera";handBtn.setAttribute("aria-pressed","true");
   card.classList.remove("code");cancelAnimationFrame(S.raf);S.t0=performance.now();S.raf=requestAnimationFrame(frame);
 }
 if(handBtn){if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)handBtn.hidden=true;else handBtn.addEventListener("click",toggleHand)}
 if(location.hash==="#qrtest")window.__qr={style(s){STYLE=s;drawFlat();if(S)S.built=null},hand:onHand,
-  fake(){HAND={az:.5,azT:.5,top:0,topT:0,fistAt:0};camBox.hidden=false;hStat.hidden=false;handBtn.textContent="Stop camera";boot().then(()=>{if(S.built!==app){build();S.built=app}card.classList.remove("code");cancelAnimationFrame(S.raf);S.t0=performance.now();S.raf=requestAnimationFrame(frame)})}};
+  fake(){HAND={az:.5,azT:.5,top:0,topT:0,fistAt:0};camBox.hidden=false;if(guide){guide.hidden=false;guideStep("")}hStat.hidden=false;handBtn.textContent="Stop camera";boot().then(()=>{if(S.built!==app){build();S.built=app}card.classList.remove("code");cancelAnimationFrame(S.raf);S.t0=performance.now();S.raf=requestAnimationFrame(frame)})}};
 
 if(RM||!("IntersectionObserver" in window)){card.classList.add("code");replay.hidden=true;const qb=$("#qrQuick");if(qb)qb.hidden=true;if(handBtn)handBtn.hidden=true}
 else{
   let visible=false;
   const io=new IntersectionObserver(es=>{const v=es.some(e=>e.isIntersecting);if(v===visible)return;visible=v;
-    if(v)play();else{if(CAM)stopHand();card.classList.remove("code");if(S){cancelAnimationFrame(S.raf);S.raf=0}}},{rootMargin:"0px 0px -15% 0px",threshold:.15});io.observe(card);
+    if(v)play();else{if(CAM)stopHand();card.classList.remove("code");if(S){cancelAnimationFrame(S.raf);S.raf=0}}},{rootMargin:"0px",threshold:.08});io.observe(card);
+  // load three.js while the visitor is still scrolling towards the section, so the tree starts growing the moment it appears
+  const pre=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){pre.disconnect();boot()}},{rootMargin:"900px 0px"});pre.observe(card);
 }
 tabs.forEach(t=>t.addEventListener("click",()=>{setApp(t.dataset.app);if(!RM)play()}));
 replay.addEventListener("click",()=>{if(!RM){FLY=1.9;play()}});
