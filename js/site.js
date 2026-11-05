@@ -41,6 +41,24 @@ const footWord=$("#footword");let footLetters=[];
 safe("big-fit",()=>{const big=$("#big");const fit=()=>{big.style.fontSize="";const cs=parseFloat(getComputedStyle(big).fontSize);const avail=big.parentElement.clientWidth;big.style.width="max-content";const w=big.scrollWidth;big.style.width="";if(w>avail)big.style.fontSize=(cs*avail/w*.97)+"px"};fit();addEventListener("resize",fit);document.fonts&&document.fonts.ready.then(fit)});
 safe("foot-build",()=>{footWord.innerHTML=[..."DRAKIVERSE"].map(c=>`<span aria-hidden="true">${c}</span>`).join("");footLetters=$$("span",footWord);fitWord(footWord);addEventListener("resize",()=>fitWord(footWord));document.fonts&&document.fonts.ready.then(()=>{fitWord(footWord);ST&&ST.refresh()})});
 
+/* "Say hello." scrambles into place once when it scrolls into view (the orange dot stays put).
+   Each letter's width is locked while it scrambles so the line never jumps. The footer DRAKIVERSE stays still. */
+safe("big-scramble",()=>{
+  if(RM||!("IntersectionObserver" in window))return;
+  const POOL="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz#%&*";
+  const letters=bigLetters.filter(s=>s.className!=="dotc");
+  const run=()=>{
+    const finals=letters.map(s=>s.textContent);
+    letters.forEach(s=>{s.style.width=s.getBoundingClientRect().width+"px";s.style.textAlign="center";s.style.overflow="hidden"});
+    let f=0;const steps=finals.length*3+4;
+    const tick=()=>{letters.forEach((s,i)=>{s.textContent=f>=i*3+4?finals[i]:POOL[Math.floor(Math.random()*POOL.length)]});
+      if(++f<=steps)setTimeout(tick,45);else letters.forEach(s=>{s.style.width="";s.style.textAlign="";s.style.overflow=""})};
+    tick();
+  };
+  const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){io.disconnect();(document.fonts?document.fonts.ready:Promise.resolve()).then(run)}},{threshold:.4});
+  io.observe($("#big"));
+});
+
 /* ---------- nav pill + copy (no library needed) ---------- */
 safe("navpill",()=>{
   const pill=$("#navpill"),links=$$("#navlinks a");
@@ -498,12 +516,6 @@ safe("manifesto",()=>{
   G.from(".pcard",{y:80,opacity:0,rotation:3,duration:1,stagger:.1,ease:"expo.out",scrollTrigger:{trigger:"#pgrid",start:"top 85%"}});
 });
 
-/* contact letters + footer word */
-safe("contact",()=>{
-  G.from(bigLetters,{yPercent:120,rotation:()=>G.utils.random(-25,25),opacity:0,duration:1.5,stagger:.05,ease:"elastic.out(1,.5)",scrollTrigger:{trigger:"#big",start:"top 85%"}});
-  bigLetters.forEach((s,i)=>{s.addEventListener("pointerenter",()=>G.to(s,{y:-24,rotation:i%2?10:-10,duration:.6,ease:"elastic.out(1,.3)"}));s.addEventListener("pointerleave",()=>G.to(s,{y:0,rotation:0,duration:.9,ease:"elastic.out(1,.3)"}))});
-  G.from(footLetters,{yPercent:100,opacity:0,duration:1.1,stagger:.05,ease:"expo.out",scrollTrigger:{trigger:"#footword",start:"top 95%"}});
-});
 safe("appicons",()=>{G.from(".appicon",{y:24,opacity:0,duration:.8,stagger:.08,ease:"back.out(1.6)",scrollTrigger:{trigger:".appicons",start:"top 92%"}})});
 safe("footer",()=>{
   G.from(".fin",{y:50,opacity:0,duration:1,stagger:.08,ease:"expo.out",scrollTrigger:{trigger:".fgrid",start:"top 88%"}});
