@@ -188,8 +188,6 @@ async function toggleHand(){
   card.classList.remove("code");cancelAnimationFrame(S.raf);S.t0=performance.now();S.raf=requestAnimationFrame(frame);
 }
 if(handBtn){if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)handBtn.hidden=true;else handBtn.addEventListener("click",toggleHand)}
-if(location.hash==="#qrtest")window.__qr={style(s){STYLE=s;drawFlat();if(S)S.built=null},hand:onHand,
-  fake(){HAND={az:.5,azT:.5,top:0,topT:0,fistAt:0};camBox.hidden=false;if(guide){guide.hidden=false;guideStep("")}hStat.hidden=false;handBtn.textContent="Stop camera";boot().then(()=>{if(S.built!==app){build();S.built=app}card.classList.remove("code");cancelAnimationFrame(S.raf);S.t0=performance.now();S.raf=requestAnimationFrame(frame)})}};
 
 if(RM||!("IntersectionObserver" in window)){card.classList.add("code");replay.hidden=true;const qb=$("#qrQuick");if(qb)qb.hidden=true;if(handBtn)handBtn.hidden=true}
 else{

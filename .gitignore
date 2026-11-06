@@ -16,3 +16,7 @@ credentials*.json
 *.pem
 *.p12
 *.key
+
+# Signing keys never belong on the website
+*.jks
+*.keystore
