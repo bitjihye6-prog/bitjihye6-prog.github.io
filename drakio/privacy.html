@@ -34,11 +34,14 @@ a:focus-visible{outline:2px solid #FDF0DC;outline-offset:3px}
 <p>Your resume details (name, contact details, links you choose to add, work history, education, skills and certificates), the job ads you add, your answers to Drakio's questions, the tailored resumes it makes, your job list, statuses and follow-up dates are saved only in Drakio's private storage on your device. Drakio has no server to send them to, and it never sends them anywhere.</p>
 
 <h2>Reading resumes, photos and QR codes</h2>
-<p>When you add your resume as a PDF, Word file or photo, or add a job ad from a photo, a screenshot or a "Now hiring" QR code, Google ML Kit reads the text or code on your phone. Nothing is uploaded. Drakio keeps only the text it read and the details you save. Files you pick are treated as untrusted: Drakio checks their type and size first and never runs anything inside them.</p>
+<p>When you add your resume as a PDF, Word file or photo, or add a job ad from a photo, a screenshot or a "Now hiring" QR code, Google ML Kit reads the text or code on your phone. Nothing is uploaded. If Android closes Drakio while the camera is open (this can happen on phones with little memory), Drakio picks up the photo you took from Android when it opens again, so you don't have to take it twice. Drakio keeps only the text it read and the details you save. Files you pick are treated as untrusted: Drakio checks their type and size first and never runs anything inside them.</p>
 
 <h2>Job links</h2>
-<p>When you paste a job link, type one in, or scan a QR code that holds one, Drakio shows you the address first. If you tap Open, Drakio opens that job page inside the app, the same way a web browser would. Only secure (https) pages open. When you tap "Read this job", Drakio copies the text on the page into the app and reads it on your phone.</p>
-<p>Opening a page means your phone connects to that job website, which sees what any website sees when you visit it, such as your IP address, and may set its own cookies. Drakio sends nothing to the website: not your resume, your details or anything else from the app. What happens on that website is covered by that website's own policy. "Delete all my data" also clears the cookies these pages leave in Drakio. You can always open the link in your own browser instead.</p>
+<p>When you paste a job link, type one in, share one to Drakio, or scan a QR code that holds one, Drakio first shows a "Job link found" box with the website's name on its own line, and the full link if you want to see it. Nothing opens until you tap "Open and read the job". Drakio then opens that job page inside the app, the same way a web browser would. Only secure (https) pages open: a link that starts with http:// is opened as https:// instead. While the page loads, Drakio checks inside the page whether it looks like a job ad, so the "Read this job" button only turns on when there's an ad to read; that check gives Drakio only a yes or no. When you tap "Read this job", Drakio copies the text on the page into the app and reads it on your phone.</p>
+<p>Opening a page means your phone connects to that job website, which sees what any website sees when you visit it, such as your IP address, and may set its own cookies or store data in the page viewer. Drakio sends nothing to the website: not your resume, your details or anything else from the app. What happens on that website is covered by that website's own policy. When you go to apply, sign in, upload a file or leave for another website, Drakio offers to open the page in your own browser instead, and you can always do that from the job page. "Delete all my data" also clears the cookies, saved pages and website data these pages leave in Drakio.</p>
+
+<h2>Sharing a job ad to Drakio</h2>
+<p>You can share a job ad's text or link to Drakio from another app, such as Indeed, LinkedIn or Chrome. Android hands the shared text to Drakio on your phone. Drakio limits its length, treats it as plain text and never runs anything in it. A link goes to the "Job link found" box described above; other text goes into the job ad box for you to check. Nothing is uploaded.</p>
 
 <h2>Saving and sharing your resume</h2>
 <p>When you tap Save to phone or Share, the PDF goes only where you choose, such as your Downloads folder, an email or a job website. Drakio clears its own temporary copies afterwards.</p>
@@ -50,7 +53,7 @@ a:focus-visible{outline:2px solid #FDF0DC;outline-offset:3px}
 <p>If you set a follow-up date, Drakio shows a reminder on your phone. The reminder says only "Time to follow up" and never shows the job or the employer.</p>
 
 <h2>App lock</h2>
-<p>If you turn on the app lock, your phone checks your fingerprint, face or screen lock. Android does the check, and Drakio never sees or stores your fingerprint or face. While the lock is on, Drakio also hides its preview in your recent apps.</p>
+<p>If you turn on the app lock, your phone checks your fingerprint, face or screen lock. Android does the check, and Drakio never sees or stores your fingerprint or face. While the lock is on, Drakio also hides its preview in your recent apps and Android blocks screenshots of Drakio.</p>
 
 <h2>Backups</h2>
 <p>Drakio's data is left out of Android's Google account backup, so your resume isn't copied to the cloud. This also means that if you uninstall Drakio or change phones, your saved resume and jobs are not restored. Keep your own copy of any PDF you need.</p>
@@ -68,7 +71,7 @@ a:focus-visible{outline:2px solid #FDF0DC;outline-offset:3px}
 <p>Drakio helps you organise your resume and job applications. It doesn't give legal, immigration, financial or career advice, and it doesn't apply for jobs or contact employers for you.</p>
 
 <h2>Deleting your information</h2>
-<p>Delete any job by swiping it or from its menu, or use "Delete all my data" in the app to erase your resume, jobs, reminders and job page cookies at once. Uninstalling Drakio also removes everything from your phone. PDFs you saved or shared are yours to delete wherever you kept them.</p>
+<p>Delete any job by swiping it or from its menu, or use "Delete all my data" in the app to erase your resume, jobs, reminders and the job page viewer's cookies, saved pages and website data at once. Uninstalling Drakio also removes everything from your phone. PDFs you saved or shared are yours to delete wherever you kept them.</p>
 
 <h2>If you email us</h2>
 <p>If you write to <a href="mailto:hello@drakiverse.studio">hello@drakiverse.studio</a>, we receive your email address and whatever you put in your message. We use it only to reply to you. It's kept in our email inbox, and we'll delete it if you ask.</p>
