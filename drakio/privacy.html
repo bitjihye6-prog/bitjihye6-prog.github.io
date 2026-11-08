@@ -31,10 +31,10 @@ a:focus-visible{outline:2px solid #FDF0DC;outline-offset:3px}
 <p>Drakio is made by Drakiverse Studio, an independent app developer based in Canada.</p>
 
 <h2>What stays on your phone</h2>
-<p>Your resume details (name, contact details, links you choose to add, work history, education, skills and certificates), the job ads you add, your answers to Drakio's questions, the tailored resumes it makes, your job list, statuses, follow-up days and times and any follow-up notes you write are saved only in Drakio's private storage on your device. Drakio has no server to send them to, and it never sends them anywhere.</p>
+<p>Your resume details (name, contact details, links you choose to add, work history, education, skills and certificates), the job ads you add, your answers to Drakio's questions, the tailored resumes it makes, your job list, statuses, follow-up days and times, any follow-up notes you write and any interview times you add are saved only in Drakio's private storage on your device. Drakio has no server to send them to, and it never sends them anywhere.</p>
 
 <h2>Reading resumes, photos and QR codes</h2>
-<p>When you add your resume as a PDF, Word file or photo, or add a job ad from a photo, a screenshot or a "Now hiring" QR code, Google ML Kit reads the text or code on your phone. Nothing is uploaded. If Android closes Drakio while the camera is open (this can happen on phones with little memory), Drakio picks up the photo you took from Android when it opens again, so you don't have to take it twice. Drakio keeps only the text it read and the details you save. Files you pick are treated as untrusted: Drakio checks their type and size first and never runs anything inside them.</p>
+<p>When you add your resume as a PDF, Word file or photo, or add a job ad from a photo, a screenshot or a "Now hiring" QR code, Google ML Kit reads the text or code on your phone. Nothing is uploaded. If Android closes Drakio while the camera is open (this can happen on phones with little memory), Drakio picks up the photo you took from Android when it opens again, so you don't have to take it twice. Drakio keeps only the text it read and the details you save, and deletes its temporary copy of each file or photo straight after reading it. ML Kit's usage reporting to Google is switched off in Drakio. Files you pick are treated as untrusted: Drakio checks their type and size first and never runs anything inside them.</p>
 
 <h2>Job links</h2>
 <p>When you paste a job link, type one in, share one to Drakio, or scan a QR code that holds one, Drakio first shows a "Job link found" box with the website's name on its own line, and the full link if you want to see it. Nothing opens until you tap "Open and read the job". Drakio then opens that job page inside the app, the same way a web browser would. Only secure (https) pages open: a link that starts with http:// is opened as https:// instead. While the page loads, Drakio checks inside the page whether it looks like a job ad, so the "Read this job" button only turns on when there's an ad to read; that check gives Drakio only a yes or no. When you tap "Read this job", Drakio copies the text on the page into the app and reads it on your phone.</p>
@@ -47,7 +47,7 @@ a:focus-visible{outline:2px solid #FDF0DC;outline-offset:3px}
 <p>When you tap Save to phone, Drakio saves the PDF in your phone's Downloads folder (on Android 9 and older, in the folder you pick). Saving there needs no storage permission, and Drakio can only see the files it saved itself. When you tap Share, the PDF goes only where you choose, such as an email or a job website. Drakio clears its own temporary copies afterwards.</p>
 
 <h2>What Drakio never adds</h2>
-<p>Drakio uses only what's on your resume or what you confirm, and shows every added line in "What changed" before it goes into your PDF. It never adds a photo, ID numbers, religion, ethnicity or state of origin. Date of birth, marital status, nationality and gender are added only when a job ad asks for them and you agree.</p>
+<p>Drakio uses only what's on your resume or what you confirm, and shows every added line in "What changed" before it goes into your PDF. It never adds a photo, ID numbers, religion, ethnicity or state of origin. If your own resume already lists personal details such as date of birth, age, religion, marital status, nationality, gender, health or ID numbers, Drakio leaves them out of the new resume and shows them to you under "Text Drakio couldn't place" instead.</p>
 
 <h2>Reminders</h2>
 <p>If you set a follow-up day and time, Drakio shows a reminder on your phone then. The reminder says only "Time to follow up" and never shows the job, the employer or your follow-up note. The note shows only on the job's page inside Drakio.</p>
@@ -59,7 +59,7 @@ a:focus-visible{outline:2px solid #FDF0DC;outline-offset:3px}
 <p>Drakio's data is left out of Android's Google account backup, so your resume isn't copied to the cloud. This also means that if you uninstall Drakio or change phones, your saved resume and jobs are not restored. Keep your own copy of any PDF you need.</p>
 
 <h2>Permissions the app uses</h2>
-<p>Internet, only to open job links you choose. Notifications, for follow-up reminders. Run at startup, to put your reminders back after your phone restarts. Vibration, when a reminder arrives. Fingerprint, face or screen lock, only if you turn on the app lock. Photos and files are picked through Android's own picker, so Drakio doesn't need access to your whole photo library or storage.</p>
+<p>Internet, only to open job links you choose. Notifications, for follow-up reminders. Run at startup, to put your reminders back after your phone restarts. Vibration, when a reminder arrives. Network state, so the job page viewer can tell you when you're offline. Fingerprint, face or screen lock, only if you turn on the app lock. Photos and files are picked through Android's own picker, so Drakio doesn't need access to your whole photo library or storage.</p>
 
 <h2>Purchases</h2>
 <p>If Drakio Pro is offered, it will be sold through Google Play. Google processes the payment, and we never see your card details.</p>
@@ -71,7 +71,7 @@ a:focus-visible{outline:2px solid #FDF0DC;outline-offset:3px}
 <p>Drakio helps you organise your resume and job applications. It doesn't give legal, immigration, financial or career advice, and it doesn't apply for jobs or contact employers for you.</p>
 
 <h2>Deleting your information</h2>
-<p>Delete any job by swiping it or from its menu, or use "Delete all my data" in the app to erase your resume, jobs, reminders and the job page viewer's cookies, saved pages and website data at once. Uninstalling Drakio also removes everything from your phone. PDFs you saved or shared are yours to delete wherever you kept them.</p>
+<p>Delete any job by swiping it or from its menu, or use "Delete all my data" in the app to erase your resume, jobs, reminders and the job page viewer's cookies, saved pages and website data at once. The count of free resumes you've used is kept, so deleting doesn't reset it. Uninstalling Drakio also removes everything from your phone. PDFs you saved or shared are yours to delete wherever you kept them.</p>
 
 <h2>If you email us</h2>
 <p>If you write to <a href="mailto:hello@drakiverse.studio">hello@drakiverse.studio</a>, we receive your email address and whatever you put in your message. We use it only to reply to you. It's kept in our email inbox, and we'll delete it if you ask.</p>
