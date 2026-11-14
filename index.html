@@ -345,6 +345,33 @@ footer .brand{margin-bottom:30px}
 .lnote svg{width:16px;height:16px;color:var(--purple)}
 
 /* folderoo: a claim comes together */
+.drk-sec{background:#0B0B0D;color:#F5F5F7;position:relative;overflow:hidden}
+.drk-sec::before{content:"";position:absolute;width:760px;height:760px;left:-280px;bottom:-300px;border-radius:50%;background:radial-gradient(rgba(94,200,255,.16),rgba(94,200,255,0) 70%);pointer-events:none}
+.drk-in{position:relative;min-height:100svh;display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,70px);align-items:center;padding-block:90px 50px}
+.drk-copy{min-width:0}.drk-copy .label{color:#9A9AA6}
+.drk-copy .h2{display:flex;align-items:center;gap:14px}.drk-copy .h2 svg{width:1em;height:1em;flex:none;border-radius:.22em}
+.drk-copy .h2 em{font-style:normal;color:var(--drakio)}
+.drk-copy p.lead{color:#9A9AA6;font-size:18px;max-width:42ch;margin:16px 0 0}
+.drk-copy .facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.drk-copy .facts span{font-family:var(--f-mono);font-size:12px;padding:7px 11px;border-radius:999px;border:1px solid currentColor}
+.drk-board{width:min(440px,100%);justify-self:center;display:grid;gap:12px}
+.drk-card{background:#141418;border:1px solid #26262E;border-radius:22px;padding:18px}
+.drk-card .t{font-weight:800;font-size:18px}.drk-card .s{color:#9A9AA6;font-size:14px}
+.drk-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.drk-chips span{font-size:12px;padding:4px 10px;border-radius:999px;border:1px solid #26262E}
+.drk-chg{background:#0F1F2C;border:1px solid #1F4560;border-radius:22px;padding:18px}
+.drk-chg .k{display:flex;justify-content:space-between;align-items:center;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.drk-chg .k b{font-weight:500;font-size:10.5px;padding:3px 8px;border-radius:999px;background:#1B2A17;color:#9BE38B;letter-spacing:.02em;text-transform:none}
+.drk-chg .was{color:#9A9AA6;text-decoration:line-through;font-size:14px;margin:0 0 6px}
+.drk-chg .now{font-size:15px;margin:0}.drk-chg .why{color:var(--drakio);font-size:13px;margin:8px 0 0}
+.drk-match{display:flex;align-items:center;gap:14px;background:var(--drakio);color:#08131B;border-radius:22px;padding:16px 18px}
+.drk-match b{font-family:var(--f-display);font-size:30px;letter-spacing:-.03em}.drk-match small{display:block;font-size:12px;opacity:.75}
+.drk-note{font-family:var(--f-mono);font-size:11px;color:#9A9AA6;text-align:center;letter-spacing:.06em}
+.drk-board>*{animation:drkin .7s cubic-bezier(.22,1,.36,1) both}.drk-board>*:nth-child(2){animation-delay:.12s}.drk-board>*:nth-child(3){animation-delay:.24s}.drk-board>*:nth-child(4){animation-delay:.36s}
+@keyframes drkin{from{opacity:0;transform:translateY(18px)}}
+@media (prefers-reduced-motion:reduce){.drk-board>*{animation:none}}
+@media (max-width:430px){.navlinks a{padding:9px 6px!important;font-size:12px!important;letter-spacing:-.01em}}
+@media (max-width:370px){.navlinks a{padding:9px 4.5px!important;font-size:11.5px!important}}
+@media (max-width:900px){.drk-in{grid-template-columns:1fr;padding-block:80px 40px;gap:26px}.drk-copy p.lead{font-size:16px}}
 .roo-sec{background:#0F5E5A;color:#fff;position:relative;overflow:hidden}
 .roo-sec::before{content:"";position:absolute;width:760px;height:760px;right:-260px;top:-240px;border-radius:50%;background:radial-gradient(rgba(246,196,83,.22),rgba(246,196,83,0) 70%);pointer-events:none}
 .roo-in{position:relative;min-height:100svh;display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,70px);align-items:center;padding-block:90px 50px}
@@ -575,7 +602,7 @@ footer .brand{margin-bottom:30px}
     <a class="brand" href="#top" aria-label="Drakiverse Studio home"><span class="dot" aria-hidden="true"></span><span class="bw">DRAKIVERSE<span class="bstudio" aria-hidden="true">.studio<svg viewBox="0 0 300 40" preserveAspectRatio="none"><path d="M4 30 C 70 8, 150 38, 220 18 S 290 10, 296 14"/></svg></span></span></a>
     <nav class="navlinks" id="navlinks" aria-label="Sections">
       <span class="navpill" id="navpill" aria-hidden="true"></span>
-      <a href="#worlds">Apps</a><a href="#demo">Renvo</a><a href="#lastly">Lastly</a><a href="#folderoo">Folderoo</a><a href="#contact">Contact</a>
+      <a href="#worlds">Apps</a><a href="#demo">Renvo</a><a href="#lastly">Lastly</a><a href="#folderoo">Folderoo</a><a href="#drakio">Drakio</a><a href="#contact">Contact</a>
     </nav>
   </div>
 </header>
@@ -797,6 +824,25 @@ footer .brand{margin-bottom:30px}
     </div>
   </section>
 
+  <section class="drk-sec gut" id="drakio">
+    <div class="wrap drk-in">
+      <div class="drk-copy">
+        <p class="label">Meet Drakio · Coming soon to Google Play</p>
+        <h2 class="h2"><svg viewBox="0 0 96 96" aria-hidden="true"><rect width="96" height="96" rx="22" fill="#000"/><path d="M20,32 V22 H30 M66,22 H76 V32 M76,64 V74 H66 M30,74 H20 V64" fill="none" stroke="#FF6F61" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M38,42 L58,40 L46,58 Z" fill="none" stroke="#3A3A44" stroke-width="1.6" stroke-linejoin="round"/><circle cx="38" cy="42" r="6" fill="#9BE38B"/><circle cx="58" cy="40" r="6" fill="#5EC8FF"/><circle cx="46" cy="58" r="6" fill="#E040FB"/><path d="M54,52 L68,60 L62,61.5 L59,68 Z" fill="#FFF4E6" stroke="#000" stroke-width="1.3" stroke-linejoin="round"/></svg><span>Snap a job.<br><em>Get a resume.</em></span></h2>
+        <p class="lead">Snap, paste or share a job ad. Drakio reads it, asks honest yes/no questions about anything your resume doesn't show, rewrites your resume for that one job and shows every change before it reaches the PDF. It never invents a thing.</p>
+        <div class="facts"><span>Free: 3 tailored resumes</span><span>Pro $4.99 · pay once, unlimited forever</span><span>No account, no servers</span><span>12 country styles</span></div>
+        <div class="snipctas"><a class="btn" style="background:var(--drakio);color:#08131B;border-color:transparent" href="https://drakiverse.studio/drakio/">How it works &amp; details ↗</a></div>
+      </div>
+      <div class="drk-board" aria-label="Example Drakio job and changes">
+        <div class="drk-card"><div class="t">Barista</div><div class="s">Sunridge Cafe, Toronto ON</div><div class="drk-chips"><span>Espresso</span><span>Cash handling</span><span>Food Handler certificate</span></div></div>
+        <div class="drk-chg"><div class="k">Summary<b>Rewritten</b></div><p class="was">Hard-working person looking for a job.</p><p class="now">Barista with 2 years of espresso bar and customer service experience.</p><p class="why">Because the ad asks for espresso first.</p></div>
+        <div class="drk-chg"><div class="k">Experience<b>You said yes</b></div><p class="now">Handled cash and card payments and balanced the till at close.</p><p class="why">Drakio asked about cash handling. You said yes.</p></div>
+        <div class="drk-match"><b>6 of 7</b><div><small>Requirements matched</small>Canada style · Letter</div></div>
+        <p class="drk-note">EXAMPLE JOB, NOT REAL DATA</p>
+      </div>
+    </div>
+  </section>
+
   <section class="section gut get-sec" id="get">
     <div class="wrap get-grid">
       <div class="get-copy">
@@ -807,6 +853,7 @@ footer .brand{margin-bottom:30px}
           <button type="button" role="tab" class="get-tab" data-app="lastly" aria-selected="true"><i style="background:var(--purple)"></i>Lastly</button>
           <button type="button" role="tab" class="get-tab" data-app="snip" aria-selected="false"><i style="background:var(--snip)"></i>Renvo</button>
           <button type="button" role="tab" class="get-tab" data-app="folderoo" aria-selected="false"><i style="background:var(--gold)"></i>Folderoo</button>
+          <button type="button" role="tab" class="get-tab" data-app="drakio" aria-selected="false"><i style="background:var(--drakio)"></i>Drakio</button>
         </div>
         <p class="get-note">Already on your phone? Just tap the code.</p>
       </div>
@@ -869,7 +916,7 @@ footer .brand{margin-bottom:30px}
           <li><a class="flink" href="https://drakiverse.studio/renvo/" style="--lc:var(--snip)"><span class="sw" aria-hidden="true"></span>Renvo<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
           <li><a class="flink" href="#lastly" style="--lc:var(--purple)"><span class="sw" aria-hidden="true"></span>Lastly<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
           <li><a class="flink" href="https://drakiverse.studio/folderoo/" style="--lc:var(--gold)"><span class="sw" aria-hidden="true"></span>Folderoo<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
-          <li><a class="flink" href="https://drakiverse.studio/drakio/" style="--lc:var(--drakio)"><span class="sw" aria-hidden="true"></span>Drakio<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+          <li><a class="flink" href="#drakio" style="--lc:var(--drakio)"><span class="sw" aria-hidden="true"></span>Drakio<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
           <li><a class="flink" href="#worlds" data-open="next" style="--lc:var(--orange)"><span class="sw" aria-hidden="true"></span>App 05 <span class="fbadge">In the lab</span></a></li>
         </ul>
       </nav>
