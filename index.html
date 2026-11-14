@@ -354,6 +354,24 @@ footer .brand{margin-bottom:30px}
 .drk-copy p.lead{color:#9A9AA6;font-size:18px;max-width:42ch;margin:16px 0 0}
 .drk-copy .facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
 .drk-copy .facts span{font-family:var(--f-mono);font-size:12px;padding:7px 11px;border-radius:999px;border:1px solid currentColor}
+.dka{--dk-bg:#111115;--dk-line:#26262E;background:#0B0B0D;border:1px solid var(--dk-line);border-radius:34px;padding:14px 12px 12px;width:min(360px,100%);box-shadow:0 0 0 6px #18181c,0 40px 80px -40px rgba(0,0,0,.9);color:#F5F5F7;font-family:Manrope,system-ui,sans-serif}
+.dka-top{display:flex;align-items:center;gap:8px;padding:4px 10px 10px}
+.dka-dot{width:8px;height:8px;border-radius:50%;background:#5EC8FF;flex:none;animation:dkab 1s ease-in-out infinite}.dka-dot.on{background:#3DDC97;animation:none}
+@keyframes dkab{50%{opacity:.35}}
+.dka-phase{flex:1;font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dka-time{font:500 13px "JetBrains Mono",ui-monospace,monospace;color:#5EC8FF;font-variant-numeric:tabular-nums}
+.dka-stage{background:var(--dk-bg);border:1px solid var(--dk-line);border-radius:22px;overflow:hidden}
+.dka-stage svg{display:block;width:100%;height:auto}
+.dka-log{padding:12px 10px 2px;min-height:84px}
+.dka-row{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.dka-ldot{width:9px;height:9px;border-radius:50%;flex:none}
+.dka-ltext{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dka-foot{display:flex;justify-content:space-between;align-items:center;padding:6px 8px 2px;gap:10px}
+.dka-replay{font:700 13px Manrope,system-ui,sans-serif;color:#08131B;background:#5EC8FF;border:0;border-radius:999px;padding:9px 16px;min-height:40px;cursor:pointer}
+.dka-replay:focus-visible{outline:2px solid #F5F5F7;outline-offset:3px}
+.dka-note{font:500 10.5px "JetBrains Mono",ui-monospace,monospace;color:#9A9AA6;letter-spacing:.06em;text-transform:uppercase}
+@media (prefers-reduced-motion:reduce){.dka-dot{animation:none}}
+.drk-demo{justify-self:center;width:min(360px,100%);display:grid;justify-items:center;gap:12px}
 .drk-board{width:min(440px,100%);justify-self:center;display:grid;gap:12px}
 .drk-card{background:#141418;border:1px solid #26262E;border-radius:22px;padding:18px}
 .drk-card .t{font-weight:800;font-size:18px}.drk-card .s{color:#9A9AA6;font-size:14px}
@@ -829,17 +847,12 @@ footer .brand{margin-bottom:30px}
       <div class="drk-copy">
         <p class="label">Meet Drakio · Coming soon to Google Play</p>
         <h2 class="h2"><svg viewBox="0 0 96 96" aria-hidden="true"><rect width="96" height="96" rx="22" fill="#000"/><path d="M20,32 V22 H30 M66,22 H76 V32 M76,64 V74 H66 M30,74 H20 V64" fill="none" stroke="#FF6F61" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M38,42 L58,40 L46,58 Z" fill="none" stroke="#3A3A44" stroke-width="1.6" stroke-linejoin="round"/><circle cx="38" cy="42" r="6" fill="#9BE38B"/><circle cx="58" cy="40" r="6" fill="#5EC8FF"/><circle cx="46" cy="58" r="6" fill="#E040FB"/><path d="M54,52 L68,60 L62,61.5 L59,68 Z" fill="#FFF4E6" stroke="#000" stroke-width="1.3" stroke-linejoin="round"/></svg><span>Snap a job.<br><em>Get a resume.</em></span></h2>
-        <p class="lead">Snap, paste or share a job ad. Drakio reads it, asks honest yes/no questions about anything your resume doesn't show, rewrites your resume for that one job and shows every change before it reaches the PDF. It never invents a thing.</p>
-        <div class="facts"><span>Free: 3 tailored resumes</span><span>Pro $4.99 · pay once, unlimited forever</span><span>No account, no servers</span><span>12 country styles</span></div>
+        <p class="lead">Snap, paste or share a job ad. <b>Nine agents build a resume for that one job in about 10 seconds</b>: they read your resume and the ad, match your skills, ask about gaps, reorder your experience and lay out the PDF. You see every change first, and it never invents a thing.</p>
+        <div class="facts"><span>≈10 seconds per resume</span><span>Free: 3 tailored resumes</span><span>Pro $4.99 · pay once, unlimited forever</span><span>No account, no servers</span><span>12 country styles</span></div>
         <div class="snipctas"><a class="btn" style="background:var(--drakio);color:#08131B;border-color:transparent" href="https://drakiverse.studio/drakio/">How it works &amp; details ↗</a></div>
       </div>
-      <div class="drk-board" aria-label="Example Drakio job and changes">
-        <div class="drk-card"><div class="t">Barista</div><div class="s">Sunridge Cafe, Toronto ON</div><div class="drk-chips"><span>Espresso</span><span>Cash handling</span><span>Food Handler certificate</span></div></div>
-        <div class="drk-chg"><div class="k">Summary<b>Rewritten</b></div><p class="was">Hard-working person looking for a job.</p><p class="now">Barista with 2 years of espresso bar and customer service experience.</p><p class="why">Because the ad asks for espresso first.</p></div>
-        <div class="drk-chg"><div class="k">Experience<b>You said yes</b></div><p class="now">Handled cash and card payments and balanced the till at close.</p><p class="why">Drakio asked about cash handling. You said yes.</p></div>
-        <div class="drk-match"><b>6 of 7</b><div><small>Requirements matched</small>Canada style · Letter</div></div>
-        <p class="drk-note">EXAMPLE JOB, NOT REAL DATA</p>
-      </div>
+      <div class="drk-demo"><div data-drakio-agents></div></div>
+</div>
     </div>
   </section>
 
@@ -955,8 +968,9 @@ footer .brand{margin-bottom:30px}
 <script src="/js/ScrollTrigger.min.js"></script>
 <script src="/js/Flip.min.js"></script>
 <script src="/js/lab.js?v=202611062210"></script>
-<script src="/js/site.js?v=202611062330"></script>
-<script type="module" src="/js/qrtree.js?v=202611051000"></script>
+<script src="/js/site.js?v=202611141900"></script>
+<script src="/js/drakio-agents.js?v=202611141900"></script>
+<script type="module" src="/js/qrtree.js?v=202611141900"></script>
 
 </body>
 </html>
