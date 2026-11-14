@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Drakio: Snap a Job, Get Resume</title>
+<meta name="description" content="Drakio makes a resume for each job ad. Snap or paste the ad, answer honest yes/no questions, see every change, and save an ATS-friendly PDF. Everything stays on your phone. Coming soon on Google Play.">
+<meta name="theme-color" content="#0B0B0D">
+<link rel="icon" href="icon.png">
+<meta property="og:title" content="Drakio: Snap a Job, Get Resume">
+<meta property="og:description" content="Snap a job ad. Get a resume made for it, without inventing a thing.">
+<meta property="og:image" content="https://drakiverse.studio/drakio/img/banner.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Drakio: snap a job, get a resume made for it. On your phone, no account, no servers.">
+<meta property="og:url" content="https://drakiverse.studio/drakio/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Drakiverse Studio">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://drakiverse.studio/drakio/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Drakio","url":"https://drakiverse.studio/drakio/","description":"Drakio makes a resume for each job ad. Snap or paste the ad, answer honest yes/no questions, see every change, and save an ATS-friendly PDF. Everything stays on your phone.","applicationCategory":"BusinessApplication","operatingSystem":"Android","image":"https://drakiverse.studio/drakio/icon.png","publisher":{"@type":"Organization","@id":"https://drakiverse.studio/#org","name":"Drakiverse Studio","url":"https://drakiverse.studio/","logo":"https://drakiverse.studio/og.png","email":"hello@drakiverse.studio","address":{"@type":"PostalAddress","addressRegion":"ON","addressCountry":"CA"}},"offers":{"@type":"Offer","price":"0","priceCurrency":"CAD"}}</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Unbounded:wght@700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root{--bg:#0B0B0D;--surface:#141418;--surface2:#1A1A20;--line:#26262E;--fg:#F5F5F7;--muted:#9A9AA6;--coral:#FF6F61;--lime:#9BE38B;--sky:#5EC8FF;--magenta:#E040FB;--ink:#08131B;--skyDeep:#0F1F2C;--skyLine:#1F4560;color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:500 17px/1.55 Manrope,system-ui,-apple-system,"Segoe UI",sans-serif;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+a{color:var(--sky)}a:focus-visible{outline:2px solid var(--fg);outline-offset:3px;border-radius:8px}
+img{max-width:100%;height:auto;display:block}
+.wrap{max-width:1060px;margin:0 auto}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase;font-size:12.5px}
+nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:22px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--fg);font:700 26px/1 Unbounded,Manrope,sans-serif;letter-spacing:-.04em}
+.brand img{width:36px;height:36px;border-radius:10px}
+nav .links{display:flex;gap:18px;font-size:15px}nav .links a{color:var(--muted);text-decoration:none}
+.hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:48px;align-items:center;padding-block:36px 72px}
+.kicker{margin:0 0 14px;color:var(--coral)}
+h1{margin:0;font-weight:800;font-size:clamp(42px,6.6vw,72px);line-height:1.02;letter-spacing:-.04em;text-wrap:balance}
+h1 em{font-style:normal;color:var(--sky)}
+.lede{margin:22px 0 0;font-size:20px;color:var(--muted);max-width:38ch}
+.cta{margin-top:30px;display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-block;padding:14px 24px;border-radius:999px;font-weight:700;text-decoration:none;border:1px solid var(--line);color:var(--sky)}
+.btn.primary{background:var(--sky);border-color:var(--sky);color:var(--ink)}
+.dots{display:flex;gap:8px;margin-top:26px}.dots i{width:10px;height:10px;display:block}
+.phone{border-radius:34px;padding:8px;background:#18181c;box-shadow:0 0 0 1px #2a2a32,0 40px 80px -40px rgba(0,0,0,.9);max-width:330px;justify-self:center;width:100%}
+.scr{border-radius:27px;background:var(--bg);padding:20px 16px 22px;min-height:560px;display:flex;flex-direction:column;gap:12px}
+.scr .top{display:flex;align-items:center;justify-content:space-between}
+.scr .top b{font:700 18px Unbounded,Manrope,sans-serif;letter-spacing:-.03em}
+.ad{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px}
+.ad .t{font-weight:800;font-size:16px}.ad .s{color:var(--muted);font-size:13px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.chips span{font-size:11.5px;padding:4px 9px;border-radius:999px;border:1px solid var(--line);color:var(--fg)}
+.chg{border-radius:18px;padding:14px;background:var(--skyDeep);border:1px solid var(--skyLine)}
+.chg .h{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.tag{font-size:10.5px;padding:3px 8px;border-radius:999px;background:#1B2A17;color:var(--lime)}
+.before{color:var(--muted);text-decoration:line-through;font-size:13px;margin:0 0 6px}
+.after{font-size:13.5px;margin:0}
+.why{color:var(--sky);font-size:12px;margin:8px 0 0}
+.match{display:flex;align-items:center;gap:12px;background:var(--sky);color:var(--ink);border-radius:18px;padding:14px;margin-top:auto}
+.match b{font-size:26px;letter-spacing:-.03em}.match small{display:block;font-size:12px;opacity:.75}
+.note{text-align:center;color:var(--muted);font-size:11px}
+section{padding-block:56px}
+h2{margin:0 0 12px;font-size:clamp(30px,4.5vw,44px);line-height:1.08;letter-spacing:-.035em;text-wrap:balance}
+.sub{color:var(--muted);max-width:56ch;margin:0 0 32px}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:24px}
+.card h3{margin:0 0 8px;font-size:20px;letter-spacing:-.02em}.card p{margin:0;color:var(--muted);font-size:16px}
+.card .mono{display:block;margin-bottom:10px}
+.steps{list-style:none;counter-reset:s;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 28px}
+.steps li{counter-increment:s;position:relative;padding-left:56px;color:var(--muted)}
+.steps li:before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:0;width:40px;height:40px;border-radius:12px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;font:500 13px "JetBrains Mono",monospace;color:var(--sky)}
+.steps b{display:block;color:var(--fg);margin-bottom:2px}
+.countries{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.countries span{padding:8px 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:15px}
+.plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.plans ul{margin:12px 0 0;padding-left:20px;color:var(--muted)}.plans li{margin:6px 0}
+.plans .pro{background:var(--sky);color:var(--ink);border-color:var(--sky)}.plans .pro ul,.plans .pro .muted{color:#173447}
+.card .price{font-size:34px;font-weight:800;letter-spacing:-.03em;color:var(--fg);margin-top:4px}.plans .pro .price{color:var(--ink)}
+.priv{background:var(--surface2);border:1px solid var(--line);border-radius:22px;padding:28px}
+.priv ul{color:var(--muted);padding-left:20px;margin:0 0 22px}.priv li{margin:6px 0}
+footer{border-top:1px solid var(--line);padding-block:32px 48px;color:var(--muted);font-size:15px;display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between}
+@media(max-width:820px){.hero{grid-template-columns:1fr;gap:32px;padding-block:20px 48px}.three,.plans,.steps{grid-template-columns:1fr}nav .links{display:none}}
+</style></head>
+<body><div class="wrap">
+<nav><a class="brand" href="/drakio/"><img src="icon.png" alt="" width="36" height="36">drakio</a>
+<div class="links"><a href="#how">How it works</a><a href="#honest">Honest by design</a><a href="#plans">Free &amp; Pro</a><a href="privacy.html">Privacy</a></div></nav>
+
+<header class="hero"><div>
+<p class="kicker mono">Resume maker · Now in testing</p>
+<h1>Snap a job. Get a resume <em>made for it.</em></h1>
+<p class="lede">Drakio reads the job ad, asks you honest yes/no questions about what's missing, and rewrites your resume for that one job. You see every change before it reaches the PDF.</p>
+<div class="cta"><span class="btn primary">Coming soon on Google Play</span><a class="btn" href="#how">How it works</a></div>
+<div class="dots" aria-hidden="true"><i style="background:var(--coral)"></i><i style="background:var(--lime)"></i><i style="background:var(--sky)"></i><i style="background:var(--magenta)"></i></div>
+</div>
+<div class="phone"><div class="scr" role="img" aria-label="Example Drakio screen: a barista job ad at Sunridge Cafe, one change shown before and after with the reason, and a match of 6 of 7">
+<div class="top"><b>drakio</b><span class="mono" style="color:var(--muted)">What changed</span></div>
+<div class="ad"><div class="t">Barista</div><div class="s">Sunridge Cafe, Toronto ON</div>
+<div class="chips"><span>Espresso</span><span>Cash handling</span><span>Food Handler certificate</span></div></div>
+<div class="chg"><div class="h"><span class="mono" style="font-size:11px">Summary</span><span class="tag">Free</span></div>
+<p class="before">Hard-working person looking for a job.</p>
+<p class="after">Barista with 2 years of espresso bar and customer service experience.</p>
+<p class="why">Because the ad asks for espresso first.</p></div>
+<div class="chg"><div class="h"><span class="mono" style="font-size:11px">Experience</span><span class="tag">You said yes</span></div>
+<p class="after">Handled cash and card payments and balanced the till at close.</p>
+<p class="why">Drakio asked about cash handling. You said yes.</p></div>
+<div class="match"><b>6 of 7</b><div><small>Requirements matched</small>Canada style · Letter</div></div>
+<div class="note">Example job, not real data</div>
+</div></div></header>
+
+<section id="how"><h2>From job ad to PDF in a few taps</h2>
+<p class="sub">Upload your resume once. After that, every job you want gets its own version.</p>
+<ol class="steps">
+<li><b>Add your resume once</b>PDF, Word, photos of each page, screenshots, or type it in. Fix anything Drakio misread.</li>
+<li><b>Add the job ad</b>Snap a photo, pick screenshots, paste the text, share it from Indeed, LinkedIn or Chrome, scan a QR code on a “Now hiring” sign, or open a job link.</li>
+<li><b>Drakio reads the ad</b>Job title, company, country, the skills it asks for and what to check before you apply.</li>
+<li><b>Fill the gaps honestly</b>One yes/no question for each requirement your resume doesn't show. Only a “yes” is added.</li>
+<li><b>See what changed</b>Every change as Before → After with the reason. Keep it, undo it or rewrite it in your own words.</li>
+<li><b>Save the PDF and track the job</b>Hiring-software friendly, then each job keeps its own resume, status and follow-up reminder.</li>
+</ol></section>
+
+<section id="honest"><h2>Honest by design</h2>
+<p class="sub">A tailored resume should still be your resume. Drakio never makes things up.</p>
+<div class="three">
+<div class="card"><span class="mono" style="color:var(--coral)">Never invents</span><h3>Only what's true</h3><p>Every added line comes from your resume or a “yes” you gave. New skills you type get an “Is this true?” check.</p></div>
+<div class="card"><span class="mono" style="color:var(--lime)">Nothing hidden</span><h3>Every change shown</h3><p>Nothing reaches the PDF until you've seen it in “What changed”, with the reason for each edit.</p></div>
+<div class="card"><span class="mono" style="color:var(--sky)">Your match</span><h3>Matched, partly, missing</h3><p>See how your resume lines up with the ad, plus what to check before you apply.</p></div>
+<div class="card"><span class="mono" style="color:var(--magenta)">ATS friendly</span><h3>Built to be read</h3><p>One column, real text, standard headings, one date style, black and white. Six clean fonts, 10 to 12 pt.</p></div>
+<div class="card"><span class="mono" style="color:var(--coral)">No extras</span><h3>No photo, no ID numbers</h3><p>Drakio never adds a photo, ID numbers, religion or ethnicity. Personal details are added only if the ad asks and you agree.</p></div>
+<div class="card"><span class="mono" style="color:var(--lime)">Follow up</span><h3>Track every job</h3><p>A status and a follow-up reminder for each job. Reminders never name the job or employer.</p></div>
+</div></section>
+
+<section id="countries"><h2>The right style for 12 countries</h2>
+<p class="sub">Drakio picks the resume style the job's country expects: page size, headings, date format and what to leave out.</p>
+<div class="countries"><span>Canada</span><span>United States</span><span>United Kingdom</span><span>Ireland</span><span>Australia</span><span>New Zealand</span><span>India</span><span>South Africa</span><span>Singapore</span><span>Philippines</span><span>Nigeria</span><span>Kenya</span></div></section>
+
+<section id="plans"><h2>Free to start</h2>
+<p class="sub">Try it on real jobs. Upgrade once if you're applying a lot. No subscription, no account.</p>
+<div class="plans">
+<div class="card"><h3>Free</h3><p class="price">$0</p><ul><li>3 tailored resumes</li><li>Photo, screenshot, paste or job link</li><li>Honest yes/no gap check</li><li>Match score and PDF in 12 country styles</li><li>Track up to 5 jobs, with follow-up reminders</li></ul></div>
+<div class="card pro"><h3>Pro</h3><p class="price">Pay once</p><ul><li>Everything in Free, plus:</li><li>Unlimited resumes and jobs</li><li>Cover letters (coming soon)</li><li>More resume designs (coming soon)</li></ul><p class="muted" style="margin:12px 0 0;font-size:14px">Sold through Google Play at launch. The price is shown there before you buy.</p></div>
+</div></section>
+
+<section><div class="priv"><h2>Your resume stays on your phone</h2>
+<ul>
+<li>No account and no servers. Your resume, job ads and finished PDFs are stored on your device.</li>
+<li>Resumes, photos and QR codes are read on your phone with Google ML Kit. Nothing is uploaded.</li>
+<li>Drakio goes online only to open a job link you choose. You see the website's name first, and nothing from your resume is ever sent.</li>
+<li>Optional app lock, kept out of cloud backup, and “Delete all my data” in one tap.</li>
+</ul>
+<p class="sub" style="margin-bottom:18px">Drakio organizes and formats your own information. It does not give career, legal or immigration advice.</p>
+<a class="btn" href="privacy.html">Read the privacy policy</a></div></section>
+
+<footer><span>© Drakiverse Studio</span><span><a href="/">All apps</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="mailto:drakio@drakiverse.studio">drakio@drakiverse.studio</a></span></footer>
+</div></body></html>
