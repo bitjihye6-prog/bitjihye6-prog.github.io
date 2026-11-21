@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; media-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Airlo: Play Instruments in the Air</title>
+<meta name="description" content="Play harp, guitar, piano, drums and cello in the air with your hands. Hand tracking runs in your browser: the camera picture never leaves your device. By Drakiverse Studio.">
+<meta name="theme-color" content="#0B0B0D">
+<meta property="og:title" content="Airlo: Play Instruments in the Air">
+<meta property="og:description" content="Draw glowing harp strings in mid-air, strum a guitar, hit drums. Just your hands and a camera.">
+<meta property="og:url" content="https://drakiverse.studio/airlo/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Drakiverse Studio">
+<link rel="canonical" href="https://drakiverse.studio/airlo/">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Unbounded:wght@700&display=swap">
+<style>
+:root{--bg:#0B0B0D;--surface:#141418;--line:#26262E;--fg:#F5F5F7;--muted:#9A9AA6;--sky:#5EC8FF;--magenta:#E040FB;--coral:#FF6F61;color-scheme:dark}
+[hidden]{display:none!important}
+*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);color:var(--fg);font:500 16px/1.5 Manrope,system-ui,-apple-system,"Segoe UI",sans-serif}
+#stage{position:fixed;inset:0;width:100vw;height:100vh;touch-action:none}
+#cam{position:fixed;width:1px;height:1px;opacity:0;pointer-events:none}
+.top{position:fixed;left:0;right:0;top:0;padding:calc(env(safe-area-inset-top,0px) + 10px) 12px 0;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.brand{font:700 20px Unbounded,Manrope,sans-serif;letter-spacing:.02em;color:#fff;text-decoration:none;margin-right:4px}
+.brand span{color:var(--sky)}
+#tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;max-width:100%}#tabs::-webkit-scrollbar{display:none}#tabs button{flex:none}
+#tabs button,.btn{font:700 14px Manrope,sans-serif;color:var(--fg);background:rgba(20,20,24,.72);border:1px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer;backdrop-filter:blur(6px)}
+#tabs button[aria-selected=true]{background:var(--sky);color:#08131B;border-color:var(--sky)}
+#tabs button:focus-visible,.btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+#hint{flex-basis:100%;max-width:620px;margin:2px 0 0;font-size:14px;color:rgba(245,245,247,.88);text-shadow:0 1px 6px #000}
+.bottom{position:fixed;left:0;right:0;bottom:0;padding:0 12px calc(env(safe-area-inset-bottom,0px) + 30px);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#rec.on{background:var(--coral);border-color:var(--coral);color:#fff}
+#status{font-size:14px;color:#fff;text-shadow:0 1px 6px #000}
+#intro{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;background:radial-gradient(ellipse at 50% 30%,#0F1F2C 0,#0B0B0D 70%)}
+.card{max-width:520px;text-align:center}
+.card h1{font:700 clamp(34px,8vw,54px)/1.05 Unbounded,Manrope,sans-serif;margin:0 0 12px}
+.card h1 em{font-style:normal;color:var(--sky)}
+.card p{color:var(--muted);margin:0 0 14px}
+.card ul{list-style:none;padding:0;margin:0 0 20px;color:var(--fg);font-weight:700}
+.card li{display:inline-block;margin:4px 6px;padding:6px 12px;border:1px solid var(--line);border-radius:999px;font-size:14px}
+#start{font:800 18px Manrope,sans-serif;background:var(--sky);color:#08131B;border:0;border-radius:999px;padding:14px 30px;cursor:pointer}
+.small{font-size:13px!important}
+.small a{color:var(--sky)}
+#inapp{color:#FFB74D!important}
+</style>
+</head><body>
+<canvas id="stage" aria-label="Air instruments: your camera view with the instrument drawn on top"></canvas>
+<video id="cam" playsinline muted></video>
+
+<div id="ui" hidden>
+  <div class="top">
+    <a class="brand" href="/airlo/">air<span>lo</span></a>
+    <div id="tabs" role="tablist" aria-label="Choose an instrument">
+      <button type="button" role="tab" data-i="harp">Harp</button>
+      <button type="button" role="tab" data-i="guitar">Guitar</button>
+      <button type="button" role="tab" data-i="piano">Piano</button>
+      <button type="button" role="tab" data-i="drums">Drums</button>
+      <button type="button" role="tab" data-i="cello">Cello</button>
+    </div>
+    <p id="hint" aria-live="polite"></p>
+  </div>
+  <div class="bottom">
+    <button type="button" class="btn" id="rec">● Record</button>
+    <button type="button" class="btn" id="clear">Clear strings</button>
+    <span id="status" role="status" aria-live="polite"></span>
+  </div>
+</div>
+
+<div id="intro">
+  <div class="card">
+    <h1>Play music<br>in <em>thin air</em></h1>
+    <p>Your camera follows your hands, and you play instruments in the air: draw glowing harp strings, strum a guitar, tap piano keys, hit drums or bow a cello.</p>
+    <ul><li>Harp</li><li>Guitar</li><li>Piano</li><li>Drums</li><li>Cello</li></ul>
+    <button type="button" id="start">Start playing</button>
+    <p class="small" style="margin-top:16px">Works best with both hands in view, good light, and sound on. Prop your phone up, or use a laptop.</p>
+    <p class="small">Private by design: hand tracking runs in your browser and the camera picture never leaves your device. Nothing is uploaded or stored. Recordings are only made when you tap Record and go straight to your Downloads.</p>
+    <p class="small" id="inapp" hidden>Opened from Instagram, TikTok or another app? Tap ⋯ → Open in browser so the camera works.</p>
+    <p class="small"><a href="/">Drakiverse Studio</a> · Airlo app for Android coming soon</p>
+  </div>
+</div>
+<script type="module" src="/js/airlo.js?v=1"></script>
+</body></html>
